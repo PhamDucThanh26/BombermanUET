@@ -14,6 +14,9 @@ public class Bomber extends Entity {
 
     @Override
     public void update() {
-
+        this.x += 5;
+        this.y += 5;
+        if( x > 600) x -= 5;
+        if( y > 600) y -= 5;
     }
 }
