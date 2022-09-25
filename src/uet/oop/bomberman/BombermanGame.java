@@ -24,7 +24,9 @@ public class BombermanGame extends Application {
     private GraphicsContext gc;
     private Canvas canvas;
     private List<Entity> entities = new ArrayList<>();
+
     private List<Entity> stillObjects = new ArrayList<>();
+    public static char [][] idObjects;
 
     @Override
     public void start(Stage stage) {
@@ -65,6 +67,7 @@ public class BombermanGame extends Application {
                 if (j == 0 || j == HEIGHT - 1 || i == 0 || i == WIDTH - 1) {
                     object = new Wall(i, j, Sprite.wall.getFxImage());
                 }
+
                 else {
                     object = new Grass(i, j, Sprite.grass.getFxImage());
                 }
