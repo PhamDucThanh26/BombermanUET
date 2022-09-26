@@ -6,32 +6,29 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import uet.oop.bomberman.entities.Bomber;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.Grass;
 import uet.oop.bomberman.entities.Wall;
-import uet.oop.bomberman.graphics.CreateMap;
 import uet.oop.bomberman.graphics.Sprite;
+import uet.oop.bomberman.user_input.Keyboard;
 
-import java.io.File;
-import java.io.FileReader;
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
-import java.util.StringTokenizer;
 
 public class BombermanGame extends Application {
     
-    public static final int WIDTH = 16;
-    public static final int HEIGHT = 12;
-
+    public static final int WIDTH = 20;
+    public static final int HEIGHT = 15;
 
     public static final List<Entity> block = new ArrayList<>();
     public static int _widthMap = 0;
     public static int _heightMap = 0;
     public static int _level = 1;
-    
+
     private GraphicsContext gc;
     private Canvas canvas;
     private List<Entity> entities = new ArrayList<>();
@@ -39,7 +36,6 @@ public class BombermanGame extends Application {
     private List<Entity> stillObjects = new ArrayList<>();
     public static char [][] idObjects;
 
-    private CreateMap map = new CreateMap();
     @Override
     public void start(Stage stage) {
         // Tao Canvas
@@ -54,28 +50,49 @@ public class BombermanGame extends Application {
         Scene scene = new Scene(root);
 
         // Them scene vao stage
-        stage.setScene(scene);
-        stage.show();
+        stage.setTitle("Bomberman");
+
+        //Passing FileInputStream object as a parameter
+        FileInputStream inputstream = new FileInputStream("res\\icon.png");
+        Image image = new Image(inputstream);
+        stage.getIcons().add(image);
+
+        stage.setResizable(false);
+
+        Bomber bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
+        entities.add(bomberman);
+
+        //handle movement
+        Keyboard keyboard = new Keyboard();
+
+        scene.setOnKeyPressed((e) -> {
+            keyboard.hold(e);
+        });
+        scene.setOnKeyReleased((e) -> {
+            keyboard.release(e);
+        });
 
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long l) {
+                bomberman.updateMove(keyboard);
                 render();
                 update();
             }
         };
         timer.start();
+
         createMap();
-        Entity bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
-        entities.add(bomberman);
+
+        stage.setScene(scene);
+        stage.show();
     }
 
-     public void createMap() {
-
+    public void createMap() {
         for (int i = 0; i < WIDTH; i++) {
             for (int j = 0; j < HEIGHT; j++) {
                 Entity object;
-                if (j == 0 || j == HEIGHT - 1 || i == 0 || i == WIDTH - 1) {
+                if (j == 0 || j == HEIGHT - 1 || i == 0 || i == WIDTH - 1|| i == j) {
                     object = new Wall(i, j, Sprite.wall.getFxImage());
                 }
 
