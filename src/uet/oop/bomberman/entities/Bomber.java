@@ -95,6 +95,7 @@ public class Bomber extends Entity {
         x += xVec;
         y += yVec;
 
+
         if( x + Sprite.DEFAULT_SIZE >= Sprite.SCALED_SIZE * 20 - 32 || x < 16 + 12) {
             x -= xVec;
         }
