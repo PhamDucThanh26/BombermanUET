@@ -20,17 +20,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BombermanGame extends Application {
-
+    
     public static final int WIDTH = 20;
     public static final int HEIGHT = 15;
+
+    public static final List<Entity> block = new ArrayList<>();
+    public static int _widthMap = 0;
+    public static int _heightMap = 0;
+    public static int _level = 1;
 
     private GraphicsContext gc;
     private Canvas canvas;
     private List<Entity> entities = new ArrayList<>();
+
     private List<Entity> stillObjects = new ArrayList<>();
+    public static char [][] idObjects;
 
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage stage) {
         // Tao Canvas
         canvas = new Canvas(Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * HEIGHT);
         gc = canvas.getGraphicsContext2D();
@@ -85,9 +92,11 @@ public class BombermanGame extends Application {
         for (int i = 0; i < WIDTH; i++) {
             for (int j = 0; j < HEIGHT; j++) {
                 Entity object;
-                if (j == 0 || j == HEIGHT - 1 || i == 0 || i == WIDTH - 1) {
+                if (j == 0 || j == HEIGHT - 1 || i == 0 || i == WIDTH - 1|| i == j) {
                     object = new Wall(i, j, Sprite.wall.getFxImage());
-                } else {
+                }
+
+                else {
                     object = new Grass(i, j, Sprite.grass.getFxImage());
                 }
                 stillObjects.add(object);
@@ -97,6 +106,7 @@ public class BombermanGame extends Application {
 
     public void update() {
         entities.forEach(Entity::update);
+        block.forEach(Entity::update);
     }
 
     public void render() {
@@ -104,10 +114,4 @@ public class BombermanGame extends Application {
         stillObjects.forEach(g -> g.render(gc));
         entities.forEach(g -> g.render(gc));
     }
-
-    @Override
-    public boolean equals(Object obj) {
-        return super.equals(obj);
-    }
-
 }
