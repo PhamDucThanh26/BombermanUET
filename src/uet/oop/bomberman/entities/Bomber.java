@@ -7,12 +7,13 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 
 public class Bomber extends Entity {
-
+    private double velocity = 1;
     public Bomber(int x, int y, Image img) {
         super( x, y, img);
     }
 
     @Override
     public void update() {
+
     }
 }

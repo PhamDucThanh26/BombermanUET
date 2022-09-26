@@ -11,15 +11,21 @@ import uet.oop.bomberman.entities.Bomber;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.Grass;
 import uet.oop.bomberman.entities.Wall;
+import uet.oop.bomberman.graphics.CreateMap;
 import uet.oop.bomberman.graphics.Sprite;
 
+import java.io.File;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
+import java.util.StringTokenizer;
 
 public class BombermanGame extends Application {
     
-    public static final int WIDTH = 20;
-    public static final int HEIGHT = 15;
+    public static final int WIDTH = 16;
+    public static final int HEIGHT = 12;
+
 
     public static final List<Entity> block = new ArrayList<>();
     public static int _widthMap = 0;
@@ -33,6 +39,7 @@ public class BombermanGame extends Application {
     private List<Entity> stillObjects = new ArrayList<>();
     public static char [][] idObjects;
 
+    private CreateMap map = new CreateMap();
     @Override
     public void start(Stage stage) {
         // Tao Canvas
@@ -58,18 +65,17 @@ public class BombermanGame extends Application {
             }
         };
         timer.start();
-
         createMap();
-
         Entity bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
         entities.add(bomberman);
     }
 
-    public void createMap() {
+     public void createMap() {
+
         for (int i = 0; i < WIDTH; i++) {
             for (int j = 0; j < HEIGHT; j++) {
                 Entity object;
-                if (j == 0 || j == HEIGHT - 1 || i == 0 || i == WIDTH - 1|| i == j) {
+                if (j == 0 || j == HEIGHT - 1 || i == 0 || i == WIDTH - 1) {
                     object = new Wall(i, j, Sprite.wall.getFxImage());
                 }
 

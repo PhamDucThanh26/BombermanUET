@@ -14,7 +14,8 @@ import java.util.Scanner;
 import java.util.StringTokenizer;
 
 public class CreateMap {
-    CreateMap(String level) {
+    public CreateMap(){}
+    public void createMap (String level) {
         System.out.print(System.getProperty("user.dir"));
         final File fileName = new File(level);
         try(FileReader inputFile = new FileReader(fileName)) {
