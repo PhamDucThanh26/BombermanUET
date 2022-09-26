@@ -53,9 +53,7 @@ public class BombermanGame extends Application {
         stage.setTitle("Bomberman");
 
         //Passing FileInputStream object as a parameter
-        FileInputStream inputstream = new FileInputStream("res\\icon.png");
-        Image image = new Image(inputstream);
-        stage.getIcons().add(image);
+        Image img = new Image("file:res//icon.png");
 
         stage.setResizable(false);
 
