@@ -54,6 +54,7 @@ public class BombermanGame extends Application {
 
         //Passing FileInputStream object as a parameter
         Image img = new Image("file:res//icon.png");
+        stage.getIcons().add(img);
 
         stage.setResizable(false);
 
@@ -73,7 +74,7 @@ public class BombermanGame extends Application {
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long l) {
-                bomberman.updateMove(keyboard);
+                bomberman.update(keyboard);
                 render();
                 update();
             }

@@ -13,6 +13,8 @@ public abstract class Entity {
 
     //Tọa độ Y tính từ góc trái trên trong Canvas
     protected int y;
+    protected int width;
+    protected int height;
 
     protected Image img;
 
@@ -20,6 +22,14 @@ public abstract class Entity {
     public Entity( int xUnit, int yUnit, Image img) {
         this.x = xUnit * Sprite.SCALED_SIZE;
         this.y = yUnit * Sprite.SCALED_SIZE;
+        this.img = img;
+    }
+
+    public Image getImg() {
+        return img;
+    }
+
+    public void setImg(Image img) {
         this.img = img;
     }
 
