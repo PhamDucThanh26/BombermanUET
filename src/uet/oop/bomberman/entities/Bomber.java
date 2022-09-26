@@ -31,20 +31,11 @@ public class Bomber extends Entity {
     }
 
     public void move(Keyboard a) {
-        if(a.keys[0]) {
-            yVec = -3;
-        }
-        else if(a.keys[1]) {
-            yVec = +3;
-        }
-        else if(a.keys[2]) {
-            xVec = -3;
-        }
-        else if(a.keys[3]) {
-            xVec = 3;
-        } else {
-            xVec = 0;
-            yVec = 0;
-        }
+        xVec = 0;
+        yVec = 0;
+        if(a.keys[0]) yVec -= 3;
+        if(a.keys[1]) yVec += 3;
+        if(a.keys[2]) xVec -= 3;
+        if(a.keys[3]) xVec += 3;
     }
 }

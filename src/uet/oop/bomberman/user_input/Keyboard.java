@@ -7,14 +7,12 @@ import javafx.scene.input.KeyEvent;
 import java.awt.*;
 
 public class Keyboard {
-    private boolean isPressed = false;
     public boolean[] keys = new boolean[120];
     final private int k_up = 0;
     final private int k_down = 1;
     final private int k_left = 2;
     final private int k_right = 3;
-    public void input(KeyEvent event) {
-        if( isPressed )return;
+    public void hold(KeyEvent event) {
         switch (event.getCode()) {
             case W:
             case UP:
@@ -39,7 +37,6 @@ public class Keyboard {
             default:
                 break;
         }
-        isPressed = true;
     }
 
     public void release(KeyEvent event) {
@@ -67,6 +64,5 @@ public class Keyboard {
             default:
                 break;
         }
-        isPressed = false;
     }
 }
