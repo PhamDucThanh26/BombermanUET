@@ -8,26 +8,24 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import uet.oop.bomberman.entities.Bomber;
-import uet.oop.bomberman.entities.Entity;
-import uet.oop.bomberman.entities.Grass;
-import uet.oop.bomberman.entities.Wall;
+import uet.oop.bomberman.entities.*;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.user_input.Keyboard;
 
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class BombermanGame extends Application {
     
-    public static final int WIDTH = 31;
-    public static final int HEIGHT = 13;
+    public static final int WIDTH = 20;
+    public static final int HEIGHT = 15;
 
     public static final List<Entity> block = new ArrayList<>();
-    public static int _widthMap = 0;
-    public static int _heightMap = 0;
-    public static int _level = 1;
 
     private GraphicsContext gc;
     private Canvas canvas;
@@ -57,7 +55,7 @@ public class BombermanGame extends Application {
 
         stage.getIcons().add(img);
 
-        stage.setResizable(false);
+        stage.setResizable(true);
 
         Bomber bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
         entities.add(bomberman);
@@ -82,14 +80,42 @@ public class BombermanGame extends Application {
         };
         timer.start();
 
-        createMap();
+        createMap("C:\\Code\\Java\\bomberman-starter\\BombermanUET\\res\\levels\\Level0.txt");
 
         stage.setScene(scene);
         stage.show();
     }
 
-    public void createMap() {
-        for (int i = 0; i < WIDTH; i++) {
+    public void createMap(String path) {
+        try {
+            File file = new File(path);
+            Scanner sc = new Scanner(file);
+            int j = 0;
+            while(sc.hasNextLine()) {
+                String s = sc.nextLine();
+                System.out.println(s.length());
+
+                for(int i = 0; i < s.length(); i++) {
+                    Entity object;
+                    if(s.charAt(i) == '#') {
+                        object = new Wall(i, j, Sprite.wall.getFxImage() );
+                    }
+                    else if(s.charAt(i) == '*') {
+                        object = new Brick(i, j, Sprite.brick.getFxImage());
+                    }
+                    else {
+                        object = new Grass(i, j, Sprite.grass.getFxImage());
+                    }
+                    stillObjects.add(object);
+                }
+                j++;
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+
+        /*for (int i = 0; i < WIDTH; i++) {
             for (int j = 0; j < HEIGHT; j++) {
                 Entity object;
                 if (j == 0 || j == HEIGHT - 1 || i == 0 || i == WIDTH - 1|| i == j) {
@@ -101,7 +127,7 @@ public class BombermanGame extends Application {
                 }
                 stillObjects.add(object);
             }
-        }
+        }*/
     }
 
     public void update() {

@@ -22,17 +22,17 @@ public class CreateMap {
             Scanner sc = new Scanner(inputFile);
             String line = sc.nextLine();
             StringTokenizer tokens = new StringTokenizer(line);
-            _level = Integer.parseInt(tokens.nextToken());
-            _heightMap = Integer.parseInt(tokens.nextToken());
-            _widthMap = Integer.parseInt(tokens.nextToken());
+            //_level = Integer.parseInt(tokens.nextToken());
+            //_heightMap = Integer.parseInt(tokens.nextToken());
+            //_widthMap = Integer.parseInt(tokens.nextToken());
             while(sc.hasNextLine()) {
-                idObjects = new char[_widthMap][_heightMap];
+                idObjects = new char[WIDTH][HEIGHT];
                 //listkill = new int[_widthMap][_heightMap]
-                for(int i = 0; i < _heightMap; i++) {
+                for(int i = 0; i < HEIGHT; i++) {
                     String lineTile = sc.nextLine();
                     StringTokenizer tokenLine = new StringTokenizer(lineTile);
 
-                    for(int j = 0; j < _widthMap; j++) {
+                    for(int j = 0; j < WIDTH; j++) {
                         char c = tokenLine.nextToken().charAt(0);
                         Entity entity = null;
                         switch (c) {
