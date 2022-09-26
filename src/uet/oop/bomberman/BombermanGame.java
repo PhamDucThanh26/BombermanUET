@@ -21,8 +21,8 @@ import java.util.List;
 
 public class BombermanGame extends Application {
     
-    public static final int WIDTH = 20;
-    public static final int HEIGHT = 15;
+    public static final int WIDTH = 31;
+    public static final int HEIGHT = 13;
 
     public static final List<Entity> block = new ArrayList<>();
     public static int _widthMap = 0;
@@ -53,9 +53,9 @@ public class BombermanGame extends Application {
         stage.setTitle("Bomberman");
 
         //Passing FileInputStream object as a parameter
-        FileInputStream inputstream = new FileInputStream("res\\icon.png");
-        Image image = new Image(inputstream);
-        stage.getIcons().add(image);
+        Image img = new Image("file:res//icon.png");
+
+        stage.getIcons().add(img);
 
         stage.setResizable(false);
 

@@ -9,8 +9,8 @@ import javafx.scene.paint.Color;
 import uet.oop.bomberman.user_input.Keyboard;
 
 public class Bomber extends Entity {
-    int xVec = 0;
-    int yVec = 0;
+    private int xVec = 0;
+    private int yVec = 0;
 
     public Bomber(int x, int y, Image img) {
         super( x, y, img);
@@ -33,10 +33,10 @@ public class Bomber extends Entity {
     public void updateMove(Keyboard a) {
         xVec = 0;
         yVec = 0;
-        if(a.up) yVec -= 3;
-        if(a.down) yVec += 3;
-        if(a.left) xVec -= 3;
-        if(a.right) xVec += 3;
+        if(a.up) yVec -= 1;
+        if(a.down) yVec += 1;
+        if(a.left) xVec -= 1;
+        if(a.right) xVec += 1;
         if(a.plant_bomb) {
 
         }
