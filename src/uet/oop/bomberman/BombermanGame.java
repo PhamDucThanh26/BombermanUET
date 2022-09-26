@@ -2,6 +2,7 @@ package uet.oop.bomberman;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -12,7 +13,13 @@ import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.Grass;
 import uet.oop.bomberman.entities.Wall;
 import uet.oop.bomberman.graphics.Sprite;
+import uet.oop.bomberman.user_input.Keyboard;
+import javafx.event.EventHandler;
 
+import javafx.scene.control.Button;
+
+import javafx.scene.input.KeyEvent;
+import java.security.Key;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +34,7 @@ public class BombermanGame extends Application {
     private List<Entity> stillObjects = new ArrayList<>();
 
     @Override
-    public void start(Stage stage) {
+    public void start(Stage stage) throws Exception {
         // Tao Canvas
         canvas = new Canvas(Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * HEIGHT);
         gc = canvas.getGraphicsContext2D();
@@ -54,8 +61,23 @@ public class BombermanGame extends Application {
 
         createMap();
 
-        Entity bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
+        Bomber bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
         entities.add(bomberman);
+
+        //handle movement
+        Keyboard keyboard = new Keyboard();
+
+        scene.setOnKeyPressed((e) -> {
+            keyboard.input(e);
+            bomberman.move(keyboard);
+        });
+        scene.setOnKeyReleased((e) -> {
+            keyboard.release(e);
+            bomberman.move(keyboard);
+        });
+
+
+        bomberman.update();
     }
 
     public void createMap() {
@@ -82,4 +104,10 @@ public class BombermanGame extends Application {
         stillObjects.forEach(g -> g.render(gc));
         entities.forEach(g -> g.render(gc));
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
+    }
+
 }
