@@ -16,7 +16,7 @@ public class Bomber extends Entity {
     int frameRate = 0;
     int frameCount = 0;
     private boolean moving = false;
-    private boolean stillEntityCollision = false;
+
     Image[] upAnimation = {
             Sprite.player_up.getFxImage(),
             Sprite.player_up_1.getFxImage(),
@@ -45,22 +45,15 @@ public class Bomber extends Entity {
         super( x, y, img);
     }
 
-    public boolean isStillEntityCollision() {
-        return stillEntityCollision;
-    }
-
-    public void setStillEntityCollision(boolean stillEntityCollsion) {
-        this.stillEntityCollision = stillEntityCollsion;
-    }
-
     @Override
     public void update() {
-        move();
-        updateAnimation();
+
     }
 
     public void update(Keyboard a) {
         updateMove(a);
+        move();
+        updateAnimation();
     }
 
     public void updateMove(Keyboard a) {
@@ -85,10 +78,6 @@ public class Bomber extends Entity {
             moving = true;
             this.setImg(rightAnimation[frameCount]);
         }
-        if(stillEntityCollision) {
-            xVec = 0;
-            yVec = 0;
-        }
         if(a.plant_bomb) {
         }
     }
@@ -103,11 +92,6 @@ public class Bomber extends Entity {
     }
 
     private void move() {
-        if(stillEntityCollision) {
-            x -= xVec;
-            y -= yVec;
-            return;
-        }
         x += xVec;
         y += yVec;
 
@@ -119,15 +103,4 @@ public class Bomber extends Entity {
         }
     }
 
-    public void updateMove(Keyboard a) {
-        xVec = 0;
-        yVec = 0;
-        if(a.up) yVec -= 3;
-        if(a.down) yVec += 3;
-        if(a.left) xVec -= 3;
-        if(a.right) xVec += 3;
-        if(a.plant_bomb) {
-
-        }
-    }
 }
