@@ -22,22 +22,27 @@ import java.util.Scanner;
 
 public class BombermanGame extends Application {
     
-    public static final int WIDTH = 20;
-    public static final int HEIGHT = 15;
+    public static final int WIDTH = 1080;
+    public static final int HEIGHT = 720;
 
     public static final List<Entity> block = new ArrayList<>();
 
     private GraphicsContext gc;
     private Canvas canvas;
     private List<Entity> entities = new ArrayList<>();
+    Bomber bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
 
     private List<Entity> stillObjects = new ArrayList<>();
     public static char [][] idObjects;
 
+    //handle movement
+    Keyboard keyboard = new Keyboard();
     @Override
     public void start(Stage stage) {
         // Tao Canvas
-        canvas = new Canvas(Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * HEIGHT);
+        canvas = new Canvas(WIDTH, HEIGHT);
+        canvas.setLayoutX(30);
+        canvas.setLayoutY(30);
         gc = canvas.getGraphicsContext2D();
 
         // Tao root container
@@ -52,36 +57,24 @@ public class BombermanGame extends Application {
 
         //Passing FileInputStream object as a parameter
         Image img = new Image("file:res//icon.png");
-        stage.getIcons().add(img);
 
         stage.getIcons().add(img);
 
         stage.setResizable(true);
 
-        Bomber bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
-        entities.add(bomberman);
-
-        //handle movement
-        Keyboard keyboard = new Keyboard();
-
-        scene.setOnKeyPressed((e) -> {
-            keyboard.hold(e);
-        });
-        scene.setOnKeyReleased((e) -> {
-            keyboard.release(e);
-        });
+        scene.setOnKeyPressed(e -> keyboard.hold(e));
+        scene.setOnKeyReleased(e -> keyboard.release(e));
 
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long l) {
-                bomberman.update(keyboard);
-                render();
                 update();
+                render();
             }
         };
         timer.start();
 
-        createMap("C:\\Code\\Java\\bomberman-starter\\BombermanUET\\res\\levels\\Level0.txt");
+        createMap(System.getProperty("user.dir") + "\\res\\levels\\Level1.txt");
 
         stage.setScene(scene);
         stage.show();
@@ -92,10 +85,11 @@ public class BombermanGame extends Application {
             File file = new File(path);
             Scanner sc = new Scanner(file);
             int j = 0;
-            //sc.nextLine();
-            while(sc.hasNextLine()) {
+
+            sc.nextLine();
+
+            while(sc.hasNextLine() && j < 13) {
                 String s = sc.nextLine();
-                System.out.println(s.length());
 
                 for(int i = 0; i < s.length(); i++) {
                     Entity object;
@@ -129,26 +123,35 @@ public class BombermanGame extends Application {
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+            System.exit(1);
         }
 
-
-        /*for (int i = 0; i < WIDTH; i++) {
-            for (int j = 0; j < HEIGHT; j++) {
-                Entity object;
-                if (j == 0 || j == HEIGHT - 1 || i == 0 || i == WIDTH - 1|| i == j) {
-                    object = new Wall(i, j, Sprite.wall.getFxImage());
-                }
-
-                else {
-                    object = new Grass(i, j, Sprite.grass.getFxImage());
-                }
-                stillObjects.add(object);
-            }
-        }*/
+//        for (int i = 0; i < WIDTH; i++) {
+//            for (int j = 0; j < HEIGHT; j++) {
+//                Entity object;
+//                if (j == 0 || j == HEIGHT - 1 || i == 0 || i == WIDTH - 1|| i == j) {
+//                    object = new Wall(i, j, Sprite.wall.getFxImage());
+//                }
+//
+//                else {
+//                    object = new Grass(i, j, Sprite.grass.getFxImage());
+//                }
+//                stillObjects.add(object);
+//            }
+//        }
     }
 
     public void update() {
+        bomberman.update(keyboard);
         entities.forEach(Entity::update);
+        stillObjects.forEach( (Entity e) -> {
+            if (e instanceof Brick && bomberman.checkCollision(e)) {
+                System.out.println("bomberman hit");
+                bomberman.setStillEntityCollision(true);
+            }
+        });
+
+        bomberman.update();
         block.forEach(Entity::update);
     }
 
@@ -156,5 +159,6 @@ public class BombermanGame extends Application {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         stillObjects.forEach(g -> g.render(gc));
         entities.forEach(g -> g.render(gc));
+        bomberman.render(gc);
     }
 }
