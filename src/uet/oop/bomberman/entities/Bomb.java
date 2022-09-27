@@ -15,6 +15,6 @@ public class Bomb extends Entity {
 
     @Override
     public void update() {
-
+        Bomb test = new Bomb(0, 0, Sprite.bomb.getFxImage());
     }
 }

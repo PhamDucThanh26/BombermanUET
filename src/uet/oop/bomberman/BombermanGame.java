@@ -91,6 +91,7 @@ public class BombermanGame extends Application {
             File file = new File(path);
             Scanner sc = new Scanner(file);
             int j = 0;
+            //sc.nextLine();
             while(sc.hasNextLine()) {
                 String s = sc.nextLine();
                 System.out.println(s.length());
@@ -103,6 +104,21 @@ public class BombermanGame extends Application {
                     else if(s.charAt(i) == '*') {
                         object = new Brick(i, j, Sprite.brick.getFxImage());
                     }
+                    else if(s.charAt(i) == 'x') {
+                        stillObjects.add(new Grass(i, j, Sprite.grass.getFxImage()));
+                        object = new Portal(i, j, Sprite.portal.getFxImage());
+                    }
+                    else if(s.charAt(i) == '1') {
+                        stillObjects.add(new Grass(i, j, Sprite.grass.getFxImage()));
+                        object = new Oneal(i, j, Sprite.oneal_right1.getFxImage());
+                    }
+                    else if(s.charAt(i) == '2') {
+                        stillObjects.add(new Grass(i, j, Sprite.grass.getFxImage()));
+                        object = new Ballon(i, j, Sprite.balloom_left1.getFxImage());
+                    }
+
+
+
                     else {
                         object = new Grass(i, j, Sprite.grass.getFxImage());
                     }
