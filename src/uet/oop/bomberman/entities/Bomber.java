@@ -7,6 +7,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import uet.oop.bomberman.user_input.Keyboard;
+import uet.oop.bomberman.entities.Bomb;
+
+import static uet.oop.bomberman.BombermanGame.bomberman;
+import static uet.oop.bomberman.entities.Bomb.putBomb;
 
 public class Bomber extends Entity {
     private int xVec = 0;
@@ -38,7 +42,7 @@ public class Bomber extends Entity {
         if(a.left) xVec -= 1;
         if(a.right) xVec += 1;
         if(a.plant_bomb) {
-
+            putBomb();
         }
     }
 }

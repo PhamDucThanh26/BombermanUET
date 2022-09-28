@@ -50,7 +50,7 @@ public class CreateMap {
 
                         }
                         idObjects[j][i] = c;
-                        block.add(entity);
+                        entities.add(entity);
                     }
                 }
             }

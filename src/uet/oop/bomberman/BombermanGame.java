@@ -25,11 +25,12 @@ public class BombermanGame extends Application {
     public static final int WIDTH = 20;
     public static final int HEIGHT = 15;
 
-    public static final List<Entity> block = new ArrayList<>();
 
+
+    public static Bomber bomberman;
     private GraphicsContext gc;
     private Canvas canvas;
-    private List<Entity> entities = new ArrayList<>();
+    public static List<Entity> entities = new ArrayList<>();
 
     private List<Entity> stillObjects = new ArrayList<>();
     public static char [][] idObjects;
@@ -57,7 +58,7 @@ public class BombermanGame extends Application {
 
         stage.setResizable(true);
 
-        Bomber bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
+        bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
         entities.add(bomberman);
 
         //handle movement
@@ -117,12 +118,15 @@ public class BombermanGame extends Application {
                         object = new Ballon(i, j, Sprite.balloom_left1.getFxImage());
                     }
 
-
-
                     else {
                         object = new Grass(i, j, Sprite.grass.getFxImage());
                     }
-                    stillObjects.add(object);
+                    if(object instanceof Grass || object instanceof Brick || object instanceof Wall) {
+                        stillObjects.add(object);
+                    }
+                    else {
+                        entities.add(object);
+                    }
                 }
                 j++;
             }
@@ -148,7 +152,7 @@ public class BombermanGame extends Application {
 
     public void update() {
         entities.forEach(Entity::update);
-        block.forEach(Entity::update);
+
     }
 
     public void render() {
