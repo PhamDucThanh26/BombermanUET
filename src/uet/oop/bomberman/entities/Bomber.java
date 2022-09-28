@@ -1,11 +1,7 @@
 package uet.oop.bomberman.entities;
 
 import uet.oop.bomberman.graphics.Sprite;
-import javafx.scene.SnapshotParameters;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
 import uet.oop.bomberman.user_input.Keyboard;
 
 public class Bomber extends Entity {
@@ -15,8 +11,7 @@ public class Bomber extends Entity {
     final int FPS = 60;
     int frameRate = 0;
     int frameCount = 0;
-    private boolean moving = false;
-
+    private boolean stillEntityCollision = false;
     Image[] upAnimation = {
             Sprite.player_up.getFxImage(),
             Sprite.player_up_1.getFxImage(),
@@ -45,15 +40,16 @@ public class Bomber extends Entity {
         super( x, y, img);
     }
 
-    @Override
-    public void update() {
+    public boolean isStillEntityCollision() {
+        return stillEntityCollision;
+    }
 
+    public void setStillEntityCollision(boolean stillEntityCollision) {
+        this.stillEntityCollision = stillEntityCollision;
     }
 
     public void update(Keyboard a) {
         updateMove(a);
-        move();
-        updateAnimation();
     }
 
     public void updateMove(Keyboard a) {
@@ -65,17 +61,14 @@ public class Bomber extends Entity {
         }
         if(a.down) {
             yVec += 2;
-            moving = true;
             this.setImg(downAnimation[frameCount]);
         }
         if(a.left) {
             xVec -= 2;
-            moving = true;
             this.setImg(leftAnimation[frameCount]);
         }
         if(a.right)  {
             xVec += 2;
-            moving = true;
             this.setImg(rightAnimation[frameCount]);
         }
         if(a.plant_bomb) {
@@ -92,16 +85,34 @@ public class Bomber extends Entity {
     }
 
     private void move() {
+        if(stillEntityCollision) {
+            xVec = 0;
+            yVec = 0;
+            stillEntityCollision = false;
+        }
         x += xVec;
         y += yVec;
 
 
-        if( x + Sprite.DEFAULT_SIZE >= Sprite.SCALED_SIZE * 20 - 32 || x < 16 + 12) {
+        if( x + Sprite.wall.getSize() > 1080 ||
+                x <= Sprite.wall.getSize()  ) {
             x -= xVec;
         }
-        if( y + Sprite.DEFAULT_SIZE >= Sprite.SCALED_SIZE * 15 - 45 || y < 16 + 12) {
+        if( y + Sprite.wall.getSize() > 720 ||
+                y <= Sprite.wall.getSize() ) {
             y -= yVec;
         }
     }
 
+    @Override
+    public boolean intersects(Entity spr) {
+        this.stillEntityCollision = super.intersects(spr);
+        return this.stillEntityCollision;
+    }
+
+    @Override
+    public void update() {
+        move();
+        updateAnimation();
+    }
 }

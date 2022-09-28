@@ -8,21 +8,19 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import uet.oop.bomberman.entities.Bomber;
-import uet.oop.bomberman.entities.Entity;
-import uet.oop.bomberman.entities.Grass;
-import uet.oop.bomberman.entities.Wall;
+import uet.oop.bomberman.entities.*;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.user_input.Keyboard;
 
-import java.io.FileInputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class BombermanGame extends Application {
-    
-    public static final int WIDTH = 20;
-    public static final int HEIGHT = 15;
+    public static final int WIDTH = 1080;
+    public static final int HEIGHT = 720;
 
     public static final List<Entity> block = new ArrayList<>();
     public static int _widthMap = 0;
@@ -32,20 +30,23 @@ public class BombermanGame extends Application {
     private GraphicsContext gc;
     private Canvas canvas;
     private List<Entity> entities = new ArrayList<>();
+    Bomber bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
 
     private List<Entity> stillObjects = new ArrayList<>();
     public static char [][] idObjects;
 
+    //handle movement
+    Keyboard keyboard = new Keyboard();
     @Override
     public void start(Stage stage) {
         // Tao Canvas
-        canvas = new Canvas(Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * HEIGHT);
+        canvas = new Canvas(WIDTH, HEIGHT);
         gc = canvas.getGraphicsContext2D();
 
         // Tao root container
         Group root = new Group();
         root.getChildren().add(canvas);
-
+        createMap(System.getProperty("user.dir") + "\\res\\levels\\Level1.txt");
         // Tao scene
         Scene scene = new Scene(root);
 
@@ -54,63 +55,105 @@ public class BombermanGame extends Application {
 
         //Passing FileInputStream object as a parameter
         Image img = new Image("file:res//icon.png");
+
         stage.getIcons().add(img);
 
-        stage.setResizable(false);
+        stage.setResizable(true);
 
-        Bomber bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
-        entities.add(bomberman);
-
-        //handle movement
-        Keyboard keyboard = new Keyboard();
-
-        scene.setOnKeyPressed((e) -> {
-            keyboard.hold(e);
-        });
-        scene.setOnKeyReleased((e) -> {
-            keyboard.release(e);
-        });
+        scene.setOnKeyPressed(e -> keyboard.hold(e));
+        scene.setOnKeyReleased(e -> keyboard.release(e));
 
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long l) {
-                bomberman.update(keyboard);
-                render();
                 update();
+                render();
             }
         };
         timer.start();
-
-        createMap();
 
         stage.setScene(scene);
         stage.show();
     }
 
-    public void createMap() {
-        for (int i = 0; i < WIDTH; i++) {
-            for (int j = 0; j < HEIGHT; j++) {
-                Entity object;
-                if (j == 0 || j == HEIGHT - 1 || i == 0 || i == WIDTH - 1|| i == j) {
-                    object = new Wall(i, j, Sprite.wall.getFxImage());
-                }
+    public void createMap(String path) {
+        try {
+            File file = new File(path);
+            Scanner sc = new Scanner(file);
+            int j = 0;
 
-                else {
-                    object = new Grass(i, j, Sprite.grass.getFxImage());
+            sc.nextLine();
+
+            while(sc.hasNextLine() && j < 13) {
+                String s = sc.nextLine();
+
+                for(int i = 0; i < s.length(); i++) {
+                    Entity object;
+                    if(s.charAt(i) == '#') {
+                        object = new Wall(i, j, Sprite.wall.getFxImage() );
+                    }
+                    else if(s.charAt(i) == '*') {
+                        object = new Brick(i, j, Sprite.brick.getFxImage());
+                    }
+                    else if(s.charAt(i) == 'x') {
+                        stillObjects.add(new Grass(i, j, Sprite.grass.getFxImage()));
+                        object = new Portal(i, j, Sprite.portal.getFxImage());
+                    }
+                    else if(s.charAt(i) == '1') {
+                        stillObjects.add(new Grass(i, j, Sprite.grass.getFxImage()));
+                        object = new Oneal(i, j, Sprite.oneal_right1.getFxImage());
+                    }
+                    else if(s.charAt(i) == '2') {
+                        stillObjects.add(new Grass(i, j, Sprite.grass.getFxImage()));
+                        object = new Ballon(i, j, Sprite.balloom_left1.getFxImage());
+                    }
+
+
+
+                    else {
+                        object = new Grass(i, j, Sprite.grass.getFxImage());
+                    }
+                    stillObjects.add(object);
                 }
-                stillObjects.add(object);
+                j++;
             }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            System.exit(1);
         }
+
+//        for (int i = 0; i < WIDTH; i++) {
+//            for (int j = 0; j < HEIGHT; j++) {
+//                Entity object;
+//                if (j == 0 || j == HEIGHT - 1 || i == 0 || i == WIDTH - 1|| i == j) {
+//                    object = new Wall(i, j, Sprite.wall.getFxImage());
+//                }
+//
+//                else {
+//                    object = new Grass(i, j, Sprite.grass.getFxImage());
+//                }
+//                stillObjects.add(object);
+//            }
+//        }
     }
 
     public void update() {
+        bomberman.update(keyboard);
         entities.forEach(Entity::update);
-        block.forEach(Entity::update);
+        stillObjects.forEach( (Entity e) -> {
+            if (e instanceof Brick && bomberman.intersects(e)) {
+                System.out.println("bomberman hit");
+            }
+        });
+
+        bomberman.update();
+        stillObjects.forEach(Entity::update);
     }
 
     public void render() {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         stillObjects.forEach(g -> g.render(gc));
         entities.forEach(g -> g.render(gc));
+        bomberman.render(gc);
     }
 }
