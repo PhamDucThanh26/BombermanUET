@@ -1,5 +1,6 @@
 package uet.oop.bomberman.entities;
 
+import javafx.geometry.Rectangle2D;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -13,8 +14,8 @@ public abstract class Entity {
 
     //Tọa độ Y tính từ góc trái trên trong Canvas
     protected int y;
-    protected int width;
-    protected int height;
+    protected double width;
+    protected double height;
 
     protected Image img;
 
@@ -23,6 +24,8 @@ public abstract class Entity {
         this.x = xUnit * Sprite.SCALED_SIZE;
         this.y = yUnit * Sprite.SCALED_SIZE;
         this.img = img;
+        width = img.getWidth();
+        height = img.getHeight();
     }
 
     public Image getImg() {
@@ -37,4 +40,12 @@ public abstract class Entity {
         gc.drawImage(img, x, y);
     }
     public abstract void update();
+
+    public Rectangle2D getBoundary() {
+        return new Rectangle2D(x, y, width, height);
+    }
+
+    public boolean intersects(Entity spr) {
+        return spr.getBoundary().intersects(this.getBoundary());
+    }
 }
