@@ -71,8 +71,6 @@ public class Bomber extends Entity {
             xVec += 2;
             this.setImg(rightAnimation[frameCount]);
         }
-        if(a.plant_bomb) {
-        }
     }
 
     private void updateAnimation() {

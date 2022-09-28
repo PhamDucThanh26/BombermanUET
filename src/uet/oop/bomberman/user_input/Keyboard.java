@@ -1,7 +1,5 @@
 package uet.oop.bomberman.user_input;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
 
 import java.awt.*;
