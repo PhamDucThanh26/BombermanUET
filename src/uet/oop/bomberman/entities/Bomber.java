@@ -3,6 +3,10 @@ package uet.oop.bomberman.entities;
 import uet.oop.bomberman.graphics.Sprite;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.user_input.Keyboard;
+import uet.oop.bomberman.entities.Bomb;
+
+import static uet.oop.bomberman.BombermanGame.bomberman;
+import static uet.oop.bomberman.entities.Bomb.putBomb;
 
 public class Bomber extends Entity {
     int xVec = 0;
@@ -102,6 +106,16 @@ public class Bomber extends Entity {
         }
     }
 
+    public void updateMove(Keyboard a) {
+        xVec = 0;
+        yVec = 0;
+        if(a.up) yVec -= 1;
+        if(a.down) yVec += 1;
+        if(a.left) xVec -= 1;
+        if(a.right) xVec += 1;
+        if(a.plant_bomb) {
+            putBomb();
+        }
     @Override
     public boolean intersects(Entity spr) {
         this.stillEntityCollision = super.intersects(spr);

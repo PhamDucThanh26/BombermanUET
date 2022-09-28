@@ -2,7 +2,8 @@ package uet.oop.bomberman.entities;
 
 import javafx.scene.image.Image;
 
-import static uet.oop.bomberman.BombermanGame.block;
+
+import static uet.oop.bomberman.BombermanGame.entities;
 
 public class Brick extends Entity {
     public Brick(int x, int y, Image img) {
@@ -10,7 +11,7 @@ public class Brick extends Entity {
     }
 
     private void checkHidden() {
-        for(Entity entity: block) {
+        for(Entity entity:entities) {
         }
     }
 
