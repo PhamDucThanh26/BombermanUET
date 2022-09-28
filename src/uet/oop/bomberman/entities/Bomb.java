@@ -36,7 +36,7 @@ public class Bomb extends Entity {
         super(xUnit, yUnit, img);
     }
 
-    public static void putBomb() {
+    public static void putBomb(Entity bomberman) {
         if (isBomb == 0 && bombNumber > 0) {
             bombNumber--;
             isBomb = 1;
@@ -50,24 +50,24 @@ public class Bomb extends Entity {
             entities.add(bomb);
         }
     }
-        public static void activeBomb() {
-            if(swapActive == 1) {
-                bomb.setImg(Sprite.bomb.getFxImage());
-                swapActive = 2;
-            }
-            else if(swapActive == 2) {
-                bomb.setImg(Sprite.bomb_1.getFxImage());
-                swapActive = 3;
-            }
-            else if(swapActive == 3) {
-                bomb.setImg(Sprite.bomb_2.getFxImage());
-                swapActive = 3;
-                swapActive = 4;
-            }
-            else {
-                bomb.setImg(Sprite.bomb_1.getFxImage());
-                }
+    public static void activeBomb() {
+        if(swapActive == 1) {
+            bomb.setImg(Sprite.bomb.getFxImage());
+            swapActive = 2;
         }
+        else if(swapActive == 2) {
+            bomb.setImg(Sprite.bomb_1.getFxImage());
+            swapActive = 3;
+        }
+        else if(swapActive == 3) {
+            bomb.setImg(Sprite.bomb_2.getFxImage());
+            swapActive = 3;
+            swapActive = 4;
+        }
+        else {
+            bomb.setImg(Sprite.bomb_1.getFxImage());
+        }
+    }
 
 
     @Override

@@ -26,7 +26,7 @@ public class BombermanGame extends Application {
 
     private GraphicsContext gc;
     private Canvas canvas;
-    private List<Entity> entities = new ArrayList<>();
+    public static List<Entity> entities = new ArrayList<>();
     Bomber bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
 
     private List<Entity> stillObjects = new ArrayList<>();
