@@ -58,19 +58,19 @@ public class Bomber extends Entity {
         xVec = 0;
         yVec = 0;
         if(a.up) {
-            yVec -= 2;
+            yVec -= 1;
             this.setImg(upAnimation[frameCount]);
         }
         if(a.down) {
-            yVec += 2;
+            yVec += 1;
             this.setImg(downAnimation[frameCount]);
         }
         if(a.left) {
-            xVec -= 2;
+            xVec -= 1;
             this.setImg(leftAnimation[frameCount]);
         }
         if(a.right)  {
-            xVec += 2;
+            xVec += 1;
             this.setImg(rightAnimation[frameCount]);
         }
     }

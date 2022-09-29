@@ -71,7 +71,7 @@ public class BombermanGame extends Application {
             }
         });
 
-        AnimationTimer timer = new AnimationTimer() {
+         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long l) {
                 update();
@@ -89,9 +89,7 @@ public class BombermanGame extends Application {
             File file = new File(path);
             Scanner sc = new Scanner(file);
             int j = 0;
-
             sc.nextLine();
-
             while(sc.hasNextLine() && j < 13) {
                 String s = sc.nextLine();
 
@@ -115,13 +113,12 @@ public class BombermanGame extends Application {
                         stillObjects.add(new Grass(i, j, Sprite.grass.getFxImage()));
                         object = new Ballon(i, j, Sprite.balloom_left1.getFxImage());
                     }
-
-
-
                     else {
                         object = new Grass(i, j, Sprite.grass.getFxImage());
                     }
+                    if(object instanceof Grass || object instanceof Brick|| object instanceof Wall)
                     stillObjects.add(object);
+                    else entities.add(object);
                 }
                 j++;
             }

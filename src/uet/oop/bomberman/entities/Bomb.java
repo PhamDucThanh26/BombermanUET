@@ -37,9 +37,9 @@ public class Bomb extends Entity {
     }
 
     public static void putBomb(Entity bomberman) {
-        if (isBomb == 0 && bombNumber > 0) {
+        if (isBomb == 0) {
             bombNumber--;
-            isBomb = 1;
+            //isBomb = 1;
             timeBomb = System.currentTimeMillis();
             timeTmp = timeBomb;
             int x = bomberman.getX() / 32;
@@ -47,27 +47,27 @@ public class Bomb extends Entity {
             x = Math.round(x);
             y = Math.round(y);
             bomb = new Bomb(x, y, Sprite.bomb.getFxImage());
+            activeBomb();
             entities.add(bomb);
+            System.out.println(isBomb+ " " + bombNumber);
         }
     }
     public static void activeBomb() {
-        if(swapActive == 1) {
+        if (swapActive == 1) {
             bomb.setImg(Sprite.bomb.getFxImage());
             swapActive = 2;
-        }
-        else if(swapActive == 2) {
+        } else if (swapActive == 2) {
             bomb.setImg(Sprite.bomb_1.getFxImage());
             swapActive = 3;
-        }
-        else if(swapActive == 3) {
+        } else if (swapActive == 3) {
             bomb.setImg(Sprite.bomb_2.getFxImage());
-            swapActive = 3;
             swapActive = 4;
-        }
-        else {
+        } else {
             bomb.setImg(Sprite.bomb_1.getFxImage());
+            swapActive = 1;
         }
     }
+
 
 
     @Override
