@@ -1,40 +1,35 @@
 package uet.oop.bomberman.entities;
 
+import javafx.geometry.Rectangle2D;
 import uet.oop.bomberman.graphics.Sprite;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.user_input.Keyboard;
-import uet.oop.bomberman.entities.Bomb;
 
-//import static uet.oop.bomberman.BombermanGame.bomberman;
-import static uet.oop.bomberman.BombermanGame.entities;
 import static uet.oop.bomberman.entities.Bomb.putBomb;
 
 public class Bomber extends Entity {
     int xVec = 0;
     int yVec = 0;
-
     final int FPS = 60;
     int frameRate = 0;
     int frameCount = 0;
-    private boolean stillEntityCollision = false;
+    private boolean collision = false;
+    private Rectangle2D solidArea;
     Image[] upAnimation = {
             Sprite.player_up.getFxImage(),
             Sprite.player_up_1.getFxImage(),
             Sprite.player_up_2.getFxImage()
     };
-
     Image[] downAnimation = {
             Sprite.player_down.getFxImage(),
             Sprite.player_down_1.getFxImage(),
             Sprite.player_down_2.getFxImage()
     };
-
     Image[] leftAnimation = {
             Sprite.player_left.getFxImage(),
             Sprite.player_left_1.getFxImage(),
             Sprite.player_left_2.getFxImage()
     };
-
     Image[] rightAnimation = {
             Sprite.player_right.getFxImage(),
             Sprite.player_right_1.getFxImage(),
@@ -43,14 +38,15 @@ public class Bomber extends Entity {
 
     public Bomber(int x, int y, Image img) {
         super( x, y, img);
+        solidArea = new Rectangle2D(x + 2, y + 6, 6, 6);
     }
 
-    public boolean isStillEntityCollision() {
-        return stillEntityCollision;
+    public boolean isCollision() {
+        return collision;
     }
 
-    public void setStillEntityCollision(boolean stillEntityCollision) {
-        this.stillEntityCollision = stillEntityCollision;
+    public void setCollision(boolean collision) {
+        this.collision = collision;
     }
 
     public void update(Keyboard a) {
@@ -82,28 +78,29 @@ public class Bomber extends Entity {
     private void updateAction(Keyboard a) {
         if(a.plant_bomb) {
             putBomb(this);
+            a.plant_bomb = false;
+        }
+        if(a.speed_up) {
+
         }
     }
 
-    private void updateAnimation() {
-        frameRate++;
-        if(FPS / frameRate == 4) {
-            frameRate = 0;
-            frameCount++;
-            frameCount %= 3;
-        }
+    @Override
+    public void update() {
+        move();
+        updateAnimation();
+        updateSolidArea();
     }
 
     private void move() {
-        if(stillEntityCollision) {
+        if(collision) {
             xVec = 0;
             yVec = 0;
-            stillEntityCollision = false;
+            collision = false;
+            return;
         }
         x += xVec;
         y += yVec;
-
-
         if( x + Sprite.wall.getSize() > 1080 ||
                 x <= Sprite.wall.getSize()  ) {
             x -= xVec;
@@ -114,15 +111,24 @@ public class Bomber extends Entity {
         }
     }
 
-    @Override
-    public boolean intersects(Entity spr) {
-        this.stillEntityCollision = super.intersects(spr);
-        return this.stillEntityCollision;
+    // method update sprite animation
+    private void updateAnimation() {
+        frameRate++;
+        if(FPS / frameRate == 4) {
+            frameRate = 0;
+            frameCount++;
+            frameCount %= 3;
+        }
+    }
+
+    private void updateSolidArea() {
+
     }
 
     @Override
-    public void update() {
-        move();
-        updateAnimation();
+    public boolean intersects(Entity spr) {
+        Rectangle2D futureFrame = new Rectangle2D(
+                x + xVec, y + yVec, 26, 32);
+        return futureFrame.intersects(spr.getBoundary());
     }
 }

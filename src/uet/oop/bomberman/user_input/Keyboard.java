@@ -5,7 +5,7 @@ import javafx.scene.input.KeyEvent;
 import java.awt.*;
 
 public class Keyboard {
-    public boolean up, down, left, right, plant_bomb;
+    public boolean up, down, left, right, plant_bomb, speed_up;
     public void hold(KeyEvent event) {
         switch (event.getCode()) {
             case W:

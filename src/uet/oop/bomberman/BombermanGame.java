@@ -124,7 +124,8 @@ public class BombermanGame extends Application {
         bomberman.update(keyboard);
         entities.forEach(Entity::update);
         stillObjects.forEach( (Entity e) -> {
-            if (e instanceof Brick && bomberman.intersects(e)) {
+            if ( !(e instanceof Grass) && bomberman.intersects(e)) {
+                bomberman.setCollision(true);
                 System.out.println("bomberman hit");
             }
         });
