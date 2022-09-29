@@ -40,7 +40,7 @@ public class BombermanGame extends Application {
     Keyboard keyboard = new Keyboard();
     @Override
     public void start(Stage stage) {
-        music();
+//           music();
         // Tao Canvas
         canvas = new Canvas(WIDTH, HEIGHT);
         gc = canvas.getGraphicsContext2D();
@@ -65,11 +65,13 @@ public class BombermanGame extends Application {
         scene.setOnKeyPressed(e -> keyboard.hold(e));
         scene.setOnKeyReleased(e -> keyboard.release(e));
 
-        mediaPlayer.setOnEndOfMedia(new Runnable() {
+        /*mediaPlayer.setOnEndOfMedia(new Runnable() {
             public void run() {
                 mediaPlayer.seek(Duration.ZERO);
             }
         });
+        */
+
 
          AnimationTimer timer = new AnimationTimer() {
             @Override
@@ -137,9 +139,14 @@ public class BombermanGame extends Application {
                 System.out.println("bomberman hit");
             }
         });
-
         bomberman.update();
         stillObjects.forEach(Entity::update);
+        for(int i = 0; i < entities.size(); i++) {
+            if(entities.get(i) instanceof Bomb && ((Bomb) entities.get(i)).flag == true) {
+                entities.remove(entities.get(i));
+                i--;
+            }
+        }
     }
 
     public void render() {
@@ -149,12 +156,12 @@ public class BombermanGame extends Application {
         bomberman.render(gc);
     }
 
-    MediaPlayer mediaPlayer;
-    public void music() {
-        File path = new File(System.getProperty("user.dir") + "\\res\\audio\\Nokia-ringtone-arabic.mp3");
-        Media h = new Media(path.toURI().toString());
-        mediaPlayer = new MediaPlayer(h);
-        mediaPlayer.play();
+    //MediaPlayer mediaPlayer;
+    //public void music() {
+        //File path = new File(System.getProperty("user.dir") + "\\res\\audio\\Nokia-ringtone-arabic.mp3");
+        //Media h = new Media(path.toURI().toString());
+        //mediaPlayer = new MediaPlayer(h);
+        //mediaPlayer.play();
 
-    }
+    //}
 }

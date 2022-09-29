@@ -5,7 +5,7 @@ import uet.oop.bomberman.graphics.Sprite;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.user_input.Keyboard;
 
-import static uet.oop.bomberman.entities.Bomb.putBomb;
+import static uet.oop.bomberman.BombermanGame.entities;
 
 public class Bomber extends Entity {
     int xVec = 0;
@@ -74,10 +74,18 @@ public class Bomber extends Entity {
             this.setImg(rightAnimation[frameCount]);
         }
     }
+    public void putBomb() {
+            int xpos = x / 32;
+            int ypos = y / 32 + 1;
+            xpos = Math.round(xpos);
+            ypos = Math.round(ypos);
+            Bomb bomb = new Bomb(xpos, ypos, Sprite.bomb.getFxImage());
+            entities.add(bomb);
+        }
 
     private void updateAction(Keyboard a) {
         if(a.plant_bomb) {
-            putBomb(this);
+            this.putBomb();
             a.plant_bomb = false;
         }
         if(a.speed_up) {
