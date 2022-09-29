@@ -7,7 +7,11 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import uet.oop.bomberman.entities.*;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.user_input.Keyboard;
@@ -36,6 +40,7 @@ public class BombermanGame extends Application {
     Keyboard keyboard = new Keyboard();
     @Override
     public void start(Stage stage) {
+        music();
         // Tao Canvas
         canvas = new Canvas(WIDTH, HEIGHT);
         gc = canvas.getGraphicsContext2D();
@@ -59,6 +64,12 @@ public class BombermanGame extends Application {
 
         scene.setOnKeyPressed(e -> keyboard.hold(e));
         scene.setOnKeyReleased(e -> keyboard.release(e));
+
+        mediaPlayer.setOnEndOfMedia(new Runnable() {
+            public void run() {
+                mediaPlayer.seek(Duration.ZERO);
+            }
+        });
 
         AnimationTimer timer = new AnimationTimer() {
             @Override
@@ -139,5 +150,14 @@ public class BombermanGame extends Application {
         stillObjects.forEach(g -> g.render(gc));
         entities.forEach(g -> g.render(gc));
         bomberman.render(gc);
+    }
+
+    MediaPlayer mediaPlayer;
+    public void music() {
+        File path = new File(System.getProperty("user.dir") + "\\res\\audio\\Nokia-ringtone-arabic.mp3");
+        Media h = new Media(path.toURI().toString());
+        mediaPlayer = new MediaPlayer(h);
+        mediaPlayer.play();
+
     }
 }

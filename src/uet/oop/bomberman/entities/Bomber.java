@@ -128,7 +128,7 @@ public class Bomber extends Entity {
     @Override
     public boolean intersects(Entity spr) {
         Rectangle2D futureFrame = new Rectangle2D(
-                x + xVec, y + yVec, 26, 32);
+                x + xVec, y + 2 + yVec, 24, 28);
         return futureFrame.intersects(spr.getBoundary());
     }
 }
