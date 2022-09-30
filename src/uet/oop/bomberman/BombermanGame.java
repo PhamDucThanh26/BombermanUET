@@ -31,10 +31,11 @@ public class BombermanGame extends Application {
     private GraphicsContext gc;
     private Canvas canvas;
     public static List<Entity> entities = new ArrayList<>();
-    Bomber bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
+    public static Bomber bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
 
     private List<Entity> stillObjects = new ArrayList<>();
-    public static char [][] idObjects;
+    public static int [][] idObjects;
+    public static int[][] list_kill;
 
     //handle movement
     Keyboard keyboard = new Keyboard();

@@ -26,7 +26,7 @@ public class CreateMap {
             //_heightMap = Integer.parseInt(tokens.nextToken());
             //_widthMap = Integer.parseInt(tokens.nextToken());
             while(sc.hasNextLine()) {
-                idObjects = new char[WIDTH][HEIGHT];
+                idObjects = new int[WIDTH][HEIGHT];
                 //listkill = new int[_widthMap][_heightMap]
                 for(int i = 0; i < HEIGHT; i++) {
                     String lineTile = sc.nextLine();
