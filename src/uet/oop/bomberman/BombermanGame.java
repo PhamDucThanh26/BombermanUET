@@ -34,8 +34,7 @@ public class BombermanGame extends Application {
     public static Bomber bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
 
     private List<Entity> stillObjects = new ArrayList<>();
-    public static int [][] idObjects;
-    public static int[][] list_kill;
+
 
     //handle movement
     Keyboard keyboard = new Keyboard();
@@ -143,7 +142,8 @@ public class BombermanGame extends Application {
         bomberman.update();
         stillObjects.forEach(Entity::update);
         for(int i = 0; i < entities.size(); i++) {
-            if(entities.get(i) instanceof Bomb && ((Bomb) entities.get(i)).flag == true) {
+            if((entities.get(i) instanceof Bomb && ((Bomb) entities.get(i)).flag == true)
+                    ||(entities.get(i) instanceof Flame && ((Flame) entities.get(i)).flag == true)) {
                 entities.remove(entities.get(i));
                 i--;
             }

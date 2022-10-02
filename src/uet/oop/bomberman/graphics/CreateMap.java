@@ -26,7 +26,7 @@ public class CreateMap {
             //_heightMap = Integer.parseInt(tokens.nextToken());
             //_widthMap = Integer.parseInt(tokens.nextToken());
             while(sc.hasNextLine()) {
-                idObjects = new int[WIDTH][HEIGHT];
+//                idObjects = new int[WIDTH][HEIGHT];
                 //listkill = new int[_widthMap][_heightMap]
                 for(int i = 0; i < HEIGHT; i++) {
                     String lineTile = sc.nextLine();
@@ -49,7 +49,7 @@ public class CreateMap {
                                 entity = new Grass(j, i, Sprite.grass.getFxImage());
 
                         }
-                        idObjects[j][i] = c;
+//                        idObjects[j][i] = c;
                         // entities.add(entity);
                     }
                 }

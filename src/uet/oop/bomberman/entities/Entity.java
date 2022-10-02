@@ -6,10 +6,11 @@ import javafx.scene.image.Image;
 import uet.oop.bomberman.graphics.Sprite;
 
 public abstract class Entity {
+    Entity(){}
     //Tọa độ X tính từ góc trái trên trong Canvas
     protected int x;
 
-    protected boolean flag = false;
+
     //Tọa độ Y tính từ góc trái trên trong Canvas
     protected int y;
     protected double width;

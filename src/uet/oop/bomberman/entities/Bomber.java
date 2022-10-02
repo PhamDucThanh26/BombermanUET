@@ -80,8 +80,13 @@ public class Bomber extends Entity {
             xpos = Math.round(xpos);
             ypos = Math.round(ypos);
             Bomb bomb = new Bomb(xpos, ypos, Sprite.bomb.getFxImage());
+
+
             entities.add(bomb);
+
+
         }
+
 
     private void updateAction(Keyboard a) {
         if(a.plant_bomb) {
