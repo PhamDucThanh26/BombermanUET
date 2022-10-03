@@ -16,6 +16,8 @@ public abstract class Entity {
     protected double width;
     protected double height;
 
+    protected boolean flag = false;
+
     protected Image img;
 
     //Khởi tạo đối tượng, chuyển từ tọa độ đơn vị sang tọa độ trong canvas
@@ -49,6 +51,14 @@ public abstract class Entity {
 
     public void setImg(Image img) {
         this.img = img;
+    }
+
+    public boolean isFlag() {
+        return flag;
+    }
+
+    public void setFlag(boolean flag) {
+        this.flag = flag;
     }
 
     public void render(GraphicsContext gc) {

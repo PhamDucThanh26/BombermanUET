@@ -7,7 +7,6 @@ import static uet.oop.bomberman.BombermanGame.bomberman;
 import static uet.oop.bomberman.BombermanGame.entities;
 
 public class Flame extends Entity {
-    public boolean flag = false;
     public Flame() {
         x = 0;
         y = 0;

@@ -1,98 +1,64 @@
 package uet.oop.bomberman.entities;
 
+import javafx.animation.AnimationTimer;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.graphics.Sprite;
 
-import java.awt.*;
-import java.sql.Time;
-import java.util.ArrayList;
-import java.util.List;
-
-import static uet.oop.bomberman.BombermanGame.*;
-
-public class Bomb extends Entity {
-
-    private Flame flameLeft = new Flame();
-    private Flame flameRight = new Flame();
-    private Flame flameUp = new Flame();
-    private Flame flameDown = new Flame();
-    public static int bombPower = 1;
-    public Bomb(int xUnit, int yUnit, Image img) {
-        super(xUnit, yUnit, img);
-    }
+public class Bomb extends Creature {
     public boolean flag = false;
-    private final int FPS = 60;
-    private int frameRate = 0;
     private int frameCount = 0;
-
     static final Image[] activeBom = {
             Sprite.bomb_1.getFxImage(),
             Sprite.bomb_2.getFxImage(),
+    };
+    static final Image[] bombExplode = {
             Sprite.bomb_exploded.getFxImage(),
             Sprite.bomb_exploded1.getFxImage(),
             Sprite.bomb_exploded2.getFxImage(),
     };
-    static final Image[] bombExplode = {
-
-    };
     private int lifeSpan = 0;
-    public int getFrameCount() {
-        return this.frameCount;
+    private long timeBomb;
+    public static int bombNumber = 20;
+    public static int isBomb = 0;
+    public Bomb(int xUnit, int yUnit, Image img) {
+        super(xUnit, yUnit, img);
     }
     private void updateActiveAnimation() {
-        frameRate++;
-        if (FPS / frameRate == 1) {
-            frameRate = 0;
-            frameCount++;
-            frameCount = frameCount % 5;
-            lifeSpan++;
-            System.out.println(lifeSpan);
+        long now = System.currentTimeMillis();
 
+        if( (startTime - now) % 200 == 0) {
+            frameCount++;
+            frameCount = frameCount % 2;
         }
-        if (lifeSpan == 10) {
+        if(lifeSpan == 20) {
+            ExplosionBomb();
+        }
+        if(lifeSpan == 24) {
             flag = true;
         }
 
     }
 
-        public void activeBomb() {
-            System.out.println("Bomb location:" + this.getX() + " " + this.getY());
-        new Thread(() -> {
-            try {
-                Thread.sleep(1000);
-                this.setImg(activeBom[frameCount]);
-                if(lifeSpan > 6) {
-                    flameLeft.addFrameLeft(this);
-                    flameUp.addFrameUp(this);
-                    flameDown.addFrameDown(this);
-                    flameRight.addFrameRight(this);
-                }
-            }
-            catch(Exception e) {
-                e.printStackTrace();
-            }
-        } ).start();
+    public void activeBomb() {
+        this.setImg(activeBom[frameCount]);
     }
-//    public void explosionBomb() {
-//
-//        if(lifeSpan > 6) {
-//            int x = bomberman.getX() / 32;
-//            int y = bomberman.getY() / 32 - 1;
-//            upFlame = new Bomb(x , y , Sprite.explosion_vertical.getFxImage());
-//
-//            System.out.println("Toa do x va y UpFlame : " + upFlame.getX() + " " +  upFlame.getY());
-////            entities.add(upFlame);
-//
-//        }
-//    }
+    public void ExplosionBomb() {
+        long liveTime = System.currentTimeMillis() - startTime;
+        if(liveTime > 2500) {
+            this.flag = true;
+        }
+        else if(liveTime > 2000) {
+            this.setImg(bombExplode[0]);
+            System.out.println("explode");
+        }
+    }
+
 
 
     @Override
     public void update() {
         updateActiveAnimation();
         activeBomb();
-//        explosionBomb();
-//
-
+        ExplosionBomb();
     }
 }

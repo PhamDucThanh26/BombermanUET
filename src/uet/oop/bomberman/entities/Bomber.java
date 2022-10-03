@@ -7,30 +7,24 @@ import uet.oop.bomberman.user_input.Keyboard;
 
 import static uet.oop.bomberman.BombermanGame.entities;
 
-public class Bomber extends Entity {
-    int xVec = 0;
-    int yVec = 0;
-    final int FPS = 60;
-    int frameRate = 0;
+public final class Bomber extends Creature {
     int frameCount = 0;
-    private boolean collision = false;
-    private Rectangle2D solidArea;
-    Image[] upAnimation = {
+    final Image[] upAnimation = {
             Sprite.player_up.getFxImage(),
             Sprite.player_up_1.getFxImage(),
             Sprite.player_up_2.getFxImage()
     };
-    Image[] downAnimation = {
+    final Image[] downAnimation = {
             Sprite.player_down.getFxImage(),
             Sprite.player_down_1.getFxImage(),
             Sprite.player_down_2.getFxImage()
     };
-    Image[] leftAnimation = {
+    final Image[] leftAnimation = {
             Sprite.player_left.getFxImage(),
             Sprite.player_left_1.getFxImage(),
             Sprite.player_left_2.getFxImage()
     };
-    Image[] rightAnimation = {
+    final Image[] rightAnimation = {
             Sprite.player_right.getFxImage(),
             Sprite.player_right_1.getFxImage(),
             Sprite.player_right_2.getFxImage()
@@ -41,18 +35,12 @@ public class Bomber extends Entity {
         solidArea = new Rectangle2D(x + 2, y + 6, 6, 6);
     }
 
-    public boolean isCollision() {
-        return collision;
-    }
-
-    public void setCollision(boolean collision) {
-        this.collision = collision;
-    }
-
     public void update(Keyboard a) {
         updateMove(a);
         updateAction(a);
     }
+
+
 
     public void updateMove(Keyboard a) {
         xVec = 0;
@@ -80,11 +68,7 @@ public class Bomber extends Entity {
             xpos = Math.round(xpos);
             ypos = Math.round(ypos);
             Bomb bomb = new Bomb(xpos, ypos, Sprite.bomb.getFxImage());
-
-
             entities.add(bomb);
-
-
         }
 
 
@@ -105,7 +89,8 @@ public class Bomber extends Entity {
         updateSolidArea();
     }
 
-    private void move() {
+    @Override
+    protected void move() {
         if(collision) {
             xVec = 0;
             yVec = 0;
@@ -126,9 +111,8 @@ public class Bomber extends Entity {
 
     // method update sprite animation
     private void updateAnimation() {
-        frameRate++;
-        if(FPS / frameRate == 4) {
-            frameRate = 0;
+        long frame = getFrame();
+        if(frame % 15 == 0) {
             frameCount++;
             frameCount %= 3;
         }

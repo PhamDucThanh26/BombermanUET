@@ -8,10 +8,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 import uet.oop.bomberman.entities.*;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.user_input.Keyboard;
@@ -113,7 +110,7 @@ public class BombermanGame extends Application {
                     }
                     else if(s.charAt(i) == '2') {
                         stillObjects.add(new Grass(i, j, Sprite.grass.getFxImage()));
-                        object = new Ballon(i, j, Sprite.balloom_left1.getFxImage());
+                        object = new Balloom(i, j, Sprite.balloom_left1.getFxImage());
                     }
                     else {
                         object = new Grass(i, j, Sprite.grass.getFxImage());
@@ -143,7 +140,7 @@ public class BombermanGame extends Application {
         stillObjects.forEach(Entity::update);
         for(int i = 0; i < entities.size(); i++) {
             if((entities.get(i) instanceof Bomb && ((Bomb) entities.get(i)).flag == true)
-                    ||(entities.get(i) instanceof Flame && ((Flame) entities.get(i)).flag == true)) {
+                    ||( entities.get(i) instanceof Flame && ((Flame) entities.get(i)).isFlag()) ) {
                 entities.remove(entities.get(i));
                 i--;
             }
