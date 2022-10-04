@@ -45,6 +45,8 @@ public abstract class Entity {
         this.y = y;
     }
 
+
+
     public Image getImg() {
         return img;
     }

@@ -19,13 +19,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+
+
 public class BombermanGame extends Application {
     public static final int WIDTH = 1080;
     public static final int HEIGHT = 720;
 
     public static final List<Entity> block = new ArrayList<>();
 
-    private GraphicsContext gc;
+    public static GraphicsContext gc;
     private Canvas canvas;
     public static List<Entity> entities = new ArrayList<>();
     public static Bomber bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
@@ -139,8 +141,8 @@ public class BombermanGame extends Application {
         bomberman.update();
         stillObjects.forEach(Entity::update);
         for(int i = 0; i < entities.size(); i++) {
-            if((entities.get(i) instanceof Bomb && ((Bomb) entities.get(i)).flag == true)
-                    ||( entities.get(i) instanceof Flame && ((Flame) entities.get(i)).isFlag()) ) {
+            if((entities.get(i) instanceof Bomb && ((Bomb) entities.get(i)).isFlag() == true)
+                    ||entities.get(i).isFlag() == true ) {
                 entities.remove(entities.get(i));
                 i--;
             }
@@ -151,6 +153,14 @@ public class BombermanGame extends Application {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         stillObjects.forEach(g -> g.render(gc));
         entities.forEach(g -> g.render(gc));
+        entities.forEach( (Entity e) -> {
+            if (e instanceof Bomb && ((Bomb)e).isExploded == true) {
+                 ((Bomb) e).getFlameLeft().render(gc);
+                ((Bomb) e).getFlameRight().render(gc);
+                ((Bomb) e).getFlameUp().render(gc);
+                ((Bomb) e).getFlameDown().render(gc);
+            }
+        });
         bomberman.render(gc);
     }
 

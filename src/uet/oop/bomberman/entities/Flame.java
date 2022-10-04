@@ -7,11 +7,22 @@ import static uet.oop.bomberman.BombermanGame.bomberman;
 import static uet.oop.bomberman.BombermanGame.entities;
 
 public class Flame extends Entity {
+
+    public static boolean isActive = false;
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
     public Flame() {
         x = 0;
         y = 0;
         img = null;
-
+        this.flag = false;
     }
 
     public Flame(int xUnit, int yUnit, Image img) {
@@ -19,54 +30,50 @@ public class Flame extends Entity {
     }
 
     public void addFrameLeft(Bomb bomb) {
-
-        int x = bomb.getX() / 32 - 1;
-        int y = bomb.getY() / 32 ;
-        this.setImg(Sprite.explosion_horizontal_left_last.getFxImage());
-        System.out.println(x + " " + y);
-        this.setX(x * 32);
-        this.setY(y * 32);
-        entities.add(this);
-        if(bomb.flag == true) this.flag = true;
+            int x = bomb.getX() / 32 - 1;
+            int y = bomb.getY() / 32;
+            this.setImg(Sprite.explosion_horizontal_left_last.getFxImage());
+            System.out.println(x + " " + y);
+            this.setX(x * 32);
+            this.setY(y * 32);
+            if (bomb.flag == true) {
+                this.flag = true;
+            }
     }
 
     public void addFrameRight(Bomb bomb) {
 
-        int x = bomb.getX() / 32 + 1;
-        int y = bomb.getY() / 32 ;
-        this.setImg(Sprite.explosion_horizontal_right_last.getFxImage());
-        System.out.println(x + " " + y);
-        this.setX(x * 32);
-        this.setY(y * 32);
-        entities.add(this);
+            int x = bomb.getX() / 32 + 1;
+            int y = bomb.getY() / 32;
+            this.setImg(Sprite.explosion_horizontal_right_last.getFxImage());
+            this.setX(x * 32);
+            this.setY(y * 32);
+
         if(bomb.flag == true) this.flag = true;
     }
     public void addFrameUp(Bomb bomb) {
 
-        int x = bomb.getX() / 32;
-        int y = bomb.getY() / 32 - 1 ;
-        this.setImg(Sprite.explosion_vertical_top_last.getFxImage());
-        System.out.println(x + " " + y);
-        this.setX(x * 32);
-        this.setY(y * 32);
-        entities.add(this);
-        if(bomb.flag == true) this.flag = true;
+            int x = bomb.getX() / 32;
+            int y = bomb.getY() / 32 - 1;
+            this.setImg(Sprite.explosion_vertical_top_last.getFxImage());
+            this.setX(x * 32);
+            this.setY(y * 32);
+
+            if (bomb.flag == true) this.flag = true;
     }
 
     public void addFrameDown(Bomb bomb) {
 
-        int x = bomb.getX() / 32;
-        int y = bomb.getY() / 32 + 1 ;
-        this.setImg(Sprite.explosion_vertical_down_last.getFxImage());
-        System.out.println(x + " " + y);
-        this.setX(x * 32);
-        this.setY(y * 32);
-        entities.add(this);
+            int x = bomb.getX() / 32;
+            int y = bomb.getY() / 32 + 1;
+            this.setImg(Sprite.explosion_vertical_down_last.getFxImage());
+            this.setX(x * 32);
+            this.setY(y * 32);
+
         if(bomb.flag == true) this.flag = true;
 
     }
     @Override
     public void update() {
-
     }
 }

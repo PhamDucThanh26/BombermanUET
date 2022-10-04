@@ -6,8 +6,10 @@ import javafx.scene.image.Image;
 import uet.oop.bomberman.user_input.Keyboard;
 
 import static uet.oop.bomberman.BombermanGame.entities;
-
 public final class Bomber extends Creature {
+
+
+    private Bomb bomb;
     int frameCount = 0;
     final Image[] upAnimation = {
             Sprite.player_up.getFxImage(),
@@ -29,19 +31,14 @@ public final class Bomber extends Creature {
             Sprite.player_right_1.getFxImage(),
             Sprite.player_right_2.getFxImage()
     };
-
     public Bomber(int x, int y, Image img) {
         super( x, y, img);
         solidArea = new Rectangle2D(x + 2, y + 6, 6, 6);
     }
-
     public void update(Keyboard a) {
         updateMove(a);
         updateAction(a);
     }
-
-
-
     public void updateMove(Keyboard a) {
         xVec = 0;
         yVec = 0;
@@ -63,15 +60,14 @@ public final class Bomber extends Creature {
         }
     }
     public void putBomb() {
-            int xpos = x / 32;
-            int ypos = y / 32 + 1;
-            xpos = Math.round(xpos);
-            ypos = Math.round(ypos);
-            Bomb bomb = new Bomb(xpos, ypos, Sprite.bomb.getFxImage());
-            entities.add(bomb);
-        }
-
-
+        int xpos = x / 32;
+        double ypos = (double)y / 32;
+        xpos = Math.round(xpos);
+        ypos = Math.round(ypos);
+        bomb = new Bomb(xpos, (int)ypos, Sprite.bomb.getFxImage());
+//        bomb.ExplosionBomb();
+        entities.add(bomb);
+    }
     private void updateAction(Keyboard a) {
         if(a.plant_bomb) {
             this.putBomb();
@@ -99,12 +95,12 @@ public final class Bomber extends Creature {
         }
         x += xVec;
         y += yVec;
-        if( x + Sprite.wall.getSize() > 1080 ||
-                x <= Sprite.wall.getSize()  ) {
+        if( x + Sprite.wall.getSize() > 1080
+        ||x <= Sprite.wall.getSize()  ) {
             x -= xVec;
         }
-        if( y + Sprite.wall.getSize() > 720 ||
-                y <= Sprite.wall.getSize() ) {
+        if( y + Sprite.wall.getSize() > 720
+        ||y <= Sprite.wall.getSize() ) {
             y -= yVec;
         }
     }
@@ -121,7 +117,6 @@ public final class Bomber extends Creature {
     private void updateSolidArea() {
 
     }
-
     @Override
     public boolean intersects(Entity spr) {
         Rectangle2D futureFrame = new Rectangle2D(

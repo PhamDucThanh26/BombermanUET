@@ -4,9 +4,20 @@ import javafx.animation.AnimationTimer;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.graphics.Sprite;
 
+import static uet.oop.bomberman.BombermanGame.entities;
+import static uet.oop.bomberman.BombermanGame.gc;
+import static uet.oop.bomberman.entities.Flame.isActive;
+
 public class Bomb extends Creature {
-    public boolean flag = false;
+    private Flame flameLeft = new Flame();
+
+    public static int bombPower = 1;
+    private Flame flameRight = new Flame();
+    private Flame flameUp = new Flame();
+    private Flame flameDown = new Flame();
+    public boolean isExploded = false;
     private int frameCount = 0;
+
     static final Image[] activeBom = {
             Sprite.bomb_1.getFxImage(),
             Sprite.bomb_2.getFxImage(),
@@ -16,8 +27,41 @@ public class Bomb extends Creature {
             Sprite.bomb_exploded1.getFxImage(),
             Sprite.bomb_exploded2.getFxImage(),
     };
+
+    public Flame getFlameLeft() {
+        return flameLeft;
+    }
+
+    public void setFlameLeft(Flame flameLeft) {
+        this.flameLeft = flameLeft;
+    }
+
+    public Flame getFlameRight() {
+        return flameRight;
+    }
+
+    public void setFlameRight(Flame flameRight) {
+        this.flameRight = flameRight;
+    }
+
+    public Flame getFlameUp() {
+        return flameUp;
+    }
+
+    public void setFlameUp(Flame flameUp) {
+        this.flameUp = flameUp;
+    }
+
+    public Flame getFlameDown() {
+        return flameDown;
+    }
+
+    public void setFlameDown(Flame flameDown) {
+        this.flameDown = flameDown;
+    }
+
     private int lifeSpan = 0;
-    private long timeBomb;
+
     public static int bombNumber = 20;
     public static int isBomb = 0;
     public Bomb(int xUnit, int yUnit, Image img) {
@@ -31,12 +75,12 @@ public class Bomb extends Creature {
             frameCount = frameCount % 2;
         }
         if(lifeSpan == 20) {
+            isExploded = true;
             ExplosionBomb();
         }
-        if(lifeSpan == 24) {
+        if(lifeSpan == 30) {
             flag = true;
         }
-
     }
 
     public void activeBomb() {
@@ -49,11 +93,13 @@ public class Bomb extends Creature {
         }
         else if(liveTime > 2000) {
             this.setImg(bombExplode[0]);
-            System.out.println("explode");
+            this.isExploded = true;
+            flameLeft.addFrameLeft(this);
+            flameRight.addFrameRight(this);
+            flameDown.addFrameDown(this);
+            flameUp.addFrameUp(this);
         }
     }
-
-
 
     @Override
     public void update() {
