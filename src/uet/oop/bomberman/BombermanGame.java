@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import static uet.oop.bomberman.graphics.CreateMap.createMap;
 
 
 public class BombermanGame extends Application {
@@ -38,6 +39,14 @@ public class BombermanGame extends Application {
 
     public static List<Entity> stillObjects = new ArrayList<>();
 
+    public static int objectStill[][];
+
+    public static int listKill[][];
+
+    public static int heightMap;
+    public static int widthMap;
+    public static int level;
+
 
     //handle movement
     Keyboard keyboard = new Keyboard();
@@ -51,7 +60,7 @@ public class BombermanGame extends Application {
         // Tao root container
         Group root = new Group();
         root.getChildren().add(canvas);
-        createMap(System.getProperty("user.dir") + "\\res\\levels\\Level1.txt");
+        createMap(System.getProperty("user.dir") + "\\res\\levels\\Level0.txt");
         // Tao scene
         Scene scene = new Scene(root);
 
@@ -88,51 +97,6 @@ public class BombermanGame extends Application {
         stage.setScene(scene);
         stage.show();
     }
-
-    public void createMap(String path) {
-        try {
-            File file = new File(path);
-            Scanner sc = new Scanner(file);
-            int j = 0;
-            sc.nextLine();
-            while(sc.hasNextLine() && j < 13) {
-                String s = sc.nextLine();
-
-                for(int i = 0; i < s.length(); i++) {
-                    Entity object;
-                    if(s.charAt(i) == '#') {
-                        object = new Wall(i, j, Sprite.wall.getFxImage() );
-                    }
-                    else if(s.charAt(i) == '*') {
-                        object = new Brick(i, j, Sprite.brick.getFxImage());
-                    }
-                    else if(s.charAt(i) == 'x') {
-                        stillObjects.add(new Grass(i, j, Sprite.grass.getFxImage()));
-                        object = new Portal(i, j, Sprite.portal.getFxImage());
-                    }
-                    else if(s.charAt(i) == '1') {
-                        stillObjects.add(new Grass(i, j, Sprite.grass.getFxImage()));
-                        object = new Oneal(i, j, Sprite.oneal_right1.getFxImage());
-                    }
-                    else if(s.charAt(i) == '2') {
-                        stillObjects.add(new Grass(i, j, Sprite.grass.getFxImage()));
-                        object = new Balloom(i, j, Sprite.balloom_left1.getFxImage());
-                    }
-                    else {
-                        object = new Grass(i, j, Sprite.grass.getFxImage());
-                    }
-                    if(object instanceof Grass || object instanceof Brick|| object instanceof Wall)
-                    stillObjects.add(object);
-                    else entities.add(object);
-                }
-                j++;
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            System.exit(1);
-        }
-    }
-
     public void update() {
         bomberman.update(keyboard);
         entities.forEach(Entity::update);

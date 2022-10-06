@@ -1,7 +1,5 @@
 package uet.oop.bomberman.entities;
 
-import javafx.animation.AnimationTimer;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.graphics.Sprite;
 
@@ -9,12 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static uet.oop.bomberman.BombermanGame.*;
-import static uet.oop.bomberman.entities.Flame.isActive;
+
 
 public class Bomb extends Creature {
-
-
-    private Flame flameLeft = new Flame();
 
     private List<Flame> leftFlame = new ArrayList<>();
 
@@ -34,9 +29,6 @@ public class Bomb extends Creature {
     private List<Flame> upFlame = new ArrayList<>();
     private List<Flame> downFlame = new ArrayList<>();
     public static int bombPower = 2;
-    private Flame flameRight = new Flame();
-    private Flame flameUp = new Flame();
-    private Flame flameDown = new Flame();
     public boolean isExploded = false;
     private int frameCount = 0;
 
@@ -55,42 +47,7 @@ public class Bomb extends Creature {
     public List<Flame> getLeftFlame() {
         return leftFlame;
     }
-
-    public Flame getFlameLeft() {
-        return flameLeft;
-    }
-
-    public void setFlameLeft(Flame flameLeft) {
-        this.flameLeft = flameLeft;
-    }
-
-    public Flame getFlameRight() {
-        return flameRight;
-    }
-
-    public void setFlameRight(Flame flameRight) {
-        this.flameRight = flameRight;
-    }
-
-    public Flame getFlameUp() {
-        return flameUp;
-    }
-
-    public void setFlameUp(Flame flameUp) {
-        this.flameUp = flameUp;
-    }
-
-    public Flame getFlameDown() {
-        return flameDown;
-    }
-
-    public void setFlameDown(Flame flameDown) {
-        this.flameDown = flameDown;
-    }
-
     private int lifeSpan = 0;
-    public static int isBomb = 0;
-
     public Bomb(int xUnit, int yUnit, Image img) {
         super(xUnit, yUnit, img);
         for (int i = 0; i < bombPower - 1; i++) {
@@ -133,7 +90,6 @@ public class Bomb extends Creature {
         } else if (liveTime > 2000) {
             this.setImg(bombExplode[0]);
             this.isExploded = true;
-
             leftFlame.forEach((Flame g) -> {
                 g.checkFrame(this);
             });
@@ -157,7 +113,9 @@ public class Bomb extends Creature {
                     && (stillObjects.get(i) instanceof Wall || stillObjects.get(i) instanceof Brick)) {
 
                 int k = this.getX() - stillObjects.get(i).getX();
-
+                if(stillObjects.get(i) instanceof Brick){
+                    k++;
+                }
                 if( k > 0 && k < result) {
                     result = k;
                 }
@@ -165,7 +123,13 @@ public class Bomb extends Creature {
         }
         return result / 32;
     }
+    public void checkBrick() {
 
+    }
+
+    public void destroyBrick() {
+
+    }
     private int findRight() {
         int result = Integer.MIN_VALUE;
         for(int i = 0; i < stillObjects.size(); i++) {
@@ -252,9 +216,6 @@ public class Bomb extends Creature {
         updateFlameRight();
         updateFlameUp();
         updateFlameDown();
-
-
-
     }
 
 
