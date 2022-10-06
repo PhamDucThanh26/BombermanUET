@@ -8,7 +8,11 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
+
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import uet.oop.bomberman.entities.*;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.user_input.Keyboard;
@@ -32,7 +36,7 @@ public class BombermanGame extends Application {
     public static List<Entity> entities = new ArrayList<>();
     public static Bomber bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
 
-    private List<Entity> stillObjects = new ArrayList<>();
+    public static List<Entity> stillObjects = new ArrayList<>();
 
 
     //handle movement
@@ -64,12 +68,12 @@ public class BombermanGame extends Application {
         scene.setOnKeyPressed(e -> keyboard.hold(e));
         scene.setOnKeyReleased(e -> keyboard.release(e));
 
-        /*mediaPlayer.setOnEndOfMedia(new Runnable() {
-            public void run() {
-                mediaPlayer.seek(Duration.ZERO);
-            }
-        });
-        */
+//        mediaPlayer.setOnEndOfMedia(new Runnable() {
+//            public void run() {
+//                mediaPlayer.seek(Duration.ZERO);
+//            }
+//        });
+
 
 
          AnimationTimer timer = new AnimationTimer() {
@@ -144,6 +148,7 @@ public class BombermanGame extends Application {
             if((entities.get(i) instanceof Bomb && ((Bomb) entities.get(i)).isFlag() == true)
                     ||entities.get(i).isFlag() == true ) {
                 entities.remove(entities.get(i));
+                bomberman.bombNumber++;
                 i--;
             }
         }
@@ -155,21 +160,21 @@ public class BombermanGame extends Application {
         entities.forEach(g -> g.render(gc));
         entities.forEach( (Entity e) -> {
             if (e instanceof Bomb && ((Bomb)e).isExploded == true) {
-                 ((Bomb) e).getFlameLeft().render(gc);
-                ((Bomb) e).getFlameRight().render(gc);
-                ((Bomb) e).getFlameUp().render(gc);
-                ((Bomb) e).getFlameDown().render(gc);
+                 ((Bomb) e).getLeftFlame().forEach((Flame g) ->g.render(gc));
+                ((Bomb) e).getRightFlame().forEach((Flame g) ->g.render(gc));
+                ((Bomb) e).getUpFlame().forEach((Flame g) ->g.render(gc));
+                ((Bomb) e).getDownFlame().forEach((Flame g) ->g.render(gc));
             }
         });
         bomberman.render(gc);
     }
 
-    //MediaPlayer mediaPlayer;
-    //public void music() {
-        //File path = new File(System.getProperty("user.dir") + "\\res\\audio\\Nokia-ringtone-arabic.mp3");
-        //Media h = new Media(path.toURI().toString());
-        //mediaPlayer = new MediaPlayer(h);
-        //mediaPlayer.play();
-
-    //}
+    MediaPlayer mediaPlayer;
+//    public void music() {
+//        File path = new File(System.getProperty("user.dir") + "\\res\\audio\\Nokia-ringtone-arabic.mp3");
+//        Media h = new Media(path.toURI().toString());
+//        mediaPlayer = new MediaPlayer(h);
+//        mediaPlayer.play();
+//
+//    }
 }

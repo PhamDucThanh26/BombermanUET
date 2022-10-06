@@ -3,8 +3,9 @@ package uet.oop.bomberman.entities;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.graphics.Sprite;
 
-import static uet.oop.bomberman.BombermanGame.bomberman;
-import static uet.oop.bomberman.BombermanGame.entities;
+import java.util.List;
+
+import static uet.oop.bomberman.BombermanGame.*;
 
 public class Flame extends Entity {
 
@@ -28,52 +29,24 @@ public class Flame extends Entity {
     public Flame(int xUnit, int yUnit, Image img) {
         super(xUnit, yUnit, img);
     }
+    public void checkFrame(Bomb bomb) {
+        for(int i = 0; i < stillObjects.size(); i++) {
+            if(this.intersects(stillObjects.get(i))){
 
-    public void addFrameLeft(Bomb bomb) {
-            int x = bomb.getX() / 32 - 1;
-            int y = bomb.getY() / 32;
-            this.setImg(Sprite.explosion_horizontal_left_last.getFxImage());
-            System.out.println(x + " " + y);
-            this.setX(x * 32);
-            this.setY(y * 32);
-            if (bomb.flag == true) {
-                this.flag = true;
             }
-    }
-
-    public void addFrameRight(Bomb bomb) {
-
-            int x = bomb.getX() / 32 + 1;
-            int y = bomb.getY() / 32;
-            this.setImg(Sprite.explosion_horizontal_right_last.getFxImage());
-            this.setX(x * 32);
-            this.setY(y * 32);
-
+        }
         if(bomb.flag == true) this.flag = true;
     }
-    public void addFrameUp(Bomb bomb) {
 
-            int x = bomb.getX() / 32;
-            int y = bomb.getY() / 32 - 1;
-            this.setImg(Sprite.explosion_vertical_top_last.getFxImage());
-            this.setX(x * 32);
-            this.setY(y * 32);
 
-            if (bomb.flag == true) this.flag = true;
-    }
-
-    public void addFrameDown(Bomb bomb) {
-
-            int x = bomb.getX() / 32;
-            int y = bomb.getY() / 32 + 1;
-            this.setImg(Sprite.explosion_vertical_down_last.getFxImage());
-            this.setX(x * 32);
-            this.setY(y * 32);
-
-        if(bomb.flag == true) this.flag = true;
+    public void upDateFlame() {
 
     }
+
+
     @Override
     public void update() {
+
+
     }
 }

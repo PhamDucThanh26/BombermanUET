@@ -6,10 +6,13 @@ import javafx.scene.image.Image;
 import uet.oop.bomberman.user_input.Keyboard;
 
 import static uet.oop.bomberman.BombermanGame.entities;
+
+import static uet.oop.bomberman.entities.Bomb.bombPower;
+
 public final class Bomber extends Creature {
-
-
     private Bomb bomb;
+
+    public int bombNumber = 1;
     int frameCount = 0;
     final Image[] upAnimation = {
             Sprite.player_up.getFxImage(),
@@ -60,13 +63,16 @@ public final class Bomber extends Creature {
         }
     }
     public void putBomb() {
-        int xpos = x / 32;
-        double ypos = (double)y / 32;
-        xpos = Math.round(xpos);
-        ypos = Math.round(ypos);
-        bomb = new Bomb(xpos, (int)ypos, Sprite.bomb.getFxImage());
+        if(bombNumber > 0) {
+            bombNumber--;
+            int xpos = x / 32;
+            double ypos = (double) y / 32;
+            xpos = Math.round(xpos);
+            ypos = Math.round(ypos);
+            bomb = new Bomb(xpos, (int) ypos, Sprite.bomb.getFxImage());
 //        bomb.ExplosionBomb();
-        entities.add(bomb);
+            entities.add(bomb);
+        }
     }
     private void updateAction(Keyboard a) {
         if(a.plant_bomb) {
