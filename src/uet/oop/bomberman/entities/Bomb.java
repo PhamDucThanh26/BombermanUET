@@ -6,6 +6,7 @@ import uet.oop.bomberman.graphics.Sprite;
 
 public class Bomb extends Creature {
     public boolean flag = false;
+    public static boolean isExploded;
     private int frameCount = 0;
     static final Image[] activeBom = {
             Sprite.bomb_1.getFxImage(),
@@ -24,41 +25,28 @@ public class Bomb extends Creature {
         super(xUnit, yUnit, img);
     }
     private void updateActiveAnimation() {
-        long now = System.currentTimeMillis();
-
-        if( (startTime - now) % 200 == 0) {
+        if( frame % 15 == 0 && frame < 120) {
             frameCount++;
             frameCount = frameCount % 2;
-        }
-        if(lifeSpan == 20) {
+            this.setImg(activeBom[frameCount]);
+        } else {
             ExplosionBomb();
         }
-        if(lifeSpan == 24) {
-            flag = true;
-        }
-
     }
 
-    public void activeBomb() {
-        this.setImg(activeBom[frameCount]);
-    }
     public void ExplosionBomb() {
-        long liveTime = System.currentTimeMillis() - startTime;
-        if(liveTime > 2500) {
-            this.flag = true;
-        }
-        else if(liveTime > 2000) {
+        if(frame == 120) {
             this.setImg(bombExplode[0]);
             System.out.println("explode");
         }
+        else if(frame == 180) {
+            this.flag = true;
+        }
     }
-
-
 
     @Override
     public void update() {
+        super.update();
         updateActiveAnimation();
-        activeBomb();
-        ExplosionBomb();
     }
 }

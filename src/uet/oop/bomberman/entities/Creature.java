@@ -15,7 +15,7 @@ public class Creature extends Entity {
     // timer
     final int FPS = 60;
     protected final long startTime = System.currentTimeMillis();
-
+    protected long frame = getFrame();
     public Creature(int xUnit, int yUnit, Image img) {
         super(xUnit, yUnit, img);
     }
@@ -44,8 +44,6 @@ public class Creature extends Entity {
     }
     @Override
     public void update() {
-        move();
+        frame = getFrame();
     }
-
-
 }

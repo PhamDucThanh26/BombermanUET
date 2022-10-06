@@ -54,7 +54,6 @@ public class Flame extends Entity {
     }
 
     public void addFrameDown(Bomb bomb) {
-
         int x = bomb.getX() / 32;
         int y = bomb.getY() / 32 + 1 ;
         this.setImg(Sprite.explosion_vertical_down_last.getFxImage());
