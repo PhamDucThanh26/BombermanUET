@@ -30,11 +30,6 @@ public class Flame extends Entity {
         super(xUnit, yUnit, img);
     }
     public void checkFrame(Bomb bomb) {
-        for(int i = 0; i < stillObjects.size(); i++) {
-            if(this.intersects(stillObjects.get(i))){
-
-            }
-        }
         if(bomb.flag == true) this.flag = true;
     }
 
