@@ -46,19 +46,19 @@ public final class Bomber extends Creature {
         xVec = 0;
         yVec = 0;
         if(a.up) {
-            yVec -= 1;
+            yVec -= 2;
             this.setImg(upAnimation[frameCount]);
         }
         if(a.down) {
-            yVec += 1;
+            yVec += 2;
             this.setImg(downAnimation[frameCount]);
         }
         if(a.left) {
-            xVec -= 1;
+            xVec -= 2;
             this.setImg(leftAnimation[frameCount]);
         }
         if(a.right)  {
-            xVec += 1;
+            xVec += 2;
             this.setImg(rightAnimation[frameCount]);
         }
     }
