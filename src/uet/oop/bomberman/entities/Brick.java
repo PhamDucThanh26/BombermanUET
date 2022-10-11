@@ -13,6 +13,7 @@ public class Brick extends Entity {
     };
     public Brick(int x, int y, Image img) {
         super(x, y, img);
+        maskNumber = '*';
     }
     long startTime = System.currentTimeMillis();
 

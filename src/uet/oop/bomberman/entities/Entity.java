@@ -6,19 +6,18 @@ import javafx.scene.image.Image;
 import uet.oop.bomberman.graphics.Sprite;
 
 public abstract class Entity {
-    Entity(){}
-    //Tọa độ X tính từ góc trái trên trong Canvas
     protected int x;
-
-
-    //Tọa độ Y tính từ góc trái trên trong Canvas
     protected int y;
     protected double width;
     protected double height;
 
     protected boolean flag = false;
-
+    public int maskNumber;
     protected Image img;
+
+    protected long frame = 0;
+    public Entity() {
+    }
 
     //Khởi tạo đối tượng, chuyển từ tọa độ đơn vị sang tọa độ trong canvas
     public Entity( int xUnit, int yUnit, Image img) {
@@ -27,6 +26,7 @@ public abstract class Entity {
         this.img = img;
         width = img.getWidth();
         height = img.getHeight();
+        maskNumber = '0';
     }
 
     public int getX() {
@@ -44,8 +44,6 @@ public abstract class Entity {
     public void setY(int y) {
         this.y = y;
     }
-
-
 
     public Image getImg() {
         return img;
@@ -72,7 +70,4 @@ public abstract class Entity {
         return new Rectangle2D(x, y, width, height);
     }
 
-    public boolean intersects(Entity spr) {
-        return spr.getBoundary().intersects(this.getBoundary());
-    }
 }
