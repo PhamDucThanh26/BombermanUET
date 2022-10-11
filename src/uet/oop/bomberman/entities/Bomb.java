@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static uet.oop.bomberman.BombermanGame.*;
+import static uet.oop.bomberman.entities.Interaction.collision;
 
 
 public class Bomb extends Entity implements IAnimation {
@@ -75,21 +76,16 @@ public class Bomb extends Entity implements IAnimation {
     }
 
     int findLeft() {
-        int result = Integer.MAX_VALUE;
         for(int i = 0; i < stillObjects.size(); i++) {
-            if(this.getY() == stillObjects.get(i).getY()
-                    && (stillObjects.get(i) instanceof Wall || stillObjects.get(i) instanceof Brick)) {
-
-                int k = this.getX() - stillObjects.get(i).getX();
-                if(stillObjects.get(i) instanceof Brick){
-                    k++;
-                }
-                if( k > 0 && k < result) {
-                    result = k;
+            if(!(stillObjects.get(i) instanceof Grass)) {
+                for(int j = 0; j < leftFlame.size(); j++) {
+                    if(collision(stillObjects.get(i), leftFlame.get(j))) {
+                        return j + 1;
+                    }
                 }
             }
         }
-        return result / 32;
+        return leftFlame.size();
     }
     private int findRight() {
         int result = Integer.MIN_VALUE;
@@ -117,6 +113,7 @@ public class Bomb extends Entity implements IAnimation {
         }
         return result / 32;
     }
+
     private int findDown() {
         int result = Integer.MIN_VALUE;
         for(int i = 0; i < stillObjects.size(); i++) {
@@ -177,15 +174,7 @@ public class Bomb extends Entity implements IAnimation {
 
     @Override
     public void render(GraphicsContext gc) {
-        if(isExploded) {
-            leftFlame.forEach(fl ->render(gc));
-            rightFlame.forEach(fl -> render(gc));
-            upFlame.forEach(fl -> render(gc));
-            downFlame.forEach(fl -> render(gc));
-        }
-        else {
-            super.render(gc);
-        }
+        super.render(gc);
     }
 
     @Override

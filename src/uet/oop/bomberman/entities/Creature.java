@@ -1,5 +1,6 @@
 package uet.oop.bomberman.entities;
 
+import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 import javafx.scene.shape.Rectangle;
 import uet.oop.bomberman.graphics.IAnimation;
@@ -10,29 +11,13 @@ public abstract class Creature extends Entity implements IAnimation {
     int yVec = 0;
 
     // collision detection
-    protected boolean collision = false;
     protected Rectangle solidArea;
-    protected int saX;
-    protected int saY;
-    protected int saWidth;
-    protected int saHeight;
 
     public Creature(int xUnit, int yUnit, Image img) {
         super(xUnit, yUnit, img);
-        saX = 0;
-        saY = 0;
-        saWidth = (int) width;
-        saHeight = (int) height;
+        solidArea = new Rectangle(x, y, width, height);
     }
     long startTime = System.currentTimeMillis();
-
-    public boolean isCollision() {
-        return collision;
-    }
-
-    public void setCollision(boolean collision) {
-        this.collision = collision;
-    }
 
     public Rectangle getSolidArea() {
         return solidArea;
@@ -47,12 +32,18 @@ public abstract class Creature extends Entity implements IAnimation {
         return (System.currentTimeMillis() - startTime) * 60 / 1000;
     }
 
-    protected void move() {
-
+    @Override
+    public Rectangle2D getBoundary() {
+        return new Rectangle2D(solidArea.getX() + xVec, solidArea.getY() + yVec,
+                solidArea.getWidth(), solidArea.getHeight());
     }
+
+    protected abstract void move();
 
     @Override
     public void update() {
         frame = getCurrentFrame();
+        solidArea.setX(x);
+        solidArea.setY(y);
     }
 }

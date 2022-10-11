@@ -3,6 +3,7 @@ package uet.oop.bomberman.entities;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.shape.Rectangle;
 import uet.oop.bomberman.graphics.Sprite;
 
 public abstract class Entity {
@@ -10,7 +11,7 @@ public abstract class Entity {
     protected int y;
     protected double width;
     protected double height;
-
+    protected boolean collision = false;
     protected boolean flag = false;
     public int maskNumber;
     protected Image img;
@@ -61,6 +62,14 @@ public abstract class Entity {
         this.flag = flag;
     }
 
+    public boolean isCollision() {
+        return collision;
+    }
+
+    public void setCollision(boolean collision) {
+        this.collision = collision;
+    }
+
     public void render(GraphicsContext gc) {
         gc.drawImage(img, x, y);
     }
@@ -69,5 +78,4 @@ public abstract class Entity {
     public Rectangle2D getBoundary() {
         return new Rectangle2D(x, y, width, height);
     }
-
 }

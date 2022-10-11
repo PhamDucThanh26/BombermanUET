@@ -114,13 +114,27 @@ public class BombermanGame extends Application {
     }
 
     public void update() {
+        //keyboard
         bomberman.kbUpdate();
+
+        //interaction
         stillObjects.forEach( (Entity e) -> {
             if(!(e instanceof Grass) && collision(e, bomberman)) {
                 bomberman.setCollision(true);
                 System.out.println("collided");
             }
         });
+
+        stillObjects.forEach( (Entity e) -> {
+            entities.forEach(entity -> {
+                if(collision(e, entity) && !(e instanceof Grass)) {
+                    entity.setCollision(true);
+                }
+            });
+        });
+
+
+
         bomberman.update();
         entities.forEach(Entity::update);
         stillObjects.forEach(Entity::update);

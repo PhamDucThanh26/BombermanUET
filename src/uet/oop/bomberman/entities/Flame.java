@@ -8,7 +8,6 @@ import java.util.List;
 import static uet.oop.bomberman.BombermanGame.*;
 
 public class Flame extends Entity {
-
     public static boolean isActive = false;
 
     public boolean isActive() {
@@ -32,11 +31,6 @@ public class Flame extends Entity {
     public void checkFrame(Bomb bomb) {
         if(bomb.flag == true) this.flag = true;
     }
-
-    public void upDateFlame() {
-
-    }
-
 
     @Override
     public void update() {

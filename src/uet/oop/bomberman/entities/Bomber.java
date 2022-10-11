@@ -58,30 +58,20 @@ public final class Bomber extends Creature {
         maskNumber = 1;
     }
 
-    @Override
-    public Rectangle2D getBoundary() {
-        return new Rectangle2D(solidArea.getX() + xVec, solidArea.getY() + yVec,
-                solidArea.getWidth(), solidArea.getHeight());
-    }
-
     public void updateMove() {
         xVec = 0;
         yVec = 0;
         if (kb.up) {
             yVec -= 2;
-            this.setImg(upAnimation[frameCount]);
         }
         if (kb.down) {
             yVec += 2;
-            this.setImg(downAnimation[frameCount]);
         }
         if (kb.left) {
             xVec -= 2;
-            this.setImg(leftAnimation[frameCount]);
         }
         if (kb.right) {
             xVec += 2;
-            this.setImg(rightAnimation[frameCount]);
         }
     }
 
@@ -93,7 +83,6 @@ public final class Bomber extends Creature {
             xpos = Math.round(xpos);
             ypos = Math.round(ypos);
             Bomb bomb = new Bomb(xpos, (int) ypos, Sprite.bomb.getFxImage());
-//        bomb.ExplosionBomb();
             entities.add(bomb);
         }
     }
@@ -126,6 +115,18 @@ public final class Bomber extends Creature {
         if (frame % 10 == 0) {
             frameCount++;
             frameCount %= 3;
+        }
+        if (kb.up) {
+            this.setImg(upAnimation[frameCount]);
+        }
+        if (kb.down) {
+            this.setImg(downAnimation[frameCount]);
+        }
+        if (kb.left) {
+            this.setImg(leftAnimation[frameCount]);
+        }
+        if (kb.right) {
+            this.setImg(rightAnimation[frameCount]);
         }
     }
 
