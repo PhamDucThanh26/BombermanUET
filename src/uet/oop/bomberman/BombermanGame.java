@@ -63,13 +63,10 @@ public class BombermanGame extends Application {
         createMap(System.getProperty("user.dir") + "\\res\\levels\\Level0.txt");
         // Tao scene
         Scene scene = new Scene(root);
-
         // Them scene vao stage
         stage.setTitle("Bomberman");
-
         //Passing FileInputStream object as a parameter
         Image img = new Image("file:res//icon.png");
-
         stage.getIcons().add(img);
 
         stage.setResizable(true);
@@ -103,7 +100,7 @@ public class BombermanGame extends Application {
         stillObjects.forEach( (Entity e) -> {
             if ( !(e instanceof Grass) && bomberman.intersects(e)) {
                 bomberman.setCollision(true);
-                System.out.println("bomberman hit");
+//                System.out.println("bomberman hit");
             }
         });
         bomberman.update();

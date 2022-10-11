@@ -12,7 +12,9 @@ import static uet.oop.bomberman.BombermanGame.*;
 public class Bomb extends Creature {
 
     private List<Flame> leftFlame = new ArrayList<>();
-
+    private List<Flame> rightFlame = new ArrayList<>();
+    private List<Flame> upFlame = new ArrayList<>();
+    private List<Flame> downFlame = new ArrayList<>();
     public List<Flame> getRightFlame() {
         return rightFlame;
     }
@@ -24,14 +26,9 @@ public class Bomb extends Creature {
     public List<Flame> getDownFlame() {
         return downFlame;
     }
-
-    private List<Flame> rightFlame = new ArrayList<>();
-    private List<Flame> upFlame = new ArrayList<>();
-    private List<Flame> downFlame = new ArrayList<>();
     public static int bombPower = 2;
     public boolean isExploded = false;
     private int frameCount = 0;
-
     public boolean hasBomb = true;
 
     static final Image[] activeBom = {
@@ -90,66 +87,46 @@ public class Bomb extends Creature {
         } else if (liveTime > 2000) {
             this.setImg(bombExplode[0]);
             this.isExploded = true;
-            leftFlame.forEach((Flame g) -> {
-                g.checkFrame(this);
-            });
-            upFlame.forEach((Flame g) -> {
-                g.checkFrame(this);
-            });
-//            flameLeft.addFrameLeft(this);
-            rightFlame.forEach((Flame g) -> {
-                g.checkFrame(this);
-            });
-            downFlame.forEach((Flame g) -> {
-                g.checkFrame(this);
-            });
         }
     }
 
     int findLeft() {
         int result = Integer.MAX_VALUE;
-        for(int i = 0; i < stillObjects.size(); i++) {
-            if(this.getY() == stillObjects.get(i).getY()
+        for (int i = 0; i < stillObjects.size(); i++) {
+            if (this.getY() == stillObjects.get(i).getY()
                     && (stillObjects.get(i) instanceof Wall || stillObjects.get(i) instanceof Brick)) {
-
                 int k = this.getX() - stillObjects.get(i).getX();
-                if(stillObjects.get(i) instanceof Brick){
-                    k++;
-                }
-                if( k > 0 && k < result) {
+                if (k > 0 && k < result) {
                     result = k;
                 }
             }
         }
         return result / 32;
     }
-    public void checkBrick() {
 
-    }
 
-    public void destroyBrick() {
 
-    }
     private int findRight() {
         int result = Integer.MIN_VALUE;
-        for(int i = 0; i < stillObjects.size(); i++) {
-            if(this.getY() == stillObjects.get(i).getY()
+        for (int i = 0; i < stillObjects.size(); i++) {
+            if (this.getY() == stillObjects.get(i).getY()
                     && (stillObjects.get(i) instanceof Wall || stillObjects.get(i) instanceof Brick)) {
                 int k = this.getX() - stillObjects.get(i).getX();
-                if( k < 0 && k > result) {
+                if (k < 0 && k > result) {
                     result = k;
                 }
             }
         }
         return -result / 32;
     }
+
     private int findUp() {
         int result = Integer.MAX_VALUE;
-        for(int i = 0; i < stillObjects.size(); i++) {
-            if(this.getX() == stillObjects.get(i).getX()
+        for (int i = 0; i < stillObjects.size(); i++) {
+            if (this.getX() == stillObjects.get(i).getX()
                     && (stillObjects.get(i) instanceof Wall || stillObjects.get(i) instanceof Brick)) {
                 int k = this.getY() - stillObjects.get(i).getY();
-                if( k > 0 && k < result) {
+                if (k > 0 && k < result) {
                     result = k;
                 }
             }
@@ -159,11 +136,11 @@ public class Bomb extends Creature {
 
     private int findDown() {
         int result = Integer.MIN_VALUE;
-        for(int i = 0; i < stillObjects.size(); i++) {
-            if(this.getX() == stillObjects.get(i).getX()
+        for (int i = 0; i < stillObjects.size(); i++) {
+            if (this.getX() == stillObjects.get(i).getX()
                     && (stillObjects.get(i) instanceof Wall || stillObjects.get(i) instanceof Brick)) {
                 int k = this.getY() - stillObjects.get(i).getY();
-                if( k < 0 && k > result) {
+                if (k < 0 && k > result) {
                     result = k;
                 }
             }
@@ -173,8 +150,8 @@ public class Bomb extends Creature {
 
     public void updateFlameLeft() {
         int k = findLeft();
-        if(k > bombPower) return;
-        for(int i = k - 1; i < leftFlame.size(); i++) {
+        if (k > bombPower) return;
+        for (int i = k - 1; i < leftFlame.size(); i++) {
             leftFlame.remove(i);
             i--;
         }
@@ -182,8 +159,8 @@ public class Bomb extends Creature {
 
     public void updateFlameRight() {
         int k = findRight();
-        if(k > bombPower) return;
-        for(int i = k - 1; i < rightFlame.size(); i++) {
+        if (k > bombPower) return;
+        for (int i = k - 1; i < rightFlame.size(); i++) {
             rightFlame.remove(i);
             i--;
         }
@@ -191,22 +168,25 @@ public class Bomb extends Creature {
 
     public void updateFlameUp() {
         int k = findUp();
-        if(k > bombPower) return;
-        for(int i = k - 1; i < upFlame.size(); i++) {
+        if (k > bombPower) return;
+        for (int i = k - 1; i < upFlame.size(); i++) {
             upFlame.remove(i);
             i--;
         }
     }
+
     public void updateFlameDown() {
         int k = findDown();
-        if(k > bombPower) return;
-        for(int i = k - 1; i < downFlame.size(); i++) {
+        if (k > bombPower) return;
+        for (int i = k - 1; i < downFlame.size(); i++) {
             downFlame.remove(i);
             i--;
         }
     }
 
-
+    boolean checkBrick() {
+        return true;
+    }
     @Override
     public void update() {
         updateActiveAnimation();

@@ -34,9 +34,10 @@ public class Flame extends Entity {
     }
 
 
-    public void upDateFlame() {
 
-    }
+
+
+
 
 
     @Override
