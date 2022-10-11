@@ -1,6 +1,8 @@
 package uet.oop.bomberman.entities;
 
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import uet.oop.bomberman.graphics.IAnimation;
 import uet.oop.bomberman.graphics.Sprite;
 
 import java.util.ArrayList;
@@ -9,32 +11,17 @@ import java.util.List;
 import static uet.oop.bomberman.BombermanGame.*;
 
 
-public class Bomb extends Creature {
-
+public class Bomb extends Entity implements IAnimation {
     private List<Flame> leftFlame = new ArrayList<>();
-
-    public List<Flame> getRightFlame() {
-        return rightFlame;
-    }
-
-    public List<Flame> getUpFlame() {
-        return upFlame;
-    }
-
-    public List<Flame> getDownFlame() {
-        return downFlame;
-    }
-
     private List<Flame> rightFlame = new ArrayList<>();
     private List<Flame> upFlame = new ArrayList<>();
     private List<Flame> downFlame = new ArrayList<>();
     public static int bombPower = 2;
     public boolean isExploded = false;
     private int frameCount = 0;
+    private final long startTime = System.currentTimeMillis();
 
-    public boolean hasBomb = true;
-
-    static final Image[] activeBom = {
+    static final Image[] activeBomb = {
             Sprite.bomb_1.getFxImage(),
             Sprite.bomb_2.getFxImage(),
     };
@@ -44,10 +31,6 @@ public class Bomb extends Creature {
             Sprite.bomb_exploded2.getFxImage(),
     };
 
-    public List<Flame> getLeftFlame() {
-        return leftFlame;
-    }
-    private int lifeSpan = 0;
     public Bomb(int xUnit, int yUnit, Image img) {
         super(xUnit, yUnit, img);
         for (int i = 0; i < bombPower - 1; i++) {
@@ -62,47 +45,32 @@ public class Bomb extends Creature {
         downFlame.add(new Flame(xUnit, yUnit + bombPower, Sprite.explosion_vertical_down_last.getFxImage()));
     }
 
-    private void updateActiveAnimation() {
-        long now = System.currentTimeMillis();
-
-        if ((startTime - now) % 200 == 0) {
+    @Override
+    public void updateAnimation() {
+        if(frame > 2 * FPS) {
+            flag = true;
+        } else if (frame > (int) (1.5 * FPS) ) {
+            isExploded = true;
+        }
+        else if (frame % 20 == 0) {
             frameCount++;
             frameCount = frameCount % 2;
         }
-        if (lifeSpan == 20) {
-            isExploded = true;
-            ExplosionBomb();
-        }
-        if (lifeSpan == 30) {
-            flag = true;
-
-        }
+        this.setImg(activeBomb[frameCount]);
     }
 
-    public void activeBomb() {
-        this.setImg(activeBom[frameCount]);
-    }
 
     public void ExplosionBomb() {
-        long liveTime = System.currentTimeMillis() - startTime;
-        if (liveTime > 2500) {
+        if (frame > 150) {
             this.flag = true;
-        } else if (liveTime > 2000) {
+        } else {
             this.setImg(bombExplode[0]);
             this.isExploded = true;
-            leftFlame.forEach((Flame g) -> {
-                g.checkFrame(this);
-            });
-            upFlame.forEach((Flame g) -> {
-                g.checkFrame(this);
-            });
+            leftFlame.forEach(g -> g.checkFrame(this));
+            upFlame.forEach(g -> g.checkFrame(this));
 //            flameLeft.addFrameLeft(this);
-            rightFlame.forEach((Flame g) -> {
-                g.checkFrame(this);
-            });
-            downFlame.forEach((Flame g) -> {
-                g.checkFrame(this);
-            });
+            rightFlame.forEach(g -> g.checkFrame(this));
+            downFlame.forEach(g -> g.checkFrame(this));
         }
     }
 
@@ -122,13 +90,6 @@ public class Bomb extends Creature {
             }
         }
         return result / 32;
-    }
-    public void checkBrick() {
-
-    }
-
-    public void destroyBrick() {
-
     }
     private int findRight() {
         int result = Integer.MIN_VALUE;
@@ -156,7 +117,6 @@ public class Bomb extends Creature {
         }
         return result / 32;
     }
-
     private int findDown() {
         int result = Integer.MIN_VALUE;
         for(int i = 0; i < stillObjects.size(); i++) {
@@ -179,7 +139,6 @@ public class Bomb extends Creature {
             i--;
         }
     }
-
     public void updateFlameRight() {
         int k = findRight();
         if(k > bombPower) return;
@@ -188,7 +147,6 @@ public class Bomb extends Creature {
             i--;
         }
     }
-
     public void updateFlameUp() {
         int k = findUp();
         if(k > bombPower) return;
@@ -206,17 +164,32 @@ public class Bomb extends Creature {
         }
     }
 
-
     @Override
     public void update() {
-        updateActiveAnimation();
-        activeBomb();
-        ExplosionBomb();
-        updateFlameLeft();
-        updateFlameRight();
-        updateFlameUp();
-        updateFlameDown();
+        frame = getCurrentFrame();
+//        ExplosionBomb();
+//        updateFlameLeft();
+//        updateFlameRight();
+//        updateFlameUp();
+//        updateFlameDown();
+        updateAnimation();
     }
 
+    @Override
+    public void render(GraphicsContext gc) {
+        if(isExploded) {
+            leftFlame.forEach(fl ->render(gc));
+            rightFlame.forEach(fl -> render(gc));
+            upFlame.forEach(fl -> render(gc));
+            downFlame.forEach(fl -> render(gc));
+        }
+        else {
+            super.render(gc);
+        }
+    }
 
+    @Override
+    public long getCurrentFrame() {
+        return (System.currentTimeMillis() - startTime) * 60 / 1000;
+    }
 }

@@ -1,18 +1,16 @@
 package uet.oop.bomberman.entities;
 
 import javafx.geometry.Rectangle2D;
+import javafx.scene.shape.Rectangle;
 import uet.oop.bomberman.graphics.Sprite;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.user_input.Keyboard;
 
 import static uet.oop.bomberman.BombermanGame.entities;
 
-import static uet.oop.bomberman.entities.Bomb.bombPower;
-
 public final class Bomber extends Creature {
-    private Bomb bomb;
-
-    public int bombNumber = 1;
+    public Keyboard kb = new Keyboard();
+    public int bombCD = 0;
     int frameCount = 0;
     final Image[] upAnimation = {
             Sprite.player_up.getFxImage(),
@@ -34,66 +32,87 @@ public final class Bomber extends Creature {
             Sprite.player_right_1.getFxImage(),
             Sprite.player_right_2.getFxImage()
     };
+
+//    public static int[] bomberMask = {
+//            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+//            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+//            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+//            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+//            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+//            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+//            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+//            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+//            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+//            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+//            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+//            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+//            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+//            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+//            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+//            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+//    };
+
     public Bomber(int x, int y, Image img) {
-        super( x, y, img);
-        solidArea = new Rectangle2D(x + 2, y + 6, 6, 6);
+        super(x, y, img);
+        solidArea = new Rectangle(x, y + 8, 24, 24);
+        maskNumber = 1;
     }
-    public void update(Keyboard a) {
-        updateMove(a);
-        updateAction(a);
+
+    @Override
+    public Rectangle2D getBoundary() {
+        return new Rectangle2D(solidArea.getX() + xVec, solidArea.getY() + yVec,
+                solidArea.getWidth(), solidArea.getHeight());
     }
-    public void updateMove(Keyboard a) {
+
+    public void updateMove() {
         xVec = 0;
         yVec = 0;
-        if(a.up) {
+        if (kb.up) {
             yVec -= 2;
             this.setImg(upAnimation[frameCount]);
         }
-        if(a.down) {
+        if (kb.down) {
             yVec += 2;
             this.setImg(downAnimation[frameCount]);
         }
-        if(a.left) {
+        if (kb.left) {
             xVec -= 2;
             this.setImg(leftAnimation[frameCount]);
         }
-        if(a.right)  {
+        if (kb.right) {
             xVec += 2;
             this.setImg(rightAnimation[frameCount]);
         }
     }
+
     public void putBomb() {
-        if(bombNumber > 0) {
-            bombNumber--;
+        if (bombCD < 0) {
+            bombCD = 2 * FPS;
             int xpos = x / 32;
             double ypos = (double) y / 32;
             xpos = Math.round(xpos);
             ypos = Math.round(ypos);
-            bomb = new Bomb(xpos, (int) ypos, Sprite.bomb.getFxImage());
+            Bomb bomb = new Bomb(xpos, (int) ypos, Sprite.bomb.getFxImage());
 //        bomb.ExplosionBomb();
             entities.add(bomb);
         }
     }
-    private void updateAction(Keyboard a) {
-        if(a.plant_bomb) {
+
+    private void updateAction() {
+        if (kb.plant_bomb) {
             this.putBomb();
-            a.plant_bomb = false;
-        }
-        if(a.speed_up) {
-
+            kb.plant_bomb = false;
         }
     }
 
-    @Override
-    public void update() {
-        move();
-        updateAnimation();
-        updateSolidArea();
+    public void kbUpdate() {
+        updateMove();
+        updateAction();
     }
 
     @Override
-    protected void move() {
-        if(collision) {
+    public void move() {
+        if (collision) {
             xVec = 0;
             yVec = 0;
             collision = false;
@@ -101,32 +120,22 @@ public final class Bomber extends Creature {
         }
         x += xVec;
         y += yVec;
-        if( x + Sprite.wall.getSize() > 1080
-        ||x <= Sprite.wall.getSize()  ) {
-            x -= xVec;
-        }
-        if( y + Sprite.wall.getSize() > 720
-        ||y <= Sprite.wall.getSize() ) {
-            y -= yVec;
-        }
     }
 
-    // method update sprite animation
-    private void updateAnimation() {
-        long frame = getFrame();
-        if(frame % 15 == 0) {
+    public void updateAnimation() {
+        if (frame % 10 == 0) {
             frameCount++;
             frameCount %= 3;
         }
     }
 
-    private void updateSolidArea() {
-
-    }
     @Override
-    public boolean intersects(Entity spr) {
-        Rectangle2D futureFrame = new Rectangle2D(
-                x + xVec, y + 2 + yVec, 24, 28);
-        return futureFrame.intersects(spr.getBoundary());
+    public void update() {
+        super.update();
+        move();
+        updateAnimation();
+        bombCD--;
+        solidArea.setX(x);
+        solidArea.setY(y + 8);
     }
 }

@@ -33,7 +33,6 @@ public class Flame extends Entity {
         if(bomb.flag == true) this.flag = true;
     }
 
-
     public void upDateFlame() {
 
     }
@@ -41,7 +40,5 @@ public class Flame extends Entity {
 
     @Override
     public void update() {
-
-
     }
 }
