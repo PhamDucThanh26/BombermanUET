@@ -1,41 +1,57 @@
 package uet.oop.bomberman.entities;
 
 import javafx.scene.image.Image;
+import uet.oop.bomberman.graphics.IAnimation;
 import uet.oop.bomberman.graphics.Sprite;
 
 
-public class Brick extends Entity {
+public class Brick extends Entity implements IAnimation {
+    private boolean exploded = false;
+    private int frameCount = 0;
+    private long startTime;
 
     private final Image[] brickAnimation = {
             Sprite.brick_exploded.getFxImage(),
             Sprite.brick_exploded1.getFxImage(),
             Sprite.brick_exploded2.getFxImage(),
     };
+
     public Brick(int x, int y, Image img) {
         super(x, y, img);
-        maskNumber = '*';
+        maskNumber = 1;
     }
-    long startTime = System.currentTimeMillis();
 
-    public void swapAnimation() {
-
-        long liveTime = System.currentTimeMillis() - startTime;
-
-        if(liveTime > 1000 && liveTime - startTime <= 2500) {
-            this.setImg(brickAnimation[0]);
+    public void setExploded(boolean exploded) {
+        if (exploded) {
+            startTime = System.currentTimeMillis();
         }
-        if(liveTime > 2500 && liveTime <= 4000) {
-            this.setImg(brickAnimation[1]);
-        }
-        if(liveTime > 4000 && liveTime < 5000 ) {
-            this.setImg(brickAnimation[2]);
-        }
-        if(liveTime >= 5000) {
-            this.setImg(Sprite.grass.getFxImage());
-        }
+        this.exploded = exploded;
     }
+
+    @Override
+    public long getCurrentFrame() {
+        return (System.currentTimeMillis() - startTime) * 30 / 1000;
+    }
+
+    @Override
+    public void updateAnimation() {
+        if (frame == FPS / 2) {
+            flag = true;
+            return;
+        }
+        if (frame % 10 == 0) {
+            frameCount++;
+            frameCount %= 3;
+        }
+        img = brickAnimation[frameCount];
+    }
+
     @Override
     public void update() {
+        if (exploded) {
+            frame = getCurrentFrame();
+            updateAnimation();
+        }
     }
 }
 

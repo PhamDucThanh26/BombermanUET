@@ -146,20 +146,20 @@ public class BombermanGame extends Application {
                 i--;
             }
         }
+        for(int i = 0; i < stillObjects.size(); i++) {
+            if(stillObjects.get(i).isFlag()) {
+                stillObjects.remove(stillObjects.get(i));
+                i--;
+            }
+        }
         updateMaskMap();
     }
 
     public void render() {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         stillObjects.forEach(g -> g.render(gc));
-        entities.forEach( g -> {
-//            if(g instanceof Bomb) {
-//                ((Bomb) g).getLeftFlame().forEach(flame -> flame.render(gc));
-//            }
-            g.render(gc);
-        });
+        entities.forEach( g -> g.render(gc));
         bomberman.render(gc);
-
     }
 
     MediaPlayer mediaPlayer;

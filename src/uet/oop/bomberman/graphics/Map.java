@@ -24,14 +24,14 @@ public class Map {
             while (sc.hasNextLine() && j < heightMap ) {
                 String s = sc.nextLine();
                 for (int i = 0; i < s.length(); i++) {
+                    stillObjects.add(new Grass(i, j, Sprite.grass.getFxImage()));
                     Entity object;
                     if (s.charAt(i) == '#') {
                         object = new Wall(i, j, Sprite.wall.getFxImage());
                     } else if (s.charAt(i) == '*') {
                         object = new Brick(i, j, Sprite.brick.getFxImage());
                     } else if (s.charAt(i) == 'x') {
-                        stillObjects.add(new Grass(i, j, Sprite.grass.getFxImage()));
-                        object = new Portal(i, j, Sprite.brick.getFxImage());
+                        object = new Portal(i, j, Sprite.portal.getFxImage());
                     } else if (s.charAt(i) == '1') {
                         stillObjects.add(new Grass(i, j, Sprite.grass.getFxImage()));
                         object = new Oneal(i, j, Sprite.oneal_right1.getFxImage());
@@ -39,9 +39,9 @@ public class Map {
                         stillObjects.add(new Grass(i, j, Sprite.grass.getFxImage()));
                         object = new Balloom(i, j, Sprite.balloom_left1.getFxImage());
                     } else {
-                        object = new Grass(i, j, Sprite.grass.getFxImage());
+                        continue;
                     }
-                    if (object instanceof Grass || object instanceof Brick || object instanceof Wall)
+                    if ( object instanceof Brick || object instanceof Wall)
                         stillObjects.add(object);
                     else entities.add(object);
                 }

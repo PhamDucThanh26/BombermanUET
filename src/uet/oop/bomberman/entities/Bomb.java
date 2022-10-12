@@ -2,7 +2,6 @@ package uet.oop.bomberman.entities;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import uet.oop.bomberman.Main;
 import uet.oop.bomberman.graphics.IAnimation;
 import uet.oop.bomberman.graphics.Sprite;
 
@@ -11,7 +10,6 @@ import java.util.List;
 
 import static uet.oop.bomberman.BombermanGame.*;
 import static uet.oop.bomberman.entities.Interaction.collision;
-
 
 public class Bomb extends Entity implements IAnimation {
     private List<Flame> leftFlame = new ArrayList<>();
@@ -49,87 +47,46 @@ public class Bomb extends Entity implements IAnimation {
         downFlame.add(new Flame(xUnit, yUnit + bombPower, Sprite.explosion_vertical_down_last.getFxImage()));
     }
 
-    public List<Flame> getLeftFlame() {
-        return leftFlame;
-    }
-
-    public void setLeftFlame(List<Flame> leftFlame) {
-        this.leftFlame = leftFlame;
-    }
-
     @Override
     public void updateAnimation() {
-        if(frame > 2 * FPS) {
+        if (frame > 2 * FPS) {
             flag = true;
-        } else if (frame > (int) (1.5 * FPS) ) {
+        } else if (frame > (int) (1.5 * FPS)) {
             isExploded = true;
-        }
-        else if ( (frame + 1) % 20 == 0) {
+        } else if ((frame + 1) % 20 == 0) {
             frameCount++;
             frameCount %= 4;
         }
-        if(isExploded) {
+        if (isExploded) {
             img = Sprite.bomb_exploded.getFxImage();
         } else {
             img = activeBomb[frameCount];
         }
     }
 
-
-    private int findRight() {
-        int result = Integer.MIN_VALUE;
-        for(int i = 0; i < stillObjects.size(); i++) {
-            if(this.getY() == stillObjects.get(i).getY()
-                    && (stillObjects.get(i) instanceof Wall || stillObjects.get(i) instanceof Brick)) {
-                int k = this.getX() - stillObjects.get(i).getX();
-                if( k < 0 && k > result) {
-                    result = k;
-                }
-            }
-        }
-        return -result / 32;
-    }
-    private int findUp() {
-        int result = Integer.MAX_VALUE;
-        for(int i = 0; i < stillObjects.size(); i++) {
-            if(this.getX() == stillObjects.get(i).getX()
-                    && (stillObjects.get(i) instanceof Wall || stillObjects.get(i) instanceof Brick)) {
-                int k = this.getY() - stillObjects.get(i).getY();
-                if( k > 0 && k < result) {
-                    result = k;
-                }
-            }
-        }
-        return result / 32;
-    }
-
-    private int findDown() {
-        int result = Integer.MIN_VALUE;
-        for(int i = 0; i < stillObjects.size(); i++) {
-            if(this.getX() == stillObjects.get(i).getX()
-                    && (stillObjects.get(i) instanceof Wall || stillObjects.get(i) instanceof Brick)) {
-                int k = this.getY() - stillObjects.get(i).getY();
-                if( k < 0 && k > result) {
-                    result = k;
-                }
-            }
-        }
-        return -result / 32;
-    }
-
     public void updateFlameList(List<Flame> flameList) {
         int rmvIdx = flameList.size();
-        for(int i = 0; i < stillObjects.size(); i++) {
-            if(stillObjects.get(i) instanceof Wall
-                    || stillObjects.get(i) instanceof  Brick) {
-                for(int j = 0; j < flameList.size(); j++) {
-                    if(collision(stillObjects.get(i), flameList.get(j))) {
-                        rmvIdx = Math.min(rmvIdx, j + 1);
+        boolean hit = false;
+        for(int i = 0; i < flameList.size(); i++) {
+            for(int j = 0; j < stillObjects.size(); j++) {
+                if(collision(flameList.get(i), stillObjects.get(j))
+                        && !(stillObjects.get(j) instanceof Grass)) {
+                    rmvIdx = i + 1;
+                    if(stillObjects.get(j) instanceof Brick) {
+                        ((Brick) stillObjects.get(j)).setExploded(true);
                     }
+                    if(stillObjects.get(j) instanceof Wall) {
+                        rmvIdx--;
+                    }
+                    hit = true;
+                    break;
                 }
             }
+            if(hit) {
+                break;
+            }
         }
-        while(rmvIdx < flameList.size()) {
+        while (rmvIdx < flameList.size()) {
             flameList.remove(rmvIdx);
         }
     }
@@ -137,19 +94,19 @@ public class Bomb extends Entity implements IAnimation {
     @Override
     public void update() {
         frame = getCurrentFrame();
+        updateAnimation();
         if(isExploded) {
             updateFlameList(leftFlame);
             updateFlameList(rightFlame);
             updateFlameList(upFlame);
             updateFlameList(downFlame);
         }
-        updateAnimation();
     }
 
     @Override
     public void render(GraphicsContext gc) {
         super.render(gc);
-        if(isExploded) {
+        if (isExploded) {
             leftFlame.forEach(fl -> fl.render(gc));
             rightFlame.forEach(fl -> fl.render(gc));
             upFlame.forEach(fl -> fl.render(gc));
