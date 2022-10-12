@@ -11,7 +11,7 @@ import static uet.oop.bomberman.BombermanGame.entities;
 public final class Bomber extends Creature {
     public Keyboard kb = new Keyboard();
     public int bombCD = 0;
-    public static Bomb bomb = new Bomb();
+    int frameCount = 0;
     final Image[] upAnimation = {
             Sprite.player_up.getFxImage(),
             Sprite.player_up_1.getFxImage(),
@@ -58,30 +58,20 @@ public final class Bomber extends Creature {
         maskNumber = 1;
     }
 
-    @Override
-    public Rectangle2D getBoundary() {
-        return new Rectangle2D(solidArea.getX() + xVec, solidArea.getY() + yVec,
-                solidArea.getWidth(), solidArea.getHeight());
-    }
-
     public void updateMove() {
         xVec = 0;
         yVec = 0;
         if (kb.up) {
             yVec -= 2;
-            this.setImg(upAnimation[frameCount]);
         }
         if (kb.down) {
             yVec += 2;
-            this.setImg(downAnimation[frameCount]);
         }
         if (kb.left) {
             xVec -= 2;
-            this.setImg(leftAnimation[frameCount]);
         }
         if (kb.right) {
             xVec += 2;
-            this.setImg(rightAnimation[frameCount]);
         }
     }
 
@@ -92,7 +82,7 @@ public final class Bomber extends Creature {
             double ypos = (double) y / 32;
             xpos = Math.round(xpos);
             ypos = Math.round(ypos);
-            bomb = new Bomb(xpos, (int) ypos, Sprite.bomb.getFxImage());
+            Bomb bomb = new Bomb(xpos, (int) ypos, Sprite.bomb.getFxImage());
             entities.add(bomb);
         }
     }
@@ -125,6 +115,18 @@ public final class Bomber extends Creature {
         if (frame % 10 == 0) {
             frameCount++;
             frameCount %= 3;
+        }
+        if (kb.up) {
+            this.setImg(upAnimation[frameCount]);
+        }
+        if (kb.down) {
+            this.setImg(downAnimation[frameCount]);
+        }
+        if (kb.left) {
+            this.setImg(leftAnimation[frameCount]);
+        }
+        if (kb.right) {
+            this.setImg(rightAnimation[frameCount]);
         }
     }
 

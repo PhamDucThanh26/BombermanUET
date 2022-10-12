@@ -1,70 +1,57 @@
 package uet.oop.bomberman.entities;
 
 import javafx.scene.image.Image;
+import uet.oop.bomberman.graphics.IAnimation;
 import uet.oop.bomberman.graphics.Sprite;
 
-import static uet.oop.bomberman.entities.Bomber.bomb;
 
-
-public class Brick extends Creature {
+public class Brick extends Entity implements IAnimation {
+    private boolean exploded = false;
+    private int frameCount = 0;
+    private long startTime;
 
     private final Image[] brickAnimation = {
             Sprite.brick_exploded.getFxImage(),
             Sprite.brick_exploded1.getFxImage(),
             Sprite.brick_exploded2.getFxImage(),
     };
+
     public Brick(int x, int y, Image img) {
         super(x, y, img);
-        maskNumber = '*';
+        maskNumber = 1;
     }
-    long startTime = System.currentTimeMillis();
 
-    boolean destroyed = false;
-
-    public final int MAX_ANIMATE = 7500;
-    int _animate = 0;
-    public void swapAnimation() {
-        if (destroyed && bomb.isExploded) {
-            _animate++;
-            if(_animate > 25) {
-                frameCount++;
-                _animate = 0;
-            }
-            frameCount %= 3;
-            this.setImg(brickAnimation[frameCount]);
-            if(frameCount == 2) {
-                this.flag = true;
-            }
+    public void setExploded(boolean exploded) {
+        if (exploded) {
+            startTime = System.currentTimeMillis();
         }
+        this.exploded = exploded;
     }
+
     @Override
-    public void update() {
-            swapAnimation();
+    public long getCurrentFrame() {
+        return (System.currentTimeMillis() - startTime) * 30 / 1000;
     }
 
     @Override
     public void updateAnimation() {
-
-    }
-
-    public void destroy() {
-        this.destroyed = true;
-
-    }
-
-    protected Sprite movingSprite(Sprite normal, Sprite x1, Sprite x2) {
-        int calc = _animate % 30;
-
-        if(calc < 10) {
-            return normal;
+        if (frame == FPS / 2) {
+            flag = true;
+            return;
         }
-
-        if(calc < 20) {
-            return x1;
+        if (frame % 10 == 0) {
+            frameCount++;
+            frameCount %= 3;
         }
-
-        return x2;
+        img = brickAnimation[frameCount];
     }
 
+    @Override
+    public void update() {
+        if (exploded) {
+            frame = getCurrentFrame();
+            updateAnimation();
+        }
+    }
 }
 

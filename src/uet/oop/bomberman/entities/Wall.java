@@ -6,7 +6,7 @@ public class Wall extends Entity {
 
     public Wall(int x, int y, Image img) {
         super(x, y, img);
-        maskNumber = '#';
+        maskNumber = 1;
     }
 
     @Override

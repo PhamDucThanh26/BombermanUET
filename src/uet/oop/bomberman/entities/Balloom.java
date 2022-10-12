@@ -1,33 +1,66 @@
 package uet.oop.bomberman.entities;
 
 import javafx.scene.image.Image;
+import javafx.scene.shape.Rectangle;
+import uet.oop.bomberman.graphics.Sprite;
 
 public class Balloom extends Creature {
     private int pivot;
+    private int frameCount = 0;
+
+    final Image[] leftAnimation = {
+            Sprite.balloom_left1.getFxImage(),
+            Sprite.balloom_left2.getFxImage(),
+            Sprite.balloom_left3.getFxImage()
+    };
+
+    final Image[] rightAnimation = {
+            Sprite.balloom_right1.getFxImage(),
+            Sprite.balloom_right2.getFxImage(),
+            Sprite.balloom_right3.getFxImage()
+    };
+
     public Balloom(int xUnit, int yUnit, Image img) {
         super(xUnit, yUnit, img);
+        solidArea = new Rectangle(x + 1, y + 1, width - 2, 10);
         pivot = x;
-        maskNumber = '1';
+        maskNumber = 1;
     }
 
     private double xVec = 1;
 
-//    updateMove();
-//    updateanimation();
     protected void move() {
+        if(collision) {
+            xVec = -xVec;
+            collision = false;
+        }
         x += xVec;
-        if( x + 80 < pivot || x > pivot + 80 || collision) {
+        if (x + xVec > pivot + 3 * Sprite.SCALED_SIZE || x + xVec < pivot - 3 * Sprite.SCALED_SIZE) {
+            x -= xVec;
             xVec = -xVec;
         }
     }
 
     @Override
     public void updateAnimation() {
-
+        if (frame % 10 == 0) {
+            frameCount++;
+            frameCount %= 3;
+        }
+        if(xVec > 0) {
+            img = leftAnimation[frameCount];
+        }
+        else {
+            img = rightAnimation[frameCount];
+        }
     }
 
     @Override
     public void update() {
+        super.update();
         move();
+        updateAnimation();
+        solidArea.setX(x + 1);
+        solidArea.setY(y + 1);
     }
 }

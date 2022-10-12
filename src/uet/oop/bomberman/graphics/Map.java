@@ -9,12 +9,9 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class Map {
-    public static int[][] mapMask;
-
-
+    public static int[][] mapMask = new int[WIDTH][HEIGHT];
     public Map() {
     }
-
     public static void createMap(String path) {
         try {
             File file = new File(path);
@@ -28,7 +25,7 @@ public class Map {
 
 
             sc.nextLine();
-            while (sc.hasNextLine() && j < heightMap) {
+            while (sc.hasNextLine() && j < heightMap ) {
                 String s = sc.nextLine();
                 for (int i = 0; i < s.length(); i++) {
                     Entity object;
@@ -43,6 +40,7 @@ public class Map {
                         stillObjects.add(new Grass(i, j, Sprite.grass.getFxImage()));
                         object = new Portal(i, j, Sprite.brick.getFxImage());
                         idStillObjects[j][i] = 3;
+                        object = new Portal(i, j, Sprite.portal.getFxImage());
                     } else if (s.charAt(i) == '1') {
                         stillObjects.add(new Grass(i, j, Sprite.grass.getFxImage()));
                         object = new Oneal(i, j, Sprite.oneal_right1.getFxImage());
@@ -52,25 +50,18 @@ public class Map {
                     } else {
                         object = new Grass(i, j,   Sprite.grass.getFxImage());
                         idStillObjects[j][i] = 0;
+                        continue;
                     }
-                    if (object instanceof Grass || object instanceof Brick || object instanceof Wall)
+                    if ( object instanceof Brick || object instanceof Wall)
                         stillObjects.add(object);
                     else entities.add(object);
                 }
                 j++;
             }
-
-
         } catch (FileNotFoundException e) {
             System.out.println("can not find file");
             e.printStackTrace();
             System.exit(1);
-        }
-        for (int i = 0; i < heightMap; i++) {
-            for (int j = 0; j < widthMap; j++) {
-                System.out.print(idStillObjects[i][j]);
-            }
-            System.out.println();
         }
     }
 
