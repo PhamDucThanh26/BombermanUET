@@ -22,7 +22,7 @@ public class Balloom extends Creature {
 
     public Balloom(int xUnit, int yUnit, Image img) {
         super(xUnit, yUnit, img);
-        solidArea = new Rectangle(x + 1, y + 1, width - 2, 10);
+        solidArea = new Rectangle(x + 1, y + 1, width - 2, height - 2);
         pivot = x;
         maskNumber = 1;
     }

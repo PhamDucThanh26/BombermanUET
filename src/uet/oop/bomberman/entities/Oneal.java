@@ -1,6 +1,7 @@
 package uet.oop.bomberman.entities;
 
 import javafx.scene.image.Image;
+import javafx.scene.shape.Rectangle;
 import uet.oop.bomberman.graphics.Sprite;
 
 public class Oneal extends Creature{
@@ -21,12 +22,16 @@ public class Oneal extends Creature{
 
     public Oneal(int xUnit, int yUnit, Image img) {
         super(xUnit, yUnit, img);
+        solidArea = new Rectangle(x + 1, y + 1, width - 2, height - 2);
     }
 
     @Override
     public void move() {
-        xVec = (x - playerX) > 0 ? -1 : 1;
-        yVec = (y - playerY) > 0 ? -1 : 1;
+        if(collision) {
+            xVec = 0;
+            yVec = 0;
+            collision = false;
+        }
         x += xVec;
         y += yVec;
     }
@@ -55,6 +60,7 @@ public class Oneal extends Creature{
         super.update();
         move();
         updateAnimation();
+        xVec = (x - playerX) > 0 ? -1 : 1;
+        yVec = (y - playerY) > 0 ? -1 : 1;
     }
-
 }
