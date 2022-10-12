@@ -38,8 +38,6 @@ public class Bomb extends Creature {
     public boolean isExploded = false;
     private int frameCount = 0;
 
-    public boolean hasBomb = true;
-
     static final Image[] activeBom = {
             Sprite.bomb_1.getFxImage(),
             Sprite.bomb_2.getFxImage(),

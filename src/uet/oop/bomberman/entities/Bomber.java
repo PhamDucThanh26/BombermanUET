@@ -93,7 +93,6 @@ public final class Bomber extends Creature {
             xpos = Math.round(xpos);
             ypos = Math.round(ypos);
             bomb = new Bomb(xpos, (int) ypos, Sprite.bomb.getFxImage());
-
             entities.add(bomb);
         }
     }

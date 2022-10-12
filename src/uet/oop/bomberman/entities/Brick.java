@@ -24,26 +24,22 @@ public class Brick extends Creature {
     public final int MAX_ANIMATE = 7500;
     int _animate = 0;
     public void swapAnimation() {
-
         if (destroyed && bomb.isExploded) {
             _animate++;
-            if(_animate > 30) {
+            if(_animate > 25) {
                 frameCount++;
                 _animate = 0;
             }
-            frameCount = frameCount % 3;
+            frameCount %= 3;
             this.setImg(brickAnimation[frameCount]);
             if(frameCount == 2) {
                 this.flag = true;
             }
-
         }
     }
     @Override
     public void update() {
             swapAnimation();
-
-
     }
 
     @Override

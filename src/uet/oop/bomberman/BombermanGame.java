@@ -159,10 +159,11 @@ public class BombermanGame extends Application {
             if(entities.get(i).isFlag()) {
                 entities.remove(entities.get(i));
                 i--;
+
             }
 
-
         }
+
         updateMaskMap();
     }
 

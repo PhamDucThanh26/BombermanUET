@@ -6,18 +6,9 @@ import uet.oop.bomberman.graphics.Sprite;
 import java.util.List;
 
 import static uet.oop.bomberman.BombermanGame.*;
+//import static uet.oop.bomberman.entities.Bomber.bomb;
 
-public class Flame extends Entity {
-
-    public static boolean isActive = false;
-
-    public boolean isActive() {
-        return isActive;
-    }
-
-    public void setActive(boolean active) {
-        isActive = active;
-    }
+public class Flame extends Creature {
 
     public Flame() {
         x = 0;
@@ -29,16 +20,10 @@ public class Flame extends Entity {
     public Flame(int xUnit, int yUnit, Image img) {
         super(xUnit, yUnit, img);
     }
-    public void checkFrame(Bomb bomb) {
-        if(bomb.flag == true) this.flag = true;
-    }
-
     public boolean collide (Entity e) {
         if(e instanceof Brick && ((Brick)e).getBoundary().intersects(this.getBoundary())) {
             ((Brick) e).destroy();
-
             return true;
-
         }
 
         return false;
@@ -49,7 +34,10 @@ public class Flame extends Entity {
         for(int i = 0; i < stillObjects.size(); i++) {
             collide(stillObjects.get(i));
         }
+    }
 
+    @Override
+    public void updateAnimation() {
 
     }
 }
