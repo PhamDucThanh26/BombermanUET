@@ -2,6 +2,7 @@ package uet.oop.bomberman.entities;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import uet.oop.bomberman.Main;
 import uet.oop.bomberman.graphics.IAnimation;
 import uet.oop.bomberman.graphics.Sprite;
 
@@ -23,8 +24,10 @@ public class Bomb extends Entity implements IAnimation {
     private final long startTime = System.currentTimeMillis();
 
     static final Image[] activeBomb = {
+            Sprite.bomb.getFxImage(),
             Sprite.bomb_1.getFxImage(),
             Sprite.bomb_2.getFxImage(),
+            Sprite.bomb_1.getFxImage(),
     };
     static final Image[] bombExplode = {
             Sprite.bomb_exploded.getFxImage(),
@@ -46,6 +49,14 @@ public class Bomb extends Entity implements IAnimation {
         downFlame.add(new Flame(xUnit, yUnit + bombPower, Sprite.explosion_vertical_down_last.getFxImage()));
     }
 
+    public List<Flame> getLeftFlame() {
+        return leftFlame;
+    }
+
+    public void setLeftFlame(List<Flame> leftFlame) {
+        this.leftFlame = leftFlame;
+    }
+
     @Override
     public void updateAnimation() {
         if(frame > 2 * FPS) {
@@ -53,9 +64,9 @@ public class Bomb extends Entity implements IAnimation {
         } else if (frame > (int) (1.5 * FPS) ) {
             isExploded = true;
         }
-        else if (frame % 20 == 0) {
+        else if ( (frame + 1) % 20 == 0) {
             frameCount++;
-            frameCount = frameCount % 2;
+            frameCount %= 4;
         }
         this.setImg(activeBomb[frameCount]);
     }
@@ -75,18 +86,6 @@ public class Bomb extends Entity implements IAnimation {
         }
     }
 
-    int findLeft() {
-        for(int i = 0; i < stillObjects.size(); i++) {
-            if(!(stillObjects.get(i) instanceof Grass)) {
-                for(int j = 0; j < leftFlame.size(); j++) {
-                    if(collision(stillObjects.get(i), leftFlame.get(j))) {
-                        return j + 1;
-                    }
-                }
-            }
-        }
-        return leftFlame.size();
-    }
     private int findRight() {
         int result = Integer.MIN_VALUE;
         for(int i = 0; i < stillObjects.size(); i++) {
@@ -128,53 +127,40 @@ public class Bomb extends Entity implements IAnimation {
         return -result / 32;
     }
 
-    public void updateFlameLeft() {
-        int k = findLeft();
-        if(k > bombPower) return;
-        for(int i = k - 1; i < leftFlame.size(); i++) {
-            leftFlame.remove(i);
-            i--;
+    public void updateFlame(List<Flame> flameList) {
+        int rmvIdx = flameList.size();
+        for(int i = 0; i < stillObjects.size(); i++) {
+            if(stillObjects.get(i) instanceof Wall
+                    || stillObjects.get(i) instanceof  Brick) {
+                for(int j = 0; j < flameList.size(); j++) {
+                    if(collision(stillObjects.get(i), flameList.get(j))) {
+                        rmvIdx = Math.min(rmvIdx, j + 1);
+                    }
+                }
+            }
         }
-    }
-    public void updateFlameRight() {
-        int k = findRight();
-        if(k > bombPower) return;
-        for(int i = k - 1; i < rightFlame.size(); i++) {
-            rightFlame.remove(i);
-            i--;
-        }
-    }
-    public void updateFlameUp() {
-        int k = findUp();
-        if(k > bombPower) return;
-        for(int i = k - 1; i < upFlame.size(); i++) {
-            upFlame.remove(i);
-            i--;
-        }
-    }
-    public void updateFlameDown() {
-        int k = findDown();
-        if(k > bombPower) return;
-        for(int i = k - 1; i < downFlame.size(); i++) {
-            downFlame.remove(i);
-            i--;
+        while(rmvIdx < flameList.size()) {
+            flameList.remove(rmvIdx);
         }
     }
 
     @Override
     public void update() {
         frame = getCurrentFrame();
-//        ExplosionBomb();
-//        updateFlameLeft();
-//        updateFlameRight();
-//        updateFlameUp();
-//        updateFlameDown();
+        updateFlame(leftFlame);
+        updateFlame(rightFlame);
+        updateFlame(upFlame);
+        updateFlame(downFlame);
         updateAnimation();
     }
 
     @Override
     public void render(GraphicsContext gc) {
         super.render(gc);
+        leftFlame.forEach(fl -> fl.render(gc));
+        rightFlame.forEach(fl -> fl.render(gc));
+        upFlame.forEach(fl -> fl.render(gc));
+        downFlame.forEach(fl -> fl.render(gc));
     }
 
     @Override

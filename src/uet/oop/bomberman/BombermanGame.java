@@ -133,11 +133,10 @@ public class BombermanGame extends Application {
             });
         });
 
-
-
         bomberman.update();
         entities.forEach(Entity::update);
         stillObjects.forEach(Entity::update);
+
         for(int i = 0; i < entities.size(); i++) {
             if(entities.get(i) instanceof Oneal) {
                 ((Oneal) entities.get(i)).getPlayerPos(bomberman);
@@ -153,8 +152,14 @@ public class BombermanGame extends Application {
     public void render() {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         stillObjects.forEach(g -> g.render(gc));
-        entities.forEach(g -> g.render(gc));
+        entities.forEach( g -> {
+//            if(g instanceof Bomb) {
+//                ((Bomb) g).getLeftFlame().forEach(flame -> flame.render(gc));
+//            }
+            g.render(gc);
+        });
         bomberman.render(gc);
+
     }
 
     MediaPlayer mediaPlayer;
