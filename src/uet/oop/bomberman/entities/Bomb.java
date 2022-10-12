@@ -246,6 +246,4 @@ public class Bomb extends Creature {
         updateFlameUp();
         updateFlameDown();
     }
-
-
 }

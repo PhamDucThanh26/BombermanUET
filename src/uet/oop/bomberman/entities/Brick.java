@@ -43,7 +43,10 @@ public class Brick extends Entity {
     }
     @Override
     public void update() {
-
+        if(this.destroyed) {
+            swapAnimation();
+            this.flag = true;
+        }
 
     }
 
