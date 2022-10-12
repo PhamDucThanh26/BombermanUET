@@ -68,23 +68,13 @@ public class Bomb extends Entity implements IAnimation {
             frameCount++;
             frameCount %= 4;
         }
-        this.setImg(activeBomb[frameCount]);
-    }
-
-
-    public void ExplosionBomb() {
-        if (frame > 150) {
-            this.flag = true;
+        if(isExploded) {
+            img = Sprite.bomb_exploded.getFxImage();
         } else {
-            this.setImg(bombExplode[0]);
-            this.isExploded = true;
-            leftFlame.forEach(g -> g.checkFrame(this));
-            upFlame.forEach(g -> g.checkFrame(this));
-//            flameLeft.addFrameLeft(this);
-            rightFlame.forEach(g -> g.checkFrame(this));
-            downFlame.forEach(g -> g.checkFrame(this));
+            img = activeBomb[frameCount];
         }
     }
+
 
     private int findRight() {
         int result = Integer.MIN_VALUE;
@@ -127,7 +117,7 @@ public class Bomb extends Entity implements IAnimation {
         return -result / 32;
     }
 
-    public void updateFlame(List<Flame> flameList) {
+    public void updateFlameList(List<Flame> flameList) {
         int rmvIdx = flameList.size();
         for(int i = 0; i < stillObjects.size(); i++) {
             if(stillObjects.get(i) instanceof Wall
@@ -147,20 +137,24 @@ public class Bomb extends Entity implements IAnimation {
     @Override
     public void update() {
         frame = getCurrentFrame();
-        updateFlame(leftFlame);
-        updateFlame(rightFlame);
-        updateFlame(upFlame);
-        updateFlame(downFlame);
+        if(isExploded) {
+            updateFlameList(leftFlame);
+            updateFlameList(rightFlame);
+            updateFlameList(upFlame);
+            updateFlameList(downFlame);
+        }
         updateAnimation();
     }
 
     @Override
     public void render(GraphicsContext gc) {
         super.render(gc);
-        leftFlame.forEach(fl -> fl.render(gc));
-        rightFlame.forEach(fl -> fl.render(gc));
-        upFlame.forEach(fl -> fl.render(gc));
-        downFlame.forEach(fl -> fl.render(gc));
+        if(isExploded) {
+            leftFlame.forEach(fl -> fl.render(gc));
+            rightFlame.forEach(fl -> fl.render(gc));
+            upFlame.forEach(fl -> fl.render(gc));
+            downFlame.forEach(fl -> fl.render(gc));
+        }
     }
 
     @Override
