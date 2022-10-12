@@ -1,17 +1,9 @@
 package uet.oop.bomberman.entities;
-
-import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.graphics.Sprite;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import static uet.oop.bomberman.BombermanGame.*;
-import static uet.oop.bomberman.entities.Interaction.collision;
-import static uet.oop.bomberman.graphics.Map.mapMask;
-
-
 public class Bomb extends Creature {
 
     public Bomb() {
