@@ -33,15 +33,22 @@ public class Flame extends Entity {
         if(bomb.flag == true) this.flag = true;
     }
 
+    public boolean collide (Entity e) {
+        if(e instanceof Brick && ((Brick)e).getBoundary().intersects(this.getBoundary())) {
+            ((Brick) e).destroy();
+            System.out.println("Flame work");
+            return true;
 
-
-
-
-
-
+        }
+        System.out.println("flame not work");
+        return false;
+    }
 
     @Override
     public void update() {
+        for(int i = 0; i < stillObjects.size(); i++) {
+            collide(stillObjects.get(i));
+        }
 
 
     }

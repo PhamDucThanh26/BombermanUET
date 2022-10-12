@@ -3,6 +3,8 @@ package uet.oop.bomberman.entities;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.graphics.Sprite;
 
+import static uet.oop.bomberman.entities.Bomber.bomb;
+
 
 public class Brick extends Entity {
 
@@ -41,23 +43,13 @@ public class Brick extends Entity {
     }
     @Override
     public void update() {
-        if(destroyed) {
-            if(_animate < MAX_ANIMATE) {
-                _animate++;
-            }
 
-        }
+
     }
 
     public void destroy() {
         this.destroyed = true;
-    }
 
-    public boolean collide(Entity e) {
-        if(e instanceof Flame) {
-            this.destroy();
-        }
-        return false;
     }
 
     protected Sprite movingSprite(Sprite normal, Sprite x1, Sprite x2) {

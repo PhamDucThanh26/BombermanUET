@@ -5,6 +5,10 @@ import javafx.scene.shape.Rectangle;
 import uet.oop.bomberman.graphics.IAnimation;
 
 public abstract class Creature extends Entity implements IAnimation {
+
+    public Creature() {
+    }
+
     // movement vector
     int xVec = 0;
     int yVec = 0;

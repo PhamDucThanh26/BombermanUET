@@ -18,6 +18,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import static uet.oop.bomberman.entities.Bomber.bomb;
 import static uet.oop.bomberman.entities.Interaction.collision;
 import static uet.oop.bomberman.graphics.Map.*;
 
@@ -27,17 +28,17 @@ public class BombermanGame extends Application {
     public static final int HEIGHT = 720;
 
     // stage
-    public static GraphicsContext gc;
+    private GraphicsContext gc;
     private Canvas canvas;
 
     // map masking
-
 
     // game entities
     public static List<Entity> entities = new ArrayList<>();
     public static Bomber bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
     public static List<Entity> stillObjects = new ArrayList<>();
 
+    public static int idStillObjects[][];
     public static int heightMap;
     public static int widthMap;
     public static int level;
@@ -114,6 +115,27 @@ public class BombermanGame extends Application {
     }
 
     public void update() {
+        bomb.getLeftFlame().forEach((Flame flame) -> {
+            flame.update();
+        } );
+        bomb.getRightFlame().forEach((Flame flame) -> {
+            flame.update();
+        } );
+        bomb.getUpFlame().forEach((Flame flame) -> {
+            flame.update();
+        } );
+        bomb.getDownFlame().forEach((Flame flame) -> {
+            flame.update();
+        } );
+        for(int i = 0; i < stillObjects.size(); i++) {
+            Entity e = stillObjects.get(i);
+            if(e instanceof Brick) {
+                if(e.getBoundary().intersects(bomb.getBoundary())){
+                    e.setFlag(false);
+                };
+            }
+
+        }
         bomberman.kbUpdate();
         stillObjects.forEach( (Entity e) -> {
             if(!(e instanceof Grass) && collision(e, bomberman)) {
@@ -124,6 +146,12 @@ public class BombermanGame extends Application {
         bomberman.update();
         entities.forEach(Entity::update);
         stillObjects.forEach(Entity::update);
+        for(int i = 0; i < stillObjects.size(); i++) {
+            if(stillObjects.get(i).isFlag() == true) {
+                stillObjects.remove(i);
+                i--;
+            }
+        }
         for(int i = 0; i < entities.size(); i++) {
             if(entities.get(i) instanceof Oneal) {
                 ((Oneal) entities.get(i)).getPlayerPos(bomberman);
@@ -132,6 +160,8 @@ public class BombermanGame extends Application {
                 entities.remove(entities.get(i));
                 i--;
             }
+
+
         }
         updateMaskMap();
     }
@@ -141,6 +171,15 @@ public class BombermanGame extends Application {
         stillObjects.forEach(g -> g.render(gc));
         entities.forEach(g -> g.render(gc));
         bomberman.render(gc);
+        entities.forEach( (Entity e) -> {
+            if (e instanceof Bomb && ((Bomb)e).isExploded == true) {
+                ((Bomb) e).getLeftFlame().forEach((Flame g) ->g.render(gc));
+                ((Bomb) e).getRightFlame().forEach((Flame g) ->g.render(gc));
+                ((Bomb) e).getUpFlame().forEach((Flame g) ->g.render(gc));
+                ((Bomb) e).getDownFlame().forEach((Flame g) ->g.render(gc));
+            }
+        });
+
     }
 
     MediaPlayer mediaPlayer;

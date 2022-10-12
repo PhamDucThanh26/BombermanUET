@@ -12,6 +12,8 @@ public final class Bomber extends Creature {
     public Keyboard kb = new Keyboard();
     public int bombCD = 0;
     int frameCount = 0;
+
+    public static Bomb bomb = new Bomb();
     final Image[] upAnimation = {
             Sprite.player_up.getFxImage(),
             Sprite.player_up_1.getFxImage(),
@@ -92,8 +94,8 @@ public final class Bomber extends Creature {
             double ypos = (double) y / 32;
             xpos = Math.round(xpos);
             ypos = Math.round(ypos);
-            Bomb bomb = new Bomb(xpos, (int) ypos, Sprite.bomb.getFxImage());
-//        bomb.ExplosionBomb();
+            bomb = new Bomb(xpos, (int) ypos, Sprite.bomb.getFxImage());
+
             entities.add(bomb);
         }
     }
