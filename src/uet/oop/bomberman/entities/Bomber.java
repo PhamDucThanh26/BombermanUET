@@ -11,8 +11,6 @@ import static uet.oop.bomberman.BombermanGame.entities;
 public final class Bomber extends Creature {
     public Keyboard kb = new Keyboard();
     public int bombCD = 0;
-    int frameCount = 0;
-
     public static Bomb bomb = new Bomb();
     final Image[] upAnimation = {
             Sprite.player_up.getFxImage(),

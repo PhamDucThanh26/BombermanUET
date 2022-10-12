@@ -6,7 +6,7 @@ import uet.oop.bomberman.graphics.Sprite;
 import static uet.oop.bomberman.entities.Bomber.bomb;
 
 
-public class Brick extends Entity {
+public class Brick extends Creature {
 
     private final Image[] brickAnimation = {
             Sprite.brick_exploded.getFxImage(),
@@ -24,29 +24,30 @@ public class Brick extends Entity {
     public final int MAX_ANIMATE = 7500;
     int _animate = 0;
     public void swapAnimation() {
-        if(destroyed) {
-            long liveTime = System.currentTimeMillis() - startTime;
 
-            if (liveTime > 1000 && liveTime - startTime <= 2500) {
-                this.setImg(brickAnimation[0]);
+        if (destroyed && bomb.isExploded) {
+            _animate++;
+            if(_animate > 30) {
+                frameCount++;
+                _animate = 0;
             }
-            if (liveTime > 2500 && liveTime <= 4000) {
-                this.setImg(brickAnimation[1]);
+            frameCount = frameCount % 3;
+            this.setImg(brickAnimation[frameCount]);
+            if(frameCount == 2) {
+                this.flag = true;
             }
-            if (liveTime > 4000 && liveTime < 5000) {
-                this.setImg(brickAnimation[2]);
-            }
-            if (liveTime >= 5000) {
-                this.setImg(Sprite.grass.getFxImage());
-            }
+
         }
     }
     @Override
     public void update() {
-        if(this.destroyed) {
             swapAnimation();
-            this.flag = true;
-        }
+
+
+    }
+
+    @Override
+    public void updateAnimation() {
 
     }
 

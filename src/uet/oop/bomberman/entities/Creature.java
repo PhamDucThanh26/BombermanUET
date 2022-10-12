@@ -6,6 +6,7 @@ import uet.oop.bomberman.graphics.IAnimation;
 
 public abstract class Creature extends Entity implements IAnimation {
 
+    protected int frameCount = 0;
     public Creature() {
     }
 
