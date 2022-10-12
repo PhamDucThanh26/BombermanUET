@@ -20,36 +20,34 @@ public class Map {
             level = sc.nextInt();
             heightMap = sc.nextInt();
             widthMap = sc.nextInt();
-            mapMask = new int[WIDTH][HEIGHT];
-            idStillObjects = new int[heightMap][widthMap];
-
-
             sc.nextLine();
             while (sc.hasNextLine() && j < heightMap ) {
                 String s = sc.nextLine();
                 for (int i = 0; i < s.length(); i++) {
+                    stillObjects.add(new Grass(i, j, Sprite.grass.getFxImage()));
                     Entity object;
                     if (s.charAt(i) == '#') {
                         object = new Wall(i, j, Sprite.wall.getFxImage());
-                        idStillObjects[j][i] = 1;
                     } else if (s.charAt(i) == '*') {
-                        stillObjects.add(new Grass(i, j, Sprite.grass.getFxImage()));
                         object = new Brick(i, j, Sprite.brick.getFxImage());
-                        idStillObjects[j][i] = 2;
                     } else if (s.charAt(i) == 'x') {
-                        stillObjects.add(new Grass(i, j, Sprite.grass.getFxImage()));
-                        object = new Portal(i, j, Sprite.brick.getFxImage());
-                        idStillObjects[j][i] = 3;
-                        object = new Portal(i, j, Sprite.portal.getFxImage());
+                        stillObjects.add(new Portal(i,j,Sprite.portal.getFxImage()));
+                        object = new Brick(i, j, Sprite.brick.getFxImage());
                     } else if (s.charAt(i) == '1') {
                         stillObjects.add(new Grass(i, j, Sprite.grass.getFxImage()));
                         object = new Oneal(i, j, Sprite.oneal_right1.getFxImage());
                     } else if (s.charAt(i) == '2') {
                         stillObjects.add(new Grass(i, j, Sprite.grass.getFxImage()));
                         object = new Balloom(i, j, Sprite.balloom_left1.getFxImage());
+                    }
+                    else if (s.charAt(i) == 'b') {
+                        stillObjects.add(new BombItem(i, j, Sprite.powerup_bombs.getFxImage()));
+                        object = new Brick(i, j, Sprite.brick.getFxImage());
+                    }
+                    else if (s.charAt(i) == 'f') {
+                        stillObjects.add(new BombItem(i, j, Sprite.powerup_flames.getFxImage()));
+                        object = new Brick(i, j, Sprite.brick.getFxImage());
                     } else {
-                        object = new Grass(i, j,   Sprite.grass.getFxImage());
-                        idStillObjects[j][i] = 0;
                         continue;
                     }
                     if ( object instanceof Brick || object instanceof Wall)

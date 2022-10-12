@@ -9,11 +9,13 @@ public class Brick extends Entity implements IAnimation {
     private boolean exploded = false;
     private int frameCount = 0;
     private long startTime;
+    protected int animate = 0;
 
     private final Image[] brickAnimation = {
             Sprite.brick_exploded.getFxImage(),
             Sprite.brick_exploded1.getFxImage(),
             Sprite.brick_exploded2.getFxImage(),
+            Sprite.brick_exploded.getFxImage(),
     };
 
     public Brick(int x, int y, Image img) {
@@ -35,15 +37,14 @@ public class Brick extends Entity implements IAnimation {
 
     @Override
     public void updateAnimation() {
-        if (frame == FPS / 2) {
-            flag = true;
-            return;
-        }
-        if (frame % 10 == 0) {
+        animate++;
+        if(animate > 10) {
             frameCount++;
-            frameCount %= 3;
+            animate = 0;
         }
+        frameCount %= 4;
         img = brickAnimation[frameCount];
+        if(frameCount == 3) this.flag = true;
     }
 
     @Override

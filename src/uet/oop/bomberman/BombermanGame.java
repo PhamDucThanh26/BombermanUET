@@ -119,7 +119,7 @@ public class BombermanGame extends Application {
 
         //interaction
         stillObjects.forEach( (Entity e) -> {
-            if(!(e instanceof Grass) && collision(e, bomberman)) {
+            if(!(e instanceof Grass || e instanceof Portal || e instanceof Item) && collision(e, bomberman)) {
                 bomberman.setCollision(true);
                 System.out.println("collided");
             }
@@ -142,6 +142,9 @@ public class BombermanGame extends Application {
                 ((Oneal) entities.get(i)).getPlayerPos(bomberman);
             }
             if(entities.get(i).isFlag()) {
+                if(entities.get(i) instanceof Bomb) {
+                    bomberman.bombNumber++;
+                }
                 entities.remove(entities.get(i));
                 i--;
             }

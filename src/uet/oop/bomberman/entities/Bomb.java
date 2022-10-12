@@ -16,7 +16,7 @@ public class Bomb extends Entity implements IAnimation {
     private List<Flame> rightFlame = new ArrayList<>();
     private List<Flame> upFlame = new ArrayList<>();
     private List<Flame> downFlame = new ArrayList<>();
-    public static int bombPower = 2;
+    public static int bombPower = 1;
     public boolean isExploded = false;
     private int frameCount = 0;
     private final long startTime = System.currentTimeMillis();
@@ -33,8 +33,10 @@ public class Bomb extends Entity implements IAnimation {
             Sprite.bomb_exploded2.getFxImage(),
     };
 
-    public Bomb(int xUnit, int yUnit, Image img) {
+    public Bomb(int xUnit, int yUnit, Image img, int n) {
+
         super(xUnit, yUnit, img);
+        bombPower = n;
         for (int i = 0; i < bombPower - 1; i++) {
             leftFlame.add(new Flame(xUnit - 1 - i, yUnit, Sprite.explosion_horizontal.getFxImage()));
             rightFlame.add(new Flame(xUnit + 1 + i, yUnit, Sprite.explosion_horizontal.getFxImage()));
@@ -45,6 +47,10 @@ public class Bomb extends Entity implements IAnimation {
         rightFlame.add(new Flame((xUnit + bombPower), yUnit, Sprite.explosion_horizontal_right_last.getFxImage()));
         upFlame.add(new Flame(xUnit, yUnit - bombPower, Sprite.explosion_vertical_top_last.getFxImage()));
         downFlame.add(new Flame(xUnit, yUnit + bombPower, Sprite.explosion_vertical_down_last.getFxImage()));
+        leftFlame.get(leftFlame.size() - 1).setHead(true);
+        rightFlame.get(leftFlame.size() - 1).setHead(true);
+        upFlame.get(leftFlame.size() - 1).setHead(true);
+        downFlame.get(leftFlame.size() - 1).setHead(true);
     }
 
     @Override
@@ -67,22 +73,19 @@ public class Bomb extends Entity implements IAnimation {
     public void updateFlameList(List<Flame> flameList) {
         int rmvIdx = flameList.size();
         boolean hit = false;
-        for(int i = 0; i < flameList.size(); i++) {
-            for(int j = 0; j < stillObjects.size(); j++) {
-                if(collision(flameList.get(i), stillObjects.get(j))
-                        && !(stillObjects.get(j) instanceof Grass)) {
-                    rmvIdx = i + 1;
-                    if(stillObjects.get(j) instanceof Brick) {
+        for (int i = 0; i < flameList.size(); i++) {
+            for (int j = 0; j < stillObjects.size(); j++) {
+                if (collision(flameList.get(i), stillObjects.get(j))
+                        && (stillObjects.get(j) instanceof Brick || stillObjects.get(j) instanceof Wall)) {
+                    rmvIdx = i;
+                    if (stillObjects.get(j) instanceof Brick) {
                         ((Brick) stillObjects.get(j)).setExploded(true);
-                    }
-                    if(stillObjects.get(j) instanceof Wall) {
-                        rmvIdx--;
                     }
                     hit = true;
                     break;
                 }
             }
-            if(hit) {
+            if (hit) {
                 break;
             }
         }
@@ -95,7 +98,7 @@ public class Bomb extends Entity implements IAnimation {
     public void update() {
         frame = getCurrentFrame();
         updateAnimation();
-        if(isExploded) {
+        if (isExploded) {
             updateFlameList(leftFlame);
             updateFlameList(rightFlame);
             updateFlameList(upFlame);
