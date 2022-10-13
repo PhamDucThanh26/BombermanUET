@@ -18,6 +18,8 @@ public class Bomb extends Entity implements IAnimation {
     private List<Flame> downFlame = new ArrayList<>();
     public static int bombPower = 1;
     public boolean isExploded = false;
+    int animate = 0;
+    private int frameCountEx = 0;
     private int frameCount = 0;
     private final long startTime = System.currentTimeMillis();
 
@@ -64,7 +66,14 @@ public class Bomb extends Entity implements IAnimation {
             frameCount %= 4;
         }
         if (isExploded) {
-            img = Sprite.bomb_exploded.getFxImage();
+            animate++;
+            if(animate > 12) {
+                frameCountEx++;
+                animate = 0;
+            }
+            frameCountEx %= 3;
+            System.out.println(frameCountEx);
+            img = bombExplode[frameCountEx];
         } else {
             img = activeBomb[frameCount];
         }
