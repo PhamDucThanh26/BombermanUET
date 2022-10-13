@@ -1,12 +1,11 @@
 package uet.oop.bomberman.entities.BuffItem;
 
 import javafx.scene.image.Image;
-import uet.oop.bomberman.entities.Entity;
 
 import static uet.oop.bomberman.BombermanGame.bomberman;
 import static uet.oop.bomberman.entities.Interaction.collision;
 
-public class BombItem extends Entity {
+public class BombItem extends Item {
     public BombItem() {
     }
 
@@ -21,6 +20,5 @@ public class BombItem extends Entity {
             this.flag = true;
             System.out.println("Number of bomb : " + bomberman.getBombNumber());
         }
-
     }
 }

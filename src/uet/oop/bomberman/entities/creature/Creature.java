@@ -1,19 +1,22 @@
-package uet.oop.bomberman.entities;
+package uet.oop.bomberman.entities.creature;
 
 import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 import javafx.scene.shape.Rectangle;
+import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.graphics.IAnimation;
+import uet.oop.bomberman.graphics.IGameEntity;
 
-public abstract class Creature extends Entity implements IAnimation {
+import java.util.ArrayList;
+import java.util.List;
 
+public abstract class Creature extends Entity implements IAnimation, IGameEntity {
+    public static List<Creature> creatures = new ArrayList<>();
     protected int frameCount = 0;
-    public Creature() {
-    }
 
     // movement vector
-    int xVec = 0;
-    int yVec = 0;
+    protected int xVec = 0;
+    protected int yVec = 0;
 
     // collision detection
     protected Rectangle solidArea;
@@ -24,14 +27,6 @@ public abstract class Creature extends Entity implements IAnimation {
     }
     long startTime = System.currentTimeMillis();
 
-    public Rectangle getSolidArea() {
-        return solidArea;
-    }
-
-    public void setSolidArea(Rectangle solidArea) {
-        this.solidArea = solidArea;
-    }
-
     @Override
     public long getCurrentFrame() {
         return (System.currentTimeMillis() - startTime) * 60 / 1000;
@@ -41,6 +36,16 @@ public abstract class Creature extends Entity implements IAnimation {
     public Rectangle2D getBoundary() {
         return new Rectangle2D(solidArea.getX() + xVec, solidArea.getY() + yVec,
                 solidArea.getWidth(), solidArea.getHeight());
+    }
+
+    @Override
+    public void addStage() {
+        creatures.add(this);
+    }
+
+    @Override
+    public void clearStage() {
+        creatures.clear();
     }
 
     protected abstract void move();

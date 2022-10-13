@@ -10,13 +10,13 @@ import java.util.List;
 
 import static uet.oop.bomberman.BombermanGame.*;
 import static uet.oop.bomberman.entities.Interaction.collision;
+import static uet.oop.bomberman.entities.creature.Bomber.bombPower;
 
 public class Bomb extends Entity implements IAnimation {
-    private List<Flame> leftFlame = new ArrayList<>();
-    private List<Flame> rightFlame = new ArrayList<>();
-    private List<Flame> upFlame = new ArrayList<>();
-    private List<Flame> downFlame = new ArrayList<>();
-    public static int bombPower = 1;
+    private final List<Flame> leftFlame = new ArrayList<>();
+    private final List<Flame> rightFlame = new ArrayList<>();
+    private final List<Flame> upFlame = new ArrayList<>();
+    private final List<Flame> downFlame = new ArrayList<>();
     public boolean isExploded = false;
     private int frameCount = 0;
     private final long startTime = System.currentTimeMillis();
@@ -26,11 +26,6 @@ public class Bomb extends Entity implements IAnimation {
             Sprite.bomb_1.getFxImage(),
             Sprite.bomb_2.getFxImage(),
             Sprite.bomb_1.getFxImage(),
-    };
-    static final Image[] bombExplode = {
-            Sprite.bomb_exploded.getFxImage(),
-            Sprite.bomb_exploded1.getFxImage(),
-            Sprite.bomb_exploded2.getFxImage(),
     };
 
     public Bomb(int xUnit, int yUnit, Image img, int n) {
@@ -74,12 +69,12 @@ public class Bomb extends Entity implements IAnimation {
         int rmvIdx = flameList.size();
         boolean hit = false;
         for (int i = 0; i < flameList.size(); i++) {
-            for (int j = 0; j < stillObjects.size(); j++) {
-                if (collision(flameList.get(i), stillObjects.get(j))
-                        && (stillObjects.get(j) instanceof Brick || stillObjects.get(j) instanceof Wall)) {
+            for (Entity stillObject : stillObjects) {
+                if (collision(flameList.get(i), stillObject)
+                        && (stillObject instanceof Brick || stillObject instanceof Wall)) {
                     rmvIdx = i;
-                    if (stillObjects.get(j) instanceof Brick) {
-                        ((Brick) stillObjects.get(j)).setExploded(true);
+                    if (stillObject instanceof Brick) {
+                        ((Brick) stillObject).setExploded(true);
                     }
                     hit = true;
                     break;

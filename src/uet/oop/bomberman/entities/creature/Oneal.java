@@ -1,13 +1,13 @@
-package uet.oop.bomberman.entities;
+package uet.oop.bomberman.entities.creature;
 
 import javafx.scene.image.Image;
 import javafx.scene.shape.Rectangle;
+import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.graphics.Sprite;
 
-public class Oneal extends Creature{
+public class Oneal extends Creature {
     int playerX;
     int playerY;
-    int frameCount = 0;
     final Image[] leftAnimation = {
             Sprite.oneal_left1.getFxImage(),
             Sprite.oneal_left2.getFxImage(),

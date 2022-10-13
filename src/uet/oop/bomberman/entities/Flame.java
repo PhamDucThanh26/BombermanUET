@@ -7,7 +7,7 @@ import uet.oop.bomberman.graphics.Sprite;
 import java.util.List;
 
 import static uet.oop.bomberman.BombermanGame.*;
-//import static uet.oop.bomberman.entities.Bomber.bomb;
+//import static uet.oop.bomberman.entities.creature.Bomber.bomb;
 
 public class Flame extends Entity implements IAnimation {
 

@@ -1,12 +1,11 @@
-package uet.oop.bomberman.entities;
+package uet.oop.bomberman.entities.creature;
 
 import javafx.scene.image.Image;
 import javafx.scene.shape.Rectangle;
 import uet.oop.bomberman.graphics.Sprite;
 
 public class Balloom extends Creature {
-    private int pivot;
-    private int frameCount = 0;
+    private final int pivot;
 
     final Image[] leftAnimation = {
             Sprite.balloom_left1.getFxImage(),
