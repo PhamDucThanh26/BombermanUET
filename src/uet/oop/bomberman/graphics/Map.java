@@ -1,6 +1,9 @@
 package uet.oop.bomberman.graphics;
 
 import uet.oop.bomberman.entities.*;
+import uet.oop.bomberman.entities.BuffItem.BombItem;
+import uet.oop.bomberman.entities.BuffItem.FlameItem;
+import uet.oop.bomberman.entities.BuffItem.SpeedItem;
 
 import static uet.oop.bomberman.BombermanGame.*;
 

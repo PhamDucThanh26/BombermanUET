@@ -12,6 +12,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import uet.oop.bomberman.entities.*;
+import uet.oop.bomberman.entities.BuffItem.Item;
 import uet.oop.bomberman.graphics.Sprite;
 
 import java.io.File;
