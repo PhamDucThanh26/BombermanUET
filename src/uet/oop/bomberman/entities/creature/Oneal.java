@@ -5,6 +5,8 @@ import javafx.scene.shape.Rectangle;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.graphics.Sprite;
 
+import static uet.oop.bomberman.BombermanGame.bomberman;
+
 public class Oneal extends Creature {
     int playerX;
     int playerY;
@@ -57,6 +59,7 @@ public class Oneal extends Creature {
 
     @Override
     public void update() {
+        getPlayerPos(bomberman);
         super.update();
         move();
         updateAnimation();

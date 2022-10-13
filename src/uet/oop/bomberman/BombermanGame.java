@@ -14,7 +14,6 @@ import javafx.stage.Stage;
 import uet.oop.bomberman.entities.*;
 import uet.oop.bomberman.entities.BuffItem.Item;
 import uet.oop.bomberman.entities.creature.Bomber;
-import uet.oop.bomberman.entities.creature.Oneal;
 import uet.oop.bomberman.graphics.Sprite;
 
 import java.io.File;
@@ -28,8 +27,8 @@ import static uet.oop.bomberman.graphics.Map.*;
 
 public class BombermanGame extends Application {
     //window size
-    public static final int WIDTH = 1080;
-    public static final int HEIGHT = 720;
+    public static final int WIDTH = 640;
+    public static final int HEIGHT = 480;
 
     // stage
     public static GraphicsContext gc;
@@ -51,6 +50,7 @@ public class BombermanGame extends Application {
 
         // Tao Canvas
         canvas = new Canvas(WIDTH, HEIGHT);
+
         gc = canvas.getGraphicsContext2D();
 
         // Tao root container
@@ -139,18 +139,10 @@ public class BombermanGame extends Application {
         stillObjects.forEach(Entity::update);
         miscellaneous.forEach(Item::update);
 
-        for(int i = 0; i < creatures.size(); i++) {
-            if(creatures.get(i) instanceof Oneal) {
-                ((Oneal) creatures.get(i)).getPlayerPos(bomberman);
-            }
-            if(creatures.get(i).isFlag()) {
-                creatures.remove(creatures.get(i));
-                i--;
-            }
-        }
+        creatures.removeIf(Entity::isFlag);
         stillObjects.removeIf(Entity::isFlag);
         miscellaneous.removeIf(Entity::isFlag);
-        updateMaskMap();
+//        updateMaskMap();
     }
 
     public void render() {

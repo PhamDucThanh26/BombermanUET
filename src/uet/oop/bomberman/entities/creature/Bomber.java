@@ -40,7 +40,6 @@ public final class Bomber extends Creature {
     public Keyboard kb = new Keyboard();
     private final List<Bomb> bombs = new ArrayList<>();
 
-
     public int getBombNumber() {
         return bombNumber;
     }
@@ -83,6 +82,8 @@ public final class Bomber extends Creature {
     }
 
     public void updateMove() {
+        xVec = 0;
+        yVec = 0;
         if (kb.up) {
             yVec -= speed;
         }

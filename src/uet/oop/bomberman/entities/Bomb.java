@@ -42,10 +42,6 @@ public class Bomb extends Entity implements IAnimation {
         rightFlame.add(new Flame((xUnit + bombPower), yUnit, Sprite.explosion_horizontal_right_last.getFxImage()));
         upFlame.add(new Flame(xUnit, yUnit - bombPower, Sprite.explosion_vertical_top_last.getFxImage()));
         downFlame.add(new Flame(xUnit, yUnit + bombPower, Sprite.explosion_vertical_down_last.getFxImage()));
-        leftFlame.get(leftFlame.size() - 1).setHead(true);
-        rightFlame.get(leftFlame.size() - 1).setHead(true);
-        upFlame.get(leftFlame.size() - 1).setHead(true);
-        downFlame.get(leftFlame.size() - 1).setHead(true);
     }
 
     @Override

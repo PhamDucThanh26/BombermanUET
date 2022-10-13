@@ -10,7 +10,6 @@ import uet.oop.bomberman.entities.creature.Creature;
 import uet.oop.bomberman.entities.creature.Oneal;
 
 import static uet.oop.bomberman.BombermanGame.*;
-import static uet.oop.bomberman.entities.creature.Creature.creatures;
 
 import java.io.File;
 import java.io.FileNotFoundException;
