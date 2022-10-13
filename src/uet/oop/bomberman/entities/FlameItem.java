@@ -17,7 +17,8 @@ public class FlameItem extends Item {
     @Override
     public void update() {
         if(collision(bomberman, this)) {
-            bombPower += 1;
+            bombPower++;
+            System.out.println("Bomb Power is " + bombPower);
             this.flag = true;
         }
 

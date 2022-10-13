@@ -5,7 +5,7 @@ import javafx.scene.image.Image;
 import static uet.oop.bomberman.BombermanGame.bomberman;
 import static uet.oop.bomberman.entities.Interaction.collision;
 
-public class BombItem extends Item {
+public class BombItem extends Entity {
     public BombItem() {
     }
 
@@ -18,7 +18,8 @@ public class BombItem extends Item {
         if(collision(bomberman, this)) {
             bomberman.bombNumber++;
             this.flag = true;
+            System.out.println("Number of bomb : " + bomberman.bombNumber);
         }
-        System.out.println(bomberman.bombNumber);
+
     }
 }

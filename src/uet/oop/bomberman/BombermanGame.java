@@ -121,7 +121,7 @@ public class BombermanGame extends Application {
         stillObjects.forEach( (Entity e) -> {
             if(!(e instanceof Grass || e instanceof Portal || e instanceof Item) && collision(e, bomberman)) {
                 bomberman.setCollision(true);
-                System.out.println("collided");
+//                System.out.println("collided");
             }
         });
 

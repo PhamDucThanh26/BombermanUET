@@ -45,7 +45,7 @@ public class Map {
                         object = new Brick(i, j, Sprite.brick.getFxImage());
                     }
                     else if (s.charAt(i) == 'f') {
-                        stillObjects.add(new BombItem(i, j, Sprite.powerup_flames.getFxImage()));
+                        stillObjects.add(new FlameItem(i, j, Sprite.powerup_flames.getFxImage()));
                         object = new Brick(i, j, Sprite.brick.getFxImage());
                     } else {
                         continue;
