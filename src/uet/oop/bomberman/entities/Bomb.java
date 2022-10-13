@@ -11,6 +11,7 @@ import java.util.List;
 import static uet.oop.bomberman.BombermanGame.*;
 import static uet.oop.bomberman.entities.Interaction.collision;
 import static uet.oop.bomberman.entities.creature.Bomber.bombPower;
+import static uet.oop.bomberman.graphics.Sprite.movingSprite;
 
 public class Bomb extends Entity implements IAnimation {
     private final List<Flame> leftFlame = new ArrayList<>();
@@ -30,6 +31,12 @@ public class Bomb extends Entity implements IAnimation {
             Sprite.bomb_1.getFxImage(),
     };
 
+    final Image[] bombExplode = {
+            Sprite.bomb_exploded.getFxImage(),
+            Sprite.bomb_exploded1.getFxImage(),
+            Sprite.bomb_exploded2.getFxImage(),
+    };
+
     public Bomb(int xUnit, int yUnit, Image img, int n) {
 
         super(xUnit, yUnit, img);
@@ -44,6 +51,11 @@ public class Bomb extends Entity implements IAnimation {
         rightFlame.add(new Flame((xUnit + bombPower), yUnit, Sprite.explosion_horizontal_right_last.getFxImage()));
         upFlame.add(new Flame(xUnit, yUnit - bombPower, Sprite.explosion_vertical_top_last.getFxImage()));
         downFlame.add(new Flame(xUnit, yUnit + bombPower, Sprite.explosion_vertical_down_last.getFxImage()));
+
+        leftFlame.get(leftFlame.size() - 1).setHead(true);
+        rightFlame.get(leftFlame.size() - 1).setHead(true);
+        upFlame.get(leftFlame.size() - 1).setHead(true);
+        downFlame.get(leftFlame.size() - 1).setHead(true);
     }
 
     @Override
@@ -100,9 +112,21 @@ public class Bomb extends Entity implements IAnimation {
         updateAnimation();
         if (isExploded) {
             updateFlameList(leftFlame);
+            leftFlame.forEach(flame -> {
+                    flame.updateLeftAnimation();
+            });
             updateFlameList(rightFlame);
+            rightFlame.forEach(flame -> {
+                flame.updateRightAnimation();
+            });
             updateFlameList(upFlame);
+            upFlame.forEach(flame -> {
+                flame.updateUpAnimation();
+            });
             updateFlameList(downFlame);
+            downFlame.forEach(flame -> {
+                flame.updateDownAnimation();
+            });
         }
     }
 

@@ -77,7 +77,7 @@ public final class Bomber extends Creature {
 
     public Bomber(int x, int y, Image img) {
         super(x, y, img);
-        solidArea = new Rectangle(x, y + 8, 24, 24);
+        solidArea = new Rectangle(x, y + 6 , 24, 26);
         maskNumber = 1;
     }
 
@@ -161,7 +161,7 @@ public final class Bomber extends Creature {
         xVec = 0;
         yVec = 0;
         solidArea.setX(x);
-        solidArea.setY(y + 8);
+        solidArea.setY(y + 6);
     }
 
     @Override

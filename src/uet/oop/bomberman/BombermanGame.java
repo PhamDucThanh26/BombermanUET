@@ -119,7 +119,6 @@ public class BombermanGame extends Application {
     public void update() {
         //keyboard
         bomberman.kbUpdate();
-
         //interaction
         stillObjects.forEach( (Entity e) -> {
             if(!(e instanceof Grass || e instanceof Portal || e instanceof Item) && collision(e, bomberman)) {
