@@ -13,31 +13,31 @@ import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import uet.oop.bomberman.entities.*;
 import uet.oop.bomberman.entities.BuffItem.Item;
+import uet.oop.bomberman.entities.creature.Bomber;
 import uet.oop.bomberman.graphics.Sprite;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import static uet.oop.bomberman.entities.BuffItem.Item.miscellaneous;
+import static uet.oop.bomberman.entities.creature.Creature.creatures;
 import static uet.oop.bomberman.entities.Interaction.collision;
 import static uet.oop.bomberman.graphics.Map.*;
 
 public class BombermanGame extends Application {
     //window size
-    public static final int WIDTH = 1080;
-    public static final int HEIGHT = 720;
+    public static final int WIDTH = 640;
+    public static final int HEIGHT = 480;
 
     // stage
     public static GraphicsContext gc;
     private Canvas canvas;
 
-    // map masking
-
-
-    // game entities
-    public static List<Entity> entities = new ArrayList<>();
+    // game creatures
     public static Bomber bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
     public static List<Entity> stillObjects = new ArrayList<>();
+    public static List<Entity> backgroundTitle = new ArrayList<>();
 
     public static int heightMap;
     public static int widthMap;
@@ -50,6 +50,7 @@ public class BombermanGame extends Application {
 
         // Tao Canvas
         canvas = new Canvas(WIDTH, HEIGHT);
+
         gc = canvas.getGraphicsContext2D();
 
         // Tao root container
@@ -109,8 +110,9 @@ public class BombermanGame extends Application {
     }
 
     public void updateMaskMap() {
-        stillObjects.forEach(e -> updateMask(e));
-        entities.forEach(e ->  updateMask(e));
+        stillObjects.forEach(this::updateMask);
+        creatures.forEach(this::updateMask);
+        miscellaneous.forEach(this::updateMask);
         updateMask(bomberman);
     }
 
@@ -122,47 +124,33 @@ public class BombermanGame extends Application {
         stillObjects.forEach( (Entity e) -> {
             if(!(e instanceof Grass || e instanceof Portal || e instanceof Item) && collision(e, bomberman)) {
                 bomberman.setCollision(true);
-//                System.out.println("collided");
             }
         });
 
-        stillObjects.forEach( (Entity e) -> {
-            entities.forEach(entity -> {
-                if(collision(e, entity) && !(e instanceof Grass)) {
-                    entity.setCollision(true);
-                }
-            });
-        });
+        stillObjects.forEach( (Entity e) -> creatures.forEach(entity -> {
+            if(collision(e, entity) && !(e instanceof Grass)) {
+                entity.setCollision(true);
+            }
+        }));
+
 
         bomberman.update();
-        entities.forEach(Entity::update);
+        creatures.forEach(Entity::update);
         stillObjects.forEach(Entity::update);
+        miscellaneous.forEach(Item::update);
 
-        for(int i = 0; i < entities.size(); i++) {
-            if(entities.get(i) instanceof Oneal) {
-                ((Oneal) entities.get(i)).getPlayerPos(bomberman);
-            }
-            if(entities.get(i).isFlag()) {
-                if(entities.get(i) instanceof Bomb) {
-                    bomberman.setBombNumber(bomberman.getBombNumber() + 1);
-                }
-                entities.remove(entities.get(i));
-                i--;
-            }
-        }
-        for(int i = 0; i < stillObjects.size(); i++) {
-            if(stillObjects.get(i).isFlag()) {
-                stillObjects.remove(stillObjects.get(i));
-                i--;
-            }
-        }
-        updateMaskMap();
+        creatures.removeIf(Entity::isFlag);
+        stillObjects.removeIf(Entity::isFlag);
+        miscellaneous.removeIf(Entity::isFlag);
+//        updateMaskMap();
     }
 
     public void render() {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+        backgroundTitle.forEach(g -> g.render(gc));
+        miscellaneous.forEach(g -> g.render(gc));
         stillObjects.forEach(g -> g.render(gc));
-        entities.forEach( g -> g.render(gc));
+        creatures.forEach( g -> g.render(gc));
         bomberman.render(gc);
     }
 

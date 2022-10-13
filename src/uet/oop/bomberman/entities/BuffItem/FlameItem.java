@@ -1,11 +1,10 @@
 package uet.oop.bomberman.entities.BuffItem;
 
 import javafx.scene.image.Image;
-import uet.oop.bomberman.entities.BuffItem.Item;
 
 import static uet.oop.bomberman.BombermanGame.bomberman;
-import static uet.oop.bomberman.entities.Bomb.bombPower;
 import static uet.oop.bomberman.entities.Interaction.collision;
+import static uet.oop.bomberman.entities.creature.Bomber.bombPower;
 
 public class FlameItem extends Item {
     public FlameItem() {
