@@ -47,6 +47,10 @@ public class Map {
                     else if (s.charAt(i) == 'f') {
                         stillObjects.add(new FlameItem(i, j, Sprite.powerup_flames.getFxImage()));
                         object = new Brick(i, j, Sprite.brick.getFxImage());
+                    }
+                    else if(s.charAt(i) == 's') {
+                        stillObjects.add(new SpeedItem(i, j, Sprite.powerup_speed.getFxImage()));
+                        object = new Brick(i, j, Sprite.brick.getFxImage());
                     } else {
                         continue;
                     }

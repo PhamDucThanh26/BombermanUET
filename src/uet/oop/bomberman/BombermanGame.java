@@ -143,7 +143,7 @@ public class BombermanGame extends Application {
             }
             if(entities.get(i).isFlag()) {
                 if(entities.get(i) instanceof Bomb) {
-                    bomberman.bombNumber++;
+                    bomberman.setBombNumber(bomberman.getBombNumber() + 1);
                 }
                 entities.remove(entities.get(i));
                 i--;

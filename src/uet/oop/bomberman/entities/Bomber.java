@@ -10,8 +10,27 @@ import static uet.oop.bomberman.BombermanGame.entities;
 import static uet.oop.bomberman.entities.Bomb.bombPower;
 
 public final class Bomber extends Creature {
+
+    private int speed = 2;
     public Keyboard kb = new Keyboard();
-    public int bombNumber = 3;
+    private int bombNumber = 1;
+
+    public int getBombNumber() {
+        return bombNumber;
+    }
+
+    public void setBombNumber(int bombNumber) {
+        this.bombNumber = bombNumber;
+    }
+
+    public int getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
+
     int frameCount = 0;
     final Image[] upAnimation = {
             Sprite.player_up.getFxImage(),
@@ -23,6 +42,7 @@ public final class Bomber extends Creature {
             Sprite.player_down_1.getFxImage(),
             Sprite.player_down_2.getFxImage()
     };
+
     final Image[] leftAnimation = {
             Sprite.player_left.getFxImage(),
             Sprite.player_left_1.getFxImage(),
@@ -63,22 +83,21 @@ public final class Bomber extends Creature {
         xVec = 0;
         yVec = 0;
         if (kb.up) {
-            yVec -= 2;
+            yVec -= speed;
         }
         if (kb.down) {
-            yVec += 2;
+            yVec += speed;
         }
         if (kb.left) {
-            xVec -= 2;
+            xVec -= speed;
         }
         if (kb.right) {
-            xVec += 2;
+            xVec += speed;
         }
     }
 
     public void putBomb() {
         if (bombNumber > 0) {
-//            bombCD = 2 * FPS;
             int xpos = x / 32;
             double ypos = (double) y / 32;
             xpos = Math.round(xpos);
