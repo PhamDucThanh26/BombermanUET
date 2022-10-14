@@ -32,9 +32,10 @@ public class Bomb extends Entity implements IAnimation {
     };
 
     final Image[] bombExplode = {
-            Sprite.bomb_exploded.getFxImage(),
-            Sprite.bomb_exploded1.getFxImage(),
             Sprite.bomb_exploded2.getFxImage(),
+            Sprite.bomb_exploded2.getFxImage(),
+            Sprite.bomb_exploded1.getFxImage(),
+            Sprite.bomb_exploded.getFxImage(),
     };
 
     public Bomb(int xUnit, int yUnit, Image img, int n) {
@@ -70,11 +71,11 @@ public class Bomb extends Entity implements IAnimation {
         }
         if (isExploded) {
             animate++;
-            if(animate > 12) {
+            if(animate == 10) {
                 frameCountEx++;
                 animate = 0;
             }
-            frameCountEx %= 3;
+            frameCountEx %= 4;
             System.out.println(frameCountEx);
             img = bombExplode[frameCountEx];
         } else {

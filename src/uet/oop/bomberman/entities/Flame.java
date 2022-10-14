@@ -83,7 +83,7 @@ public class Flame extends Entity implements IAnimation {
 
     public void updateLeftAnimation() {
             animate++;
-            if (animate == 25) {
+            if (animate == 10) {
                 frameCount++;
                 animate = 0;
             }
@@ -94,12 +94,12 @@ public class Flame extends Entity implements IAnimation {
             else {
                 this.setImg(flameHeadLeftStatus[frameCount]);
             }
-            System.out.println(frameCount);
+//            System.out.println(frameCount);
     }
 
     public void updateRightAnimation() {
         animate++;
-        if (animate == 25) {
+        if (animate == 10) {
             frameCount++;
             animate = 0;
         }
@@ -110,12 +110,12 @@ public class Flame extends Entity implements IAnimation {
         else {
             this.setImg(flameHeadRightStatus[frameCount]);
         }
-        System.out.println(frameCount);
+//        System.out.println(frameCount);
     }
 
     public void updateUpAnimation() {
         animate++;
-        if (animate == 25) {
+        if (animate == 10) {
             frameCount++;
             animate = 0;
         }
@@ -126,11 +126,11 @@ public class Flame extends Entity implements IAnimation {
         else {
             this.setImg(flameHeadUpStatus[frameCount]);
 }
-        System.out.println(frameCount);
+//        System.out.println(frameCount);
     }
     public void updateDownAnimation() {
         animate++;
-        if (animate == 25) {
+        if (animate == 10) {
             frameCount++;
             animate = 0;
         }
@@ -141,7 +141,7 @@ public class Flame extends Entity implements IAnimation {
         else {
             this.setImg(flameHeadDownStatus[frameCount]);
         }
-        System.out.println(frameCount);
+//        System.out.println(frameCount);
     }
 
 

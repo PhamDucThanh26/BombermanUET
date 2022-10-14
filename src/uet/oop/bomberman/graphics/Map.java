@@ -7,6 +7,7 @@ import uet.oop.bomberman.entities.BuffItem.Item;
 import uet.oop.bomberman.entities.BuffItem.SpeedItem;
 import uet.oop.bomberman.entities.creature.Balloom;
 import uet.oop.bomberman.entities.creature.Creature;
+import uet.oop.bomberman.entities.creature.Doll;
 import uet.oop.bomberman.entities.creature.Oneal;
 
 import static uet.oop.bomberman.BombermanGame.*;
@@ -54,6 +55,10 @@ public class Map {
                     } else if (s.charAt(i) == 's') {
                         stillObjects.add(new Brick(i, j, Sprite.brick.getFxImage()));
                         object = new SpeedItem(i, j, Sprite.powerup_speed.getFxImage());
+                    }
+                    else if(s.charAt(i) == '3') {
+                        object = new Doll(i, j, Sprite.doll_left1.getFxImage());
+
                     } else {
                         continue;
                     }

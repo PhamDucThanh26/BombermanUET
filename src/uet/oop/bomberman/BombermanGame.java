@@ -56,7 +56,7 @@ public class BombermanGame extends Application {
         // Tao root container
         Group root = new Group();
         root.getChildren().add(canvas);
-        createMap(System.getProperty("user.dir") + "\\res\\levels\\Level1.txt");
+        createMap(System.getProperty("user.dir") + "\\res\\levels\\Level2.txt");
         // Tao scene
         Scene scene = new Scene(root);
 
