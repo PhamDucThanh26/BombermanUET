@@ -3,33 +3,38 @@ package uet.oop.bomberman.entities;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.stage.Screen;
 import uet.oop.bomberman.graphics.Sprite;
 
+import static uet.oop.bomberman.BombermanGame.bomberman;
+
 public abstract class Entity {
-    protected int x;
-    protected int y;
+
+    protected double x;
+    protected double y;
     protected double width;
     protected double height;
     protected boolean collision = false;
     protected boolean flag = false;
-    public int maskNumber;
+    public int NodesNumber;
     protected Image img;
 
     protected long frame = 0;
+
     public Entity() {
     }
 
     //Khởi tạo đối tượng, chuyển từ tọa độ đơn vị sang tọa độ trong canvas
-    public Entity( int xUnit, int yUnit, Image img) {
+    public Entity(double xUnit, double yUnit, Image img) {
         this.x = xUnit * Sprite.SCALED_SIZE;
         this.y = yUnit * Sprite.SCALED_SIZE;
         this.img = img;
         width = img.getWidth();
         height = img.getHeight();
-        maskNumber = '0';
+        NodesNumber = '0';
     }
 
-    public int getX() {
+    public double getX() {
         return x;
     }
 
@@ -37,7 +42,7 @@ public abstract class Entity {
         this.x = x;
     }
 
-    public int getY() {
+    public double getY() {
         return y;
     }
 
@@ -70,8 +75,16 @@ public abstract class Entity {
     }
 
     public void render(GraphicsContext gc) {
-        gc.drawImage(img, x, y);
+        double screenX = x - bomberman.getX() + bomberman.getScreenX();
+        double screenY = y - bomberman.getY() + bomberman.getScreenY();
+
+        if ( Math.abs(x - bomberman.getX()) < Sprite.WIDTH / 2 + bomberman.width
+        && Math.abs(y - bomberman.getY()) < Sprite.HEIGHT /2 + bomberman.height + 2 * Sprite.SCALED_SIZE) {
+            gc.drawImage(img, screenX, screenY);
+        }
+
     }
+
     public abstract void update();
 
     public Rectangle2D getBoundary() {

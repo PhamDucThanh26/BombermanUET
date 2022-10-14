@@ -21,7 +21,7 @@ public abstract class Creature extends Entity implements IAnimation, IGameEntity
     // collision detection
     protected Rectangle solidArea;
 
-    public Creature(int xUnit, int yUnit, Image img) {
+    public Creature(double xUnit, double yUnit, Image img) {
         super(xUnit, yUnit, img);
         solidArea = new Rectangle(x, y, width, height);
     }

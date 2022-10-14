@@ -5,7 +5,7 @@ import javafx.scene.shape.Rectangle;
 import uet.oop.bomberman.graphics.Sprite;
 
 public class Balloom extends Creature {
-    private final int pivot;
+    private final double pivot;
 
     final Image[] leftAnimation = {
             Sprite.balloom_left1.getFxImage(),
@@ -23,7 +23,7 @@ public class Balloom extends Creature {
         super(xUnit, yUnit, img);
         solidArea = new Rectangle(x + 1, y + 1, width - 2, height - 2);
         pivot = x;
-        maskNumber = 1;
+        NodesNumber = 1;
     }
 
     private double xVec = 1;

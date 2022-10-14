@@ -24,11 +24,10 @@ import static uet.oop.bomberman.entities.BuffItem.Item.miscellaneous;
 import static uet.oop.bomberman.entities.creature.Creature.creatures;
 import static uet.oop.bomberman.entities.Interaction.collision;
 import static uet.oop.bomberman.graphics.Map.*;
+import static uet.oop.bomberman.graphics.Sprite.HEIGHT;
+import static uet.oop.bomberman.graphics.Sprite.WIDTH;
 
 public class BombermanGame extends Application {
-    //window size
-    public static final int WIDTH = 640;
-    public static final int HEIGHT = 480;
 
     // stage
     public static GraphicsContext gc;
@@ -52,6 +51,7 @@ public class BombermanGame extends Application {
         canvas = new Canvas(WIDTH, HEIGHT);
 
         gc = canvas.getGraphicsContext2D();
+//        canvas.setTranslateY(300);
 
         // Tao root container
         Group root = new Group();
@@ -65,8 +65,9 @@ public class BombermanGame extends Application {
 
         //Passing FileInputStream object as a parameter
         Image img = new Image("file:res//icon.png");
+//        stage.setHeight(HEIGHT);
         stage.getIcons().add(img);
-        stage.setResizable(true);
+        stage.setResizable(false);
 
         scene.setOnKeyPressed(e -> bomberman.kb.hold(e));
         scene.setOnKeyReleased(e -> bomberman.kb.release(e));
@@ -89,15 +90,15 @@ public class BombermanGame extends Application {
         stage.show();
     }
 
-    public void updateMask(Entity entity) {
-        int posX = entity.getX();
-        int posY = entity.getY();
+    public void updateNodes(Entity entity) {
+        double posX = entity.getX();
+        double posY = entity.getY();
         int width = (int) entity.getBoundary().getWidth();
         int height = (int) entity.getBoundary().getHeight();
         try {
-            for (int i = posX; i < posX + width; i++) {
-                for (int j = posY; j < posY + height; j++) {
-                    mapMask[i][j] = entity.maskNumber;
+            for (int i = (int) posX; i < posX + width; i++) {
+                for (int j = (int) posY; j < posY + height; j++) {
+                    mapNodes[i][j] = entity.NodesNumber;
                 }
             }
         } catch (NullPointerException e) {
@@ -109,11 +110,11 @@ public class BombermanGame extends Application {
         }
     }
 
-    public void updateMaskMap() {
-        stillObjects.forEach(this::updateMask);
-        creatures.forEach(this::updateMask);
-        miscellaneous.forEach(this::updateMask);
-        updateMask(bomberman);
+    public void updateNodesMap() {
+        stillObjects.forEach(this::updateNodes);
+        creatures.forEach(this::updateNodes);
+        miscellaneous.forEach(this::updateNodes);
+        updateNodes(bomberman);
     }
 
     public void update() {
@@ -142,7 +143,7 @@ public class BombermanGame extends Application {
         creatures.removeIf(Entity::isFlag);
         stillObjects.removeIf(Entity::isFlag);
         miscellaneous.removeIf(Entity::isFlag);
-//        updateMaskMap();
+//        updateNodesMap();
     }
 
     public void render() {

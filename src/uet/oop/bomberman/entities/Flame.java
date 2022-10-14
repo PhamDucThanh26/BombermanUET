@@ -11,7 +11,7 @@ public class Flame extends Entity implements IAnimation {
         this.flag = false;
     }
 
-    public Flame(int xUnit, int yUnit, Image img) {
+    public Flame(double xUnit, double yUnit, Image img) {
         super(xUnit, yUnit, img);
     }
 

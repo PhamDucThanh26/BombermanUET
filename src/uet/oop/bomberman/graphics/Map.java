@@ -16,7 +16,7 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class Map {
-    public static int[][] mapMask = new int[WIDTH][HEIGHT];
+    public static int[][] mapNodes = new int[Sprite.maxWorldCol][Sprite.maxWorldCol];
 
     public Map() {
     }

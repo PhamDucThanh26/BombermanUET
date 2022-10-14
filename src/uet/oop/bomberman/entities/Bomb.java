@@ -28,7 +28,7 @@ public class Bomb extends Entity implements IAnimation {
             Sprite.bomb_1.getFxImage(),
     };
 
-    public Bomb(int xUnit, int yUnit, Image img, int n) {
+    public Bomb(double xUnit, double yUnit, Image img, int n) {
 
         super(xUnit, yUnit, img);
         bombPower = n;
