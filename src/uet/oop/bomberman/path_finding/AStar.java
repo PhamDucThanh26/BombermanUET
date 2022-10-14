@@ -3,7 +3,7 @@ package uet.oop.bomberman.path_finding;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.graphics.Sprite;
 
-import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.PriorityQueue;
 
 import static uet.oop.bomberman.BombermanGame.stillObjects;
@@ -15,23 +15,16 @@ public class AStar {
 
     // graph
     Node[][]  nodes;
-    PriorityQueue<Node> openNodes = new PriorityQueue<Node>( (Node n1, Node n2) -> {
-        return Integer.compare(n1.fCost, n2.fCost);
-    });
-    ArrayList<Node> pathList = new ArrayList<>();
+    PriorityQueue<Node> openNodes = new PriorityQueue<>(Comparator.comparingInt((Node n) -> n.fCost));
     boolean[][] closedNodes;
 
     Node start, end, current;
     boolean reached = false;
-    int step = 0;
 
-    public AStar(int width, int height, int startCol, int startRow, int endCol, int endRow, boolean[][] blocks) {
+    public AStar(int width, int height, int startCol, int startRow, int endCol, int endRow) {
         // graph init
         nodes = new Node[width][height];
         closedNodes = new boolean[width][height];
-
-        start = new Node(startCol, startRow);
-        end = new Node(endCol, endRow);
 
         // heuristic init
         for(int i = 0; i < nodes.length; i++) {
@@ -41,6 +34,10 @@ public class AStar {
                 nodes[i][j].solution = false;
             }
         }
+
+        start = nodes[startCol][startRow];
+        end = nodes[endCol][endRow];
+
         nodes[startCol][startRow].fCost = 0;
 
         try {
@@ -61,17 +58,15 @@ public class AStar {
     }
 
     public void setStart(int i, int j) {
-        start.col = i;
-        start.row = j;
+        start = nodes[i][j];
     }
 
     public void setEnd(int i, int j) {
-        start.col = i;
-        start.row = j;
+        end = nodes[i][j];
     }
 
     public void updateCost(Node current, Node connectingNode, int gCost) {
-        // if connecting nodde is a still object, or it is checked
+        // if connecting node is a still object, or it is checked
         if( connectingNode == null || closedNodes[connectingNode.col][connectingNode.col]) {
             return;
         }
@@ -93,12 +88,12 @@ public class AStar {
     }
 
     /**
-     * Pseudocode for A-star
-     *
+     * Pseudocode for A-star.
+     * ---
      * 1. Let P = starting point.
      * 2. Assign f, g and h values to P. - preprocessing step
      * 3. Add P to the Open list. At this point, P is the only node on the Open list.
-     * 4. Let B = the best node from the Open list (i.e. the node that has the lowest fvalue).
+     * 4. Let B = the best node from the Open list (i.e. the node that has the lowest f-value).
      *     a. If B is the goal node, then quit – a path has been found.
      *     b. If the Open list is empty, then quit – a path cannot be found
      * 5. Let C = a valid node connected to B.
@@ -120,6 +115,7 @@ public class AStar {
             current = openNodes.poll();
 
             if(current == null) {
+                reached = false;
                 break;
             }
 
@@ -174,7 +170,28 @@ public class AStar {
         }
     }
 
-    public void display() {
+    // reset upon changing in map's still object
+    public void reset(int startCol, int startRow, int endCol, int endRow) {
+        // heuristic init
+        for(int i = 0; i < nodes.length; i++) {
+            for (int j = 0; j < nodes.length; j++) {
+                nodes[i][j] = new Node(i, j);
+                nodes[i][j].hCost = Math.abs(i - endCol) + Math.abs(j - endRow);
+                nodes[i][j].solution = false;
+            }
+        }
 
+        setStart(startCol, startRow);
+        setEnd(endCol, endRow);
+
+        start.fCost = 0;
+
+        // clear openNodes and closeNodes
+        openNodes.clear();
+        for(int i = 0; i < closedNodes.length; i++) {
+            for(int j = 0; j < closedNodes[0].length; j++) {
+                closedNodes[i][j] = false;
+            }
+        }
     }
 }

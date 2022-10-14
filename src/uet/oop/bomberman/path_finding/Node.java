@@ -14,9 +14,7 @@ public class Node {
     int fCost; // final cost
 
     // calculation
-    boolean open;   // open node
     boolean solution;
-    boolean checked; // closed node
 
     public Node(int col, int row) {
         this.col = col;
