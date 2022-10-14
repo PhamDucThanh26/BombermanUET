@@ -26,6 +26,8 @@ import static uet.oop.bomberman.entities.BuffItem.Item.miscellaneous;
 import static uet.oop.bomberman.entities.creature.Creature.creatures;
 import static uet.oop.bomberman.entities.Interaction.collision;
 import static uet.oop.bomberman.graphics.Map.*;
+import static uet.oop.bomberman.graphics.Sprite.HEIGHT;
+import static uet.oop.bomberman.graphics.Sprite.WIDTH;
 
 public class BombermanGame extends Application {
     //window size
@@ -141,7 +143,7 @@ public class BombermanGame extends Application {
         creatures.removeIf(Entity::isFlag);
         stillObjects.removeIf(Entity::isFlag);
         miscellaneous.removeIf(Entity::isFlag);
-//        updateMaskMap();
+//        updateNodesMap();
     }
 
     public void render() {

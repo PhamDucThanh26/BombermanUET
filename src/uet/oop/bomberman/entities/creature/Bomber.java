@@ -18,7 +18,7 @@ import static uet.oop.bomberman.BombermanGame.WIDTH;
 public final class Bomber extends Creature {
     protected double screenX;
     protected double screenY;
-    protected final Image[] upAnimation = {
+    final Image[] upAnimation = {
             Sprite.player_up.getFxImage(),
             Sprite.player_up_1.getFxImage(),
             Sprite.player_up_2.getFxImage()
@@ -100,8 +100,9 @@ public final class Bomber extends Creature {
     public Bomber(double x, double y, Image img) {
         super(x, y, img);
 
-        screenX = WIDTH / 2;
-        screenY = HEIGHT / 2;
+        screenX = Sprite.WIDTH / 2;
+        screenY = Sprite.HEIGHT /2 - 2 * Sprite.SCALED_SIZE;
+
         solidArea = new Rectangle(x, y + 8, 24, 24);
         NodesNumber = 1;
     }
@@ -124,12 +125,12 @@ public final class Bomber extends Creature {
     }
 
     public void putBomb() {
-        if (bombs.size() < bombNumber) {
+        if (bombs.size() <= bombNumber) {
             double xpos = x / 32;
             double ypos = (double) y / 32;
             xpos = Math.round(xpos);
             ypos = Math.round(ypos);
-            bombs.add(new Bomb((int) xpos, (int) ypos, Sprite.bomb.getFxImage(), bombPower));
+            bombs.add(new Bomb(xpos, ypos, Sprite.bomb.getFxImage(), bombPower));
         }
     }
 

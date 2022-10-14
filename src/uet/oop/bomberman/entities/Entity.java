@@ -15,10 +15,11 @@ public abstract class Entity {
     protected double height;
     protected boolean collision = false;
     protected boolean flag = false;
+    public int NodesNumber;
     protected Image img;
 
     protected long frame = 0;
-    public int NodesNumber;
+
     public Entity() {
     }
 
