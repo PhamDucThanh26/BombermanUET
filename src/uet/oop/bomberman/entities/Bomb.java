@@ -64,9 +64,9 @@ public class Bomb extends Entity implements IAnimation {
 
     @Override
     public void updateAnimation() {
-        if (frame > 2 * FPS) {
+        if (frame > 3 * FPS) {
             flag = true;
-        } else if (frame == (int) (1.5 * FPS)) {
+        } else if (frame == (int) (2.5 * FPS)) {
             isExploded = true;
             bombExplosion.playBombExplosion();
         } else if ((frame + 1) % 20 == 0) {

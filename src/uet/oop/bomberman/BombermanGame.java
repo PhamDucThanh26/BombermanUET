@@ -30,6 +30,8 @@ public class BombermanGame extends Application {
     //window size
 
     private Sound backGround = new Sound();
+
+    private Sound startStage = new Sound();
     public static final int WIDTH = 640;
     public static final int HEIGHT = 480;
 
@@ -60,6 +62,7 @@ public class BombermanGame extends Application {
         Group root = new Group();
         root.getChildren().add(canvas);
         createMap(System.getProperty("user.dir") + "\\res\\levels\\Level2.txt");
+        startStage.playStartStage();
         backGround.playBackGround();
         // Tao scene
         Scene scene = new Scene(root);

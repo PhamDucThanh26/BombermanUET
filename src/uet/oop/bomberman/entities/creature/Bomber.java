@@ -39,7 +39,7 @@ public final class Bomber extends Creature {
 
     private int bombNumber = 1;
     public static int bombPower = 1;
-    private int speed = 2;
+    private int speed = 1;
     public Keyboard kb = new Keyboard();
     private final List<Bomb> bombs = new ArrayList<>();
 

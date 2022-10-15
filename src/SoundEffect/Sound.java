@@ -17,7 +17,7 @@ public class Sound {
     public static String monsterDie = "res\\sound\\monster_die.wav";
     public static String newBomb = "res\\sound\\newbomb.wav";
     public static String win = "res\\sound\\win.wav";
-    public static String backgroundGame = "res\\sound\\2stepfromhell.wav";
+    public static String backgroundGame = "res\\sound\\bg_sound.wav";
     public static String playGame = "res\\sound\\playgame.mid";
     public static String destroy = "res\\sound\\destroy.wav";
 
@@ -82,7 +82,7 @@ public class Sound {
     }
 
     public void playBackGround() {
-        this.play(backgroundGame, MediaPlayer.INDEFINITE);
+        this.play(backgroundGame, 1);
     }
 }
 
