@@ -1,5 +1,6 @@
 package uet.oop.bomberman.entities;
 
+import SoundEffect.Sound;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.graphics.IAnimation;
@@ -14,6 +15,8 @@ import static uet.oop.bomberman.entities.creature.Bomber.bombPower;
 import static uet.oop.bomberman.graphics.Sprite.movingSprite;
 
 public class Bomb extends Entity implements IAnimation {
+
+    protected Sound bombExplosion = new Sound();
     private final List<Flame> leftFlame = new ArrayList<>();
     private final List<Flame> rightFlame = new ArrayList<>();
     private final List<Flame> upFlame = new ArrayList<>();
@@ -63,8 +66,9 @@ public class Bomb extends Entity implements IAnimation {
     public void updateAnimation() {
         if (frame > 2 * FPS) {
             flag = true;
-        } else if (frame > (int) (1.5 * FPS)) {
+        } else if (frame == (int) (1.5 * FPS)) {
             isExploded = true;
+            bombExplosion.playBombExplosion();
         } else if ((frame + 1) % 20 == 0) {
             frameCount++;
             frameCount %= 4;
@@ -112,22 +116,23 @@ public class Bomb extends Entity implements IAnimation {
         frame = getCurrentFrame();
         updateAnimation();
         if (isExploded) {
-            updateFlameList(leftFlame);
-            leftFlame.forEach(flame -> {
+                updateFlameList(leftFlame);
+                leftFlame.forEach(flame -> {
                     flame.updateLeftAnimation();
-            });
-            updateFlameList(rightFlame);
-            rightFlame.forEach(flame -> {
-                flame.updateRightAnimation();
-            });
-            updateFlameList(upFlame);
-            upFlame.forEach(flame -> {
-                flame.updateUpAnimation();
-            });
-            updateFlameList(downFlame);
-            downFlame.forEach(flame -> {
-                flame.updateDownAnimation();
-            });
+                });
+                updateFlameList(rightFlame);
+                rightFlame.forEach(flame -> {
+                    flame.updateRightAnimation();
+                });
+                updateFlameList(upFlame);
+                upFlame.forEach(flame -> {
+                    flame.updateUpAnimation();
+                });
+                updateFlameList(downFlame);
+                downFlame.forEach(flame -> {
+                    flame.updateDownAnimation();
+                });
+
         }
     }
 

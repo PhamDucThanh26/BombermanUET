@@ -1,5 +1,6 @@
 package uet.oop.bomberman.graphics;
 
+import SoundEffect.Sound;
 import uet.oop.bomberman.entities.*;
 import uet.oop.bomberman.entities.BuffItem.BombItem;
 import uet.oop.bomberman.entities.BuffItem.FlameItem;

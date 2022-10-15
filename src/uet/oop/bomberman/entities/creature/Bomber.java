@@ -1,5 +1,6 @@
 package uet.oop.bomberman.entities.creature;
 
+import SoundEffect.Sound;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.shape.Rectangle;
 import uet.oop.bomberman.entities.Bomb;
@@ -11,7 +12,7 @@ import uet.oop.bomberman.user_input.Keyboard;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class Bomber extends Creature {
+public final class Bomber extends Creature {  
     final Image[] upAnimation = {
             Sprite.player_up.getFxImage(),
             Sprite.player_up_1.getFxImage(),
@@ -33,6 +34,8 @@ public final class Bomber extends Creature {
             Sprite.player_right_1.getFxImage(),
             Sprite.player_right_2.getFxImage()
     };
+
+    private Sound bombSound = new Sound();
 
     private int bombNumber = 1;
     public static int bombPower = 1;
@@ -99,7 +102,8 @@ public final class Bomber extends Creature {
     }
 
     public void putBomb() {
-        if (bombs.size() <= bombNumber) {
+        if (bombs.size() < bombNumber) {
+            bombSound.playPlaceNewBomb();
             int xpos = x / 32;
             double ypos = (double) y / 32;
             xpos = Math.round(xpos);

@@ -17,7 +17,7 @@ public class BombItem extends Item {
     public void update() {
         if(collision(bomberman, this)) {
             bomberman.setBombNumber(bomberman.getBombNumber() + 1);
-            this.flag = true;
+            super.update();
 //            System.out.println("Number of bomb : " + bomberman.getBombNumber());
         }
     }

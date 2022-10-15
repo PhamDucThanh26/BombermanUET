@@ -2,6 +2,7 @@ package SoundEffect;
 
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.util.Duration;
 
 import java.io.File;
 
@@ -23,11 +24,13 @@ public class Sound {
     public Sound() {
     }
 
-    public static void play(String filePath) {
+    public void play(String filePath, int loop) {
 
         try {
             String path = new File(filePath).toURI().toString();
             MediaPlayer player = new MediaPlayer(new Media(path));
+            player.setCycleCount(loop);
+            player.seek(Duration.ZERO);
             player.play();
         } catch (Exception e) {
             e.printStackTrace();
@@ -36,49 +39,50 @@ public class Sound {
 
     }
 
-    public static void playDestroy() {
-        Sound.play(destroy);
+    public void playDestroy() {
+        this.play(destroy, 1);
     }
 
-    public static void playBombExplosion() {
-        Sound.play(bombExplosion);
+    public void playBombExplosion() {
+
+        this.play(bombExplosion, 1);
     }
 
-    public static void playStartStage() {
-        Sound.play(startStage);
+    public void playStartStage() {
+        this.play(startStage, 1);
     }
 
-    public static void playBomberDie() {
-        Sound.play(bomberDie);
+    public void playBomberDie() {
+        this.play(bomberDie, 1);
     }
 
-    public static void playGetNewItem() {
-        Sound.play(item);
+    public void playGetNewItem() {
+        this.play(item, 1);
     }
 
-    public static void playLose() {
-        Sound.play(lose);
+    public void playLose() {
+        this.play(lose, 1);
     }
 
-    public static void playMenu() {
-        Sound.play(menu);
+    public void playMenu() {
+        this.play(menu, MediaPlayer.INDEFINITE);
     }
 
-    public static void playMonsterDie() {
-        Sound.play(monsterDie);
+    public void playMonsterDie() {
+        this.play(monsterDie, 1);
     }
 
-    public static void playPlaceNewBomb() {
-        Sound.play(newBomb);
+    public void playPlaceNewBomb() {
+        this.play(newBomb, 1);
 
     }
 
-    public static void playWin() {
-        Sound.play(win);
+    public void playWin() {
+        this.play(win, 1);
     }
 
-    public static void playBackGround() {
-        Sound.play(backgroundGame);
+    public void playBackGround() {
+        this.play(backgroundGame, MediaPlayer.INDEFINITE);
     }
 }
 

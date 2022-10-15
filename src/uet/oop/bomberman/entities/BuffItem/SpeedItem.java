@@ -16,7 +16,7 @@ public class SpeedItem extends Item {
     @Override
     public void update() {
         if(collision(bomberman, this)) {
-           this.flag = true;
+           super.update();
            bomberman.setSpeed(bomberman.getSpeed() * 2);
 //            System.out.println("Your speed is: " + bomberman.getSpeed());
         }
