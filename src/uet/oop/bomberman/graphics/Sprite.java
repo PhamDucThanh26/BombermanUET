@@ -9,6 +9,21 @@ public class Sprite {
 	
 	public static final int DEFAULT_SIZE = 16;
 	public static final int SCALED_SIZE = DEFAULT_SIZE * 2;
+
+
+	//window size
+	public static final int maxScreenCol = 24;
+	public static final int maxScreenRow = 18;
+	public static final int WIDTH = maxScreenCol * SCALED_SIZE;
+	public static final int HEIGHT = maxScreenRow * SCALED_SIZE;
+
+	// World setting
+	public static final int maxWorldCol = 50;
+	public static final int maxWorldRow = 50;
+
+	public static final int worldWidth = maxWorldCol * SCALED_SIZE;
+	public static final int worldHeight = maxWorldRow * SCALED_SIZE;
+
     private static final int TRANSPARENT_COLOR = 0xffff00ff;
 	public final int SIZE;
 	private int _x, _y;

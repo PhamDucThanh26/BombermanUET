@@ -14,7 +14,6 @@ public abstract class Creature extends Entity implements IAnimation, IGameEntity
     public static List<Creature> creatures = new ArrayList<>();
     protected int frameCount = 0;
 
-
     // movement vector
     protected int xVec = 0;
     protected int yVec = 0;
@@ -22,20 +21,9 @@ public abstract class Creature extends Entity implements IAnimation, IGameEntity
     // collision detection
     protected Rectangle solidArea;
 
-    protected int solidX;
-
-    protected int solidY;
-
-    protected int solidWidth;
-
-    protected int solidHeight;
-    public Creature(int xUnit, int yUnit, Image img) {
+    public Creature(double xUnit, double yUnit, Image img) {
         super(xUnit, yUnit, img);
         solidArea = new Rectangle(x, y, width, height);
-        solidX = (int)solidArea.getX();
-        solidY = (int)solidArea.getY();
-        solidWidth = (int)solidArea.getWidth();
-        solidHeight = (int)solidArea.getHeight();
     }
     long startTime = System.currentTimeMillis();
 

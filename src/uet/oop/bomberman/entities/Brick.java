@@ -21,7 +21,7 @@ public class Brick extends Entity implements IAnimation {
 
     public Brick(int x, int y, Image img) {
         super(x, y, img);
-        maskNumber = 1;
+        NodesNumber = 1;
     }
 
     public void setExploded(boolean exploded) {

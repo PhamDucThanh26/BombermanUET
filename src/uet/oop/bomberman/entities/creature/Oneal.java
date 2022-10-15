@@ -8,8 +8,8 @@ import uet.oop.bomberman.graphics.Sprite;
 import static uet.oop.bomberman.BombermanGame.bomberman;
 
 public class Oneal extends Creature {
-    int playerX;
-    int playerY;
+    private double playerX;
+    private double playerY;
     final Image[] leftAnimation = {
             Sprite.oneal_left1.getFxImage(),
             Sprite.oneal_left2.getFxImage(),
@@ -22,7 +22,7 @@ public class Oneal extends Creature {
             Sprite.oneal_right3.getFxImage()
     };
 
-    public Oneal(int xUnit, int yUnit, Image img) {
+    public Oneal(double xUnit, double yUnit, Image img) {
         super(xUnit, yUnit, img);
         solidArea = new Rectangle(x + 1, y + 1, width - 2, height - 2);
     }
@@ -59,11 +59,10 @@ public class Oneal extends Creature {
 
     @Override
     public void update() {
-        getPlayerPos(bomberman);
         super.update();
+        getPlayerPos(bomberman);
         move();
         updateAnimation();
-        xVec = (x - playerX) > 0 ? -1 : 1;
-        yVec = (y - playerY) > 0 ? -1 : 1;
+
     }
 }

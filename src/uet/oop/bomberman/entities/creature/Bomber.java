@@ -12,7 +12,9 @@ import uet.oop.bomberman.user_input.Keyboard;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class Bomber extends Creature {  
+public final class Bomber extends Creature {
+    protected double screenX;
+    protected double screenY;
     final Image[] upAnimation = {
             Sprite.player_up.getFxImage(),
             Sprite.player_up_1.getFxImage(),
@@ -59,7 +61,23 @@ public final class Bomber extends Creature {
         this.speed = speed;
     }
 
-//    public static int[] bomberMask = {
+    public double getScreenX() {
+        return screenX;
+    }
+
+    public void setScreenX(double screenX) {
+        this.screenX = screenX;
+    }
+
+    public double getScreenY() {
+        return screenY;
+    }
+
+    public void setScreenY(double screenY) {
+        this.screenY = screenY;
+    }
+
+    //    public static int[] bomberNodes = {
 //            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 //            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 //            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -78,10 +96,14 @@ public final class Bomber extends Creature {
 //            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 //    };
 
-    public Bomber(int x, int y, Image img) {
+    public Bomber(double x, double y, Image img) {
         super(x, y, img);
-        solidArea = new Rectangle(x, y + 6 , 24, 26);
-        maskNumber = 1;
+
+        screenX = Sprite.WIDTH / 2;
+        screenY = Sprite.HEIGHT /2 - 2 * Sprite.SCALED_SIZE;
+
+        solidArea = new Rectangle(x, y + 8, 24, 24);
+        NodesNumber = 1;
     }
 
     public void updateMove() {
@@ -102,8 +124,7 @@ public final class Bomber extends Creature {
     }
 
     public void putBomb() {
-        if (bombs.size() < bombNumber) {
-            bombSound.playPlaceNewBomb();
+        if (bombs.size() <= bombNumber) {
             int xpos = x / 32;
             double ypos = (double) y / 32;
             xpos = Math.round(xpos);
@@ -165,12 +186,12 @@ public final class Bomber extends Creature {
         xVec = 0;
         yVec = 0;
         solidArea.setX(x);
-        solidArea.setY(y + 6);
+        solidArea.setY(y + 8);
     }
 
     @Override
     public void render(GraphicsContext gc) {
         bombs.forEach(bomb -> bomb.render(gc));
-        super.render(gc);
+        gc.drawImage(img, screenX, screenY);
     }
 }

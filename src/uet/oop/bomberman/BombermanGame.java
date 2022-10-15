@@ -16,6 +16,7 @@ import uet.oop.bomberman.entities.*;
 import uet.oop.bomberman.entities.BuffItem.Item;
 import uet.oop.bomberman.entities.creature.Bomber;
 import uet.oop.bomberman.graphics.Sprite;
+import uet.oop.bomberman.path_finding.AStar;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -28,9 +29,7 @@ import static uet.oop.bomberman.graphics.Map.*;
 
 public class BombermanGame extends Application {
     //window size
-
     private Sound backGround = new Sound();
-
     private Sound startStage = new Sound();
     public static final int WIDTH = 640;
     public static final int HEIGHT = 480;
@@ -73,7 +72,7 @@ public class BombermanGame extends Application {
         //Passing FileInputStream object as a parameter
         Image img = new Image("file:res//icon.png");
         stage.getIcons().add(img);
-        stage.setResizable(true);
+        stage.setResizable(false);
 
         scene.setOnKeyPressed(e -> bomberman.kb.hold(e));
         scene.setOnKeyReleased(e -> bomberman.kb.release(e));
@@ -92,19 +91,23 @@ public class BombermanGame extends Application {
         };
         timer.start();
 
+        AStar algo = new AStar(Sprite.maxWorldCol, Sprite.maxWorldRow, 1, 1, 17, 9);
+        algo.algorithmProcessing();
+        algo.printPath();
+
         stage.setScene(scene);
         stage.show();
     }
 
-    public void updateMask(Entity entity) {
-        int posX = entity.getX();
-        int posY = entity.getY();
+    public void updateNodes(Entity entity) {
+        double posX = entity.getX();
+        double posY = entity.getY();
         int width = (int) entity.getBoundary().getWidth();
         int height = (int) entity.getBoundary().getHeight();
         try {
-            for (int i = posX; i < posX + width; i++) {
-                for (int j = posY; j < posY + height; j++) {
-                    mapMask[i][j] = entity.maskNumber;
+            for (int i = (int) posX; i < posX + width; i++) {
+                for (int j = (int) posY; j < posY + height; j++) {
+                    mapNodes[i][j] = entity.NodesNumber;
                 }
             }
         } catch (NullPointerException e) {
@@ -116,16 +119,17 @@ public class BombermanGame extends Application {
         }
     }
 
-    public void updateMaskMap() {
-        stillObjects.forEach(this::updateMask);
-        creatures.forEach(this::updateMask);
-        miscellaneous.forEach(this::updateMask);
-        updateMask(bomberman);
+    public void updateNodesMap() {
+        stillObjects.forEach(this::updateNodes);
+        creatures.forEach(this::updateNodes);
+        miscellaneous.forEach(this::updateNodes);
+        updateNodes(bomberman);
     }
 
     public void update() {
         //keyboard
         bomberman.kbUpdate();
+
         //interaction
         stillObjects.forEach( (Entity e) -> {
             if(!(e instanceof Grass || e instanceof Portal || e instanceof Item) && collision(e, bomberman)) {
