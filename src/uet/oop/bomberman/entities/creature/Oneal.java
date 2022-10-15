@@ -63,7 +63,6 @@ public class Oneal extends Creature {
         getPlayerPos(bomberman);
         move();
         updateAnimation();
-        xVec = (x - playerX) > 0 ? -1 : 1;
-        yVec = (y - playerY) > 0 ? -1 : 1;
+
     }
 }

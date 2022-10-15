@@ -3,28 +3,25 @@ package uet.oop.bomberman.path_finding;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.graphics.Sprite;
 
-import java.util.Comparator;
-import java.util.PriorityQueue;
+import java.util.*;
 
 import static uet.oop.bomberman.BombermanGame.stillObjects;
 
 public class AStar {
     // final cost
-    public static final int V_H_COST = 10;
+    public static final int V_H_COST = 10; // Vertical and horizontal g-cost
     public static final int D_COST = 14;    // Pythagoras theorem
 
     // graph
     Node[][]  nodes;
     PriorityQueue<Node> openNodes = new PriorityQueue<>(Comparator.comparingInt((Node n) -> n.fCost));
-    boolean[][] closedNodes;
+    List<Node> closedNodes = new ArrayList<>();
 
     Node start, end, current;
-    boolean reached = false;
 
     public AStar(int width, int height, int startCol, int startRow, int endCol, int endRow) {
         // graph init
         nodes = new Node[width][height];
-        closedNodes = new boolean[width][height];
 
         // heuristic init
         for(int i = 0; i < nodes.length; i++) {
@@ -67,7 +64,7 @@ public class AStar {
 
     public void updateCost(Node current, Node connectingNode, int gCost) {
         // if connecting node is a still object, or it is checked
-        if( connectingNode == null || closedNodes[connectingNode.col][connectingNode.col]) {
+        if( connectingNode == null || closedNodes.contains(connectingNode)) {
             return;
         }
 
@@ -103,7 +100,7 @@ public class AStar {
      * lower f-value).
      *             1. If so update the path.
      *             ii. Else, add C to the Open list.
-     *     c. Repeat step 5 for all valid children of B.
+     *     c. Repeat step 5 for all valid children of B. Add B to Closed list
      * 6. Repeat from step 4.
      */
     public void algorithmProcessing() {
@@ -115,9 +112,10 @@ public class AStar {
             current = openNodes.poll();
 
             if(current == null) {
-                reached = false;
                 break;
             }
+
+            closedNodes.add(current);
 
             if(current.equals(end)) {
                 return;
@@ -188,10 +186,26 @@ public class AStar {
 
         // clear openNodes and closeNodes
         openNodes.clear();
-        for(int i = 0; i < closedNodes.length; i++) {
-            for(int j = 0; j < closedNodes[0].length; j++) {
-                closedNodes[i][j] = false;
+        closedNodes.clear();
+    }
+
+    public void printPath() {
+        if(closedNodes.contains(end)) {
+            Node current = end;
+            Stack<Node> path = new Stack<>();
+            path.push(current);
+            while(current.parent != start) {
+                current = current.parent;
+                path.push(current);
             }
+            System.out.print(start);
+            while (!path.isEmpty()) {
+                System.out.print( " -> " + path.peek());
+                path.pop();
+            }
+            System.out.println();
+        } else {
+            System.out.println("no possible path");
         }
     }
 }

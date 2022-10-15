@@ -15,6 +15,7 @@ import uet.oop.bomberman.entities.*;
 import uet.oop.bomberman.entities.BuffItem.Item;
 import uet.oop.bomberman.entities.creature.Bomber;
 import uet.oop.bomberman.graphics.Sprite;
+import uet.oop.bomberman.path_finding.AStar;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -86,6 +87,10 @@ public class BombermanGame extends Application {
         };
         timer.start();
 
+        AStar algo = new AStar(Sprite.maxWorldCol, Sprite.maxWorldRow, 1, 1, 17, 9);
+        algo.algorithmProcessing();
+        algo.printPath();
+
         stage.setScene(scene);
         stage.show();
     }
@@ -133,7 +138,6 @@ public class BombermanGame extends Application {
                 entity.setCollision(true);
             }
         }));
-
 
         bomberman.update();
         creatures.forEach(Entity::update);
