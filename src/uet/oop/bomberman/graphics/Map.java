@@ -58,7 +58,6 @@ public class Map {
                         object = new SpeedItem(i, j, Sprite.powerup_speed.getFxImage());
                     } else if (s.charAt(i) == '3') {
                         object = new Doll(i, j, Sprite.doll_left1.getFxImage());
-
                     } else {
                         continue;
                     }

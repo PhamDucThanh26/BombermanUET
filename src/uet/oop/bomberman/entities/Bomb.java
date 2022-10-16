@@ -38,7 +38,7 @@ public class Bomb extends Entity implements IAnimation {
             Sprite.bomb_exploded.getFxImage(),
     };
 
-    public Bomb(int xUnit, int yUnit, Image img, int n) {
+    public Bomb(double xUnit, double yUnit, Image img, int n) {
 
         super(xUnit, yUnit, img);
         bombPower = n;
@@ -77,7 +77,6 @@ public class Bomb extends Entity implements IAnimation {
                 animate = 0;
             }
             frameCountEx %= 4;
-            System.out.println(frameCountEx);
             img = bombExplode[frameCountEx];
         } else {
             img = activeBomb[frameCount];

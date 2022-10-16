@@ -30,11 +30,6 @@ import static uet.oop.bomberman.graphics.Sprite.HEIGHT;
 import static uet.oop.bomberman.graphics.Sprite.WIDTH;
 
 public class BombermanGame extends Application {
-    //window size
-    private Sound backGround = new Sound();
-    private Sound startStage = new Sound();
-    public static final int WIDTH = 640;
-    public static final int HEIGHT = 480;
 
     // stage
     public static GraphicsContext gc;
@@ -84,6 +79,8 @@ public class BombermanGame extends Application {
             }
         };
         timer.start();
+
+//        Thread there
 
         AStar algo = new AStar(Sprite.maxWorldCol, Sprite.maxWorldRow, 1, 1, 17, 9);
         algo.algorithmProcessing();
