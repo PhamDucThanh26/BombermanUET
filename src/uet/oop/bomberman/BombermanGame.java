@@ -36,7 +36,7 @@ public class BombermanGame extends Application {
     private Canvas canvas;
 
     // game creatures
-    public static Bomber bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
+    public static Bomber bomberman = new Bomber(2, 2, Sprite.player_right.getFxImage());
     public static List<Entity> stillObjects = new ArrayList<>();
     public static List<Entity> backgroundTitle = new ArrayList<>();
 
@@ -87,9 +87,9 @@ public class BombermanGame extends Application {
 
 //        Thread there
 
-        AStar algo = new AStar(Sprite.maxWorldCol, Sprite.maxWorldRow, 1, 1, 17, 9);
-        algo.algorithmProcessing();
-        algo.printPath();
+//        AStar algo = new AStar(Sprite.maxWorldCol, Sprite.maxWorldRow, 1, 1, 17, 9);
+//        algo.algorithmProcessing();
+//        algo.printPath();
 
         stage.setScene(scene);
         stage.show();
