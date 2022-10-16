@@ -64,6 +64,7 @@ public class BombermanGame extends Application {
         createMap(System.getProperty("user.dir") + "\\res\\levels\\Level2.txt");
         startStage.playStartStage();
         backGround.playBackGround();
+
         // Tao scene
         Scene scene = new Scene(root);
         // Them scene vao stage
