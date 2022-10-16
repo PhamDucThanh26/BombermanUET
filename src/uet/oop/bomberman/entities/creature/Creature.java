@@ -13,11 +13,9 @@ import java.util.List;
 public abstract class Creature extends Entity implements IAnimation, IGameEntity {
     public static List<Creature> creatures = new ArrayList<>();
     protected int frameCount = 0;
-
     // movement vector
     protected int xVec = 0;
     protected int yVec = 0;
-
     // collision detection
     protected Rectangle solidArea;
 

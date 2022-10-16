@@ -78,9 +78,9 @@ public abstract class Entity {
         double screenX = x - bomberman.getX() + bomberman.getScreenX();
         double screenY = y - bomberman.getY() + bomberman.getScreenY();
 
-        if ( Math.abs(x - bomberman.getX()) < Sprite.WIDTH / 2 + bomberman.width
-        && Math.abs(y - bomberman.getY()) < Sprite.HEIGHT /2 + bomberman.height + 2 * Sprite.SCALED_SIZE) {
-            gc.drawImage(img, screenX, screenY);
+        if (Math.abs(x - bomberman.getX()) < Sprite.WIDTH / 2 + bomberman.width
+                && Math.abs(y - bomberman.getY()) < Sprite.HEIGHT / 2 + bomberman.height + 2 * Sprite.SCALED_SIZE) {
+            gc.drawImage(img, screenX , screenY );
         }
 
     }

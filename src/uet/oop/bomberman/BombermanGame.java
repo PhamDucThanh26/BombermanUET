@@ -31,8 +31,8 @@ public class BombermanGame extends Application {
     //window size
     private Sound backGround = new Sound();
     private Sound startStage = new Sound();
-    public static final int WIDTH = 640;
-    public static final int HEIGHT = 480;
+    public static final int WIDTH = 448;
+    public static final int HEIGHT = 384;
 
     // stage
     public static GraphicsContext gc;
@@ -65,10 +65,8 @@ public class BombermanGame extends Application {
         backGround.playBackGround();
         // Tao scene
         Scene scene = new Scene(root);
-
         // Them scene vao stage
         stage.setTitle("Bomberman");
-
         //Passing FileInputStream object as a parameter
         Image img = new Image("file:res//icon.png");
         stage.getIcons().add(img);
@@ -76,12 +74,6 @@ public class BombermanGame extends Application {
 
         scene.setOnKeyPressed(e -> bomberman.kb.hold(e));
         scene.setOnKeyReleased(e -> bomberman.kb.release(e));
-
-//        mediaPlayer.setOnEndOfMedia(new Runnable() {
-//            public void run() {
-//                mediaPlayer.seek(Duration.ZERO);
-//            }
-//        });
          AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long l) {
@@ -142,13 +134,10 @@ public class BombermanGame extends Application {
                 entity.setCollision(true);
             }
         }));
-
-
         bomberman.update();
         creatures.forEach(Entity::update);
         stillObjects.forEach(Entity::update);
         miscellaneous.forEach(Item::update);
-
         creatures.removeIf(Entity::isFlag);
         stillObjects.removeIf(Entity::isFlag);
         miscellaneous.removeIf(Entity::isFlag);
@@ -162,13 +151,5 @@ public class BombermanGame extends Application {
         stillObjects.forEach(g -> g.render(gc));
         creatures.forEach( g -> g.render(gc));
         bomberman.render(gc);
-    }
-
-    MediaPlayer mediaPlayer;
-    public void music() {
-        File path = new File(System.getProperty("user.dir") + "\\res\\audio\\Nokia-ringtone-arabic.mp3");
-        Media h = new Media(path.toURI().toString());
-        mediaPlayer = new MediaPlayer(h);
-        mediaPlayer.play();
     }
 }

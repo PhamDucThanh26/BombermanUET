@@ -15,30 +15,28 @@ import java.util.List;
 public final class Bomber extends Creature {
     protected double screenX;
     protected double screenY;
-    final Image[] upAnimation = {
+    protected final Image[] upAnimation = {
             Sprite.player_up.getFxImage(),
             Sprite.player_up_1.getFxImage(),
             Sprite.player_up_2.getFxImage()
     };
-    final Image[] downAnimation = {
+    protected final Image[] downAnimation = {
             Sprite.player_down.getFxImage(),
             Sprite.player_down_1.getFxImage(),
             Sprite.player_down_2.getFxImage()
     };
 
-    final Image[] leftAnimation = {
+    protected final Image[] leftAnimation = {
             Sprite.player_left.getFxImage(),
             Sprite.player_left_1.getFxImage(),
             Sprite.player_left_2.getFxImage()
     };
-    final Image[] rightAnimation = {
+    protected final Image[] rightAnimation = {
             Sprite.player_right.getFxImage(),
             Sprite.player_right_1.getFxImage(),
             Sprite.player_right_2.getFxImage()
     };
-
     private Sound bombSound = new Sound();
-
     private int bombNumber = 1;
     public static int bombPower = 1;
     private int speed = 1;
@@ -52,27 +50,21 @@ public final class Bomber extends Creature {
     public void setBombNumber(int bombNumber) {
         this.bombNumber = bombNumber;
     }
-
     public int getSpeed() {
         return speed;
     }
-
     public void setSpeed(int speed) {
         this.speed = speed;
     }
-
     public double getScreenX() {
         return screenX;
     }
-
     public void setScreenX(double screenX) {
         this.screenX = screenX;
     }
-
     public double getScreenY() {
         return screenY;
     }
-
     public void setScreenY(double screenY) {
         this.screenY = screenY;
     }
@@ -99,8 +91,8 @@ public final class Bomber extends Creature {
     public Bomber(double x, double y, Image img) {
         super(x, y, img);
 
-        screenX = Sprite.WIDTH / 2;
-        screenY = Sprite.HEIGHT /2 - 2 * Sprite.SCALED_SIZE;
+        screenX = 32;
+        screenY = 32;
 
         solidArea = new Rectangle(x, y + 8, 24, 24);
         NodesNumber = 1;
@@ -122,17 +114,15 @@ public final class Bomber extends Creature {
             xVec += speed;
         }
     }
-
     public void putBomb() {
         if (bombs.size() <= bombNumber) {
-            int xpos = x / 32;
+            double xpos = x / 32;
             double ypos = (double) y / 32;
             xpos = Math.round(xpos);
             ypos = Math.round(ypos);
-            bombs.add(new Bomb(xpos, (int) ypos, Sprite.bomb.getFxImage(), bombPower));
+            bombs.add(new Bomb((int) xpos, (int) ypos, Sprite.bomb.getFxImage(), bombPower));
         }
     }
-
     private void updateAction() {
         if (kb.plant_bomb) {
             this.putBomb();
@@ -144,7 +134,6 @@ public final class Bomber extends Creature {
         updateMove();
         updateAction();
     }
-
     @Override
     public void move() {
         if (collision) {
@@ -156,7 +145,6 @@ public final class Bomber extends Creature {
         x += xVec;
         y += yVec;
     }
-
     public void updateAnimation() {
         if (frame % 10 == 0) {
             frameCount++;
@@ -175,7 +163,6 @@ public final class Bomber extends Creature {
             this.setImg(rightAnimation[frameCount]);
         }
     }
-
     @Override
     public void update() {
         super.update();
