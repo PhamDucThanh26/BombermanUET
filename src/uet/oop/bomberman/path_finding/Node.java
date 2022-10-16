@@ -11,7 +11,7 @@ public class Node {
     // cost
     int gCost; // graph cost
     int hCost; // heuristic cost, calculated by Euclidean distance
-    int fCost; // final cost
+    int fCost; // final cost = gcost + hcost
 
     // calculation
     boolean solution;
