@@ -11,6 +11,7 @@ public class Sound {
     public static String bombExplosion = System.getProperty("user.dir") + "\\res\\sound\\bomb_bang.wav";
     public static String startStage = System.getProperty("user.dir") + "\\res\\sound\\startstage.wav";
     public static String bomberDie = System.getProperty("user.dir") + "\\res\\sound\\bomber_die.wav";
+
     public static String item = System.getProperty("user.dir") + "\\res\\sound\\item.wav";
     public static String lose = System.getProperty("user.dir") + "\\res\\sound\\lose.mid";
     public static String menu = System.getProperty("user.dir") + "\\res\\sound\\menu.wav";

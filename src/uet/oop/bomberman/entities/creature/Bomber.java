@@ -128,6 +128,7 @@ public final class Bomber extends Creature {
             xpos = Math.round(xpos);
             ypos = Math.round(ypos);
             bombs.add(new Bomb(xpos, ypos, Sprite.bomb.getFxImage(), bombPower));
+            bombSound.playPlaceNewBomb();
         }
     }
 
