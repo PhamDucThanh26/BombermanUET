@@ -12,6 +12,9 @@ import uet.oop.bomberman.user_input.Keyboard;
 import java.util.ArrayList;
 import java.util.List;
 
+import static uet.oop.bomberman.BombermanGame.HEIGHT;
+import static uet.oop.bomberman.BombermanGame.WIDTH;
+
 public final class Bomber extends Creature {
     protected double screenX;
     protected double screenY;
@@ -97,9 +100,8 @@ public final class Bomber extends Creature {
     public Bomber(double x, double y, Image img) {
         super(x, y, img);
 
-        screenX = 32;
-        screenY = 32;
-
+        screenX = WIDTH / 2;
+        screenY = HEIGHT / 2;
         solidArea = new Rectangle(x, y + 8, 24, 24);
         NodesNumber = 1;
     }
@@ -122,7 +124,7 @@ public final class Bomber extends Creature {
     }
 
     public void putBomb() {
-        if (bombs.size() <= bombNumber) {
+        if (bombs.size() < bombNumber) {
             double xpos = x / 32;
             double ypos = (double) y / 32;
             xpos = Math.round(xpos);
@@ -190,6 +192,6 @@ public final class Bomber extends Creature {
     @Override
     public void render(GraphicsContext gc) {
         bombs.forEach(bomb -> bomb.render(gc));
-        gc.drawImage(img, screenX, screenY);
+        gc.drawImage(img, screenX , screenY);
     }
 }

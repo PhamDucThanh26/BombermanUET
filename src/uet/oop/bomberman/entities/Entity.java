@@ -5,7 +5,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.graphics.Sprite;
 
-import static uet.oop.bomberman.BombermanGame.bomberman;
+import static uet.oop.bomberman.BombermanGame.*;
 
 public abstract class Entity {
 
@@ -15,11 +15,10 @@ public abstract class Entity {
     protected double height;
     protected boolean collision = false;
     protected boolean flag = false;
-    public int NodesNumber;
     protected Image img;
 
     protected long frame = 0;
-
+    public int NodesNumber;
     public Entity() {
     }
 
@@ -74,11 +73,11 @@ public abstract class Entity {
     }
 
     public void render(GraphicsContext gc) {
-        double screenX = x - bomberman.getX() + bomberman.getScreenX();
-        double screenY = y - bomberman.getY() + bomberman.getScreenY();
+        double screenX = x - bomberman.getX()  + bomberman.getScreenX();
+        double screenY = y - bomberman.getY()  + bomberman.getScreenY();
 
-        if (Math.abs(x - bomberman.getX()) < Sprite.WIDTH / 2 + bomberman.width
-                && Math.abs(y - bomberman.getY()) < Sprite.HEIGHT / 2 + bomberman.height + 2 * Sprite.SCALED_SIZE) {
+        if (Math.abs(x - bomberman.getX()) < Sprite.WIDTH  + bomberman.width
+                && Math.abs(y - bomberman.getY()) < Sprite.HEIGHT / 2  + bomberman.height + 2 * Sprite.SCALED_SIZE) {
             gc.drawImage(img, screenX, screenY);
         }
 

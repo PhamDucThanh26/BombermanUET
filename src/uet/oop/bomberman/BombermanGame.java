@@ -31,8 +31,8 @@ public class BombermanGame extends Application {
     //window size
     private Sound backGround = new Sound();
     private Sound startStage = new Sound();
-    public static final int WIDTH = 448;
-    public static final int HEIGHT = 384;
+    public static final int WIDTH = 640;
+    public static final int HEIGHT = 480;
 
     // stage
     public static GraphicsContext gc;
