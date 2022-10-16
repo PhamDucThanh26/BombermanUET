@@ -24,12 +24,14 @@ public class Sound {
 
     public Sound() {
     }
+    static final double VOLUME = 1;
 
-    public void play(String filePath, int loop) {
+    public void play(String filePath, int loop, double volume ) {
 
         try {
             String path = new File(filePath).toURI().toString();
             MediaPlayer player = new MediaPlayer(new Media(path));
+            player.setVolume((double) volume);
             player.setCycleCount(loop);
             player.seek(Duration.ZERO);
             player.play();
@@ -41,49 +43,50 @@ public class Sound {
     }
 
     public void playDestroy() {
-        this.play(destroy, 1);
+        this.play(destroy, 1, VOLUME);
     }
 
     public void playBombExplosion() {
 
-        this.play(bombExplosion, 1);
+        this.play(bombExplosion, 1, VOLUME);
     }
 
     public void playStartStage() {
-        this.play(startStage, 1);
+        this.play(startStage, 1, 0.15);
     }
 
     public void playBomberDie() {
-        this.play(bomberDie, 1);
+        this.play(bomberDie, 1, VOLUME);
     }
 
     public void playGetNewItem() {
-        this.play(item, 1);
+        this.play(item, 1, 0.125);
     }
 
     public void playLose() {
-        this.play(lose, 1);
+        this.play(lose, 1, VOLUME);
     }
 
     public void playMenu() {
-        this.play(menu, MediaPlayer.INDEFINITE);
+        this.play(menu, MediaPlayer.INDEFINITE, VOLUME);
     }
 
     public void playMonsterDie() {
-        this.play(monsterDie, 1);
+        this.play(monsterDie, 1, VOLUME);
     }
 
     public void playPlaceNewBomb() {
-        this.play(newBomb, 1);
+        this.play(newBomb, 1, VOLUME);
 
     }
 
     public void playWin() {
-        this.play(win, 1);
+        this.play(win, 1, VOLUME);
     }
 
     public void playBackGround() {
-        this.play(backgroundGame, 1);
+
+        this.play(backgroundGame, 1, 0.15);
     }
 }
 
