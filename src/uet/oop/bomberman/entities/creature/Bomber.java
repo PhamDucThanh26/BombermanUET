@@ -12,9 +12,6 @@ import uet.oop.bomberman.user_input.Keyboard;
 import java.util.ArrayList;
 import java.util.List;
 
-import static uet.oop.bomberman.BombermanGame.HEIGHT;
-import static uet.oop.bomberman.BombermanGame.WIDTH;
-
 public final class Bomber extends Creature {
     protected double screenX;
     protected double screenY;

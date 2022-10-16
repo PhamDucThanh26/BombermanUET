@@ -44,6 +44,10 @@ public class BombermanGame extends Application {
     public static int widthMap;
     public static int level;
 
+    // audio
+    public Sound startStage = new Sound();
+    public Sound backGround = new Sound();
+
     @Override
     public void start(Stage stage) {
         // bgm
