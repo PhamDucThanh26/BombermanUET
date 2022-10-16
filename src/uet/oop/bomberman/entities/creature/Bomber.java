@@ -50,21 +50,27 @@ public final class Bomber extends Creature {
     public void setBombNumber(int bombNumber) {
         this.bombNumber = bombNumber;
     }
+
     public int getSpeed() {
         return speed;
     }
+
     public void setSpeed(int speed) {
         this.speed = speed;
     }
+
     public double getScreenX() {
         return screenX;
     }
+
     public void setScreenX(double screenX) {
         this.screenX = screenX;
     }
+
     public double getScreenY() {
         return screenY;
     }
+
     public void setScreenY(double screenY) {
         this.screenY = screenY;
     }
@@ -114,6 +120,7 @@ public final class Bomber extends Creature {
             xVec += speed;
         }
     }
+
     public void putBomb() {
         if (bombs.size() <= bombNumber) {
             double xpos = x / 32;
@@ -123,6 +130,7 @@ public final class Bomber extends Creature {
             bombs.add(new Bomb((int) xpos, (int) ypos, Sprite.bomb.getFxImage(), bombPower));
         }
     }
+
     private void updateAction() {
         if (kb.plant_bomb) {
             this.putBomb();
@@ -134,6 +142,7 @@ public final class Bomber extends Creature {
         updateMove();
         updateAction();
     }
+
     @Override
     public void move() {
         if (collision) {
@@ -145,6 +154,7 @@ public final class Bomber extends Creature {
         x += xVec;
         y += yVec;
     }
+
     public void updateAnimation() {
         if (frame % 10 == 0) {
             frameCount++;
@@ -163,6 +173,7 @@ public final class Bomber extends Creature {
             this.setImg(rightAnimation[frameCount]);
         }
     }
+
     @Override
     public void update() {
         super.update();

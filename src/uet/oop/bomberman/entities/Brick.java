@@ -11,7 +11,6 @@ public class Brick extends Entity implements IAnimation {
     private int frameCount = 0;
     private long startTime;
     protected int animate = 0;
-
     private final Image[] brickAnimation = {
             Sprite.brick_exploded.getFxImage(),
             Sprite.brick_exploded1.getFxImage(),
@@ -32,20 +31,15 @@ public class Brick extends Entity implements IAnimation {
     }
 
     @Override
-    public long getCurrentFrame() {
-        return (System.currentTimeMillis() - startTime) * 30 / 1000;
-    }
-
-    @Override
     public void updateAnimation() {
         animate++;
-        if(animate > 10) {
+        if (animate > 10) {
             frameCount++;
             animate = 0;
         }
         frameCount %= 4;
         img = brickAnimation[frameCount];
-        if(frameCount == 3) this.flag = true;
+        if (frameCount == 3) this.flag = true;
     }
 
     @Override
@@ -54,6 +48,11 @@ public class Brick extends Entity implements IAnimation {
             frame = getCurrentFrame();
             updateAnimation();
         }
+    }
+
+    @Override
+    public long getCurrentFrame() {
+        return (System.currentTimeMillis() - startTime) * 30 / 1000;
     }
 }
 

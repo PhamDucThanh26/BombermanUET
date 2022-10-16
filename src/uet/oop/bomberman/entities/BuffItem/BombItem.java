@@ -15,7 +15,7 @@ public class BombItem extends Item {
 
     @Override
     public void update() {
-        if(collision(bomberman, this)) {
+        if (collision(bomberman, this)) {
             bomberman.setBombNumber(bomberman.getBombNumber() + 1);
             super.update();
 //            System.out.println("Number of bomb : " + bomberman.getBombNumber());

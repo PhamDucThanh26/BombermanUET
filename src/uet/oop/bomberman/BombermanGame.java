@@ -74,7 +74,7 @@ public class BombermanGame extends Application {
 
         scene.setOnKeyPressed(e -> bomberman.kb.hold(e));
         scene.setOnKeyReleased(e -> bomberman.kb.release(e));
-         AnimationTimer timer = new AnimationTimer() {
+        AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long l) {
                 update();
@@ -123,14 +123,14 @@ public class BombermanGame extends Application {
         bomberman.kbUpdate();
 
         //interaction
-        stillObjects.forEach( (Entity e) -> {
-            if(!(e instanceof Grass || e instanceof Portal || e instanceof Item) && collision(e, bomberman)) {
+        stillObjects.forEach((Entity e) -> {
+            if (!(e instanceof Grass || e instanceof Portal || e instanceof Item) && collision(e, bomberman)) {
                 bomberman.setCollision(true);
             }
         });
 
-        stillObjects.forEach( (Entity e) -> creatures.forEach(entity -> {
-            if(collision(e, entity) && !(e instanceof Grass)) {
+        stillObjects.forEach((Entity e) -> creatures.forEach(entity -> {
+            if (collision(e, entity) && !(e instanceof Grass)) {
                 entity.setCollision(true);
             }
         }));
@@ -149,7 +149,7 @@ public class BombermanGame extends Application {
         backgroundTitle.forEach(g -> g.render(gc));
         miscellaneous.forEach(g -> g.render(gc));
         stillObjects.forEach(g -> g.render(gc));
-        creatures.forEach( g -> g.render(gc));
+        creatures.forEach(g -> g.render(gc));
         bomberman.render(gc);
     }
 }

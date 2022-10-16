@@ -56,8 +56,7 @@ public class Map {
                     } else if (s.charAt(i) == 's') {
                         stillObjects.add(new Brick(i, j, Sprite.brick.getFxImage()));
                         object = new SpeedItem(i, j, Sprite.powerup_speed.getFxImage());
-                    }
-                    else if(s.charAt(i) == '3') {
+                    } else if (s.charAt(i) == '3') {
                         object = new Doll(i, j, Sprite.doll_left1.getFxImage());
 
                     } else {

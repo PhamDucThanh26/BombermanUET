@@ -23,6 +23,7 @@ public abstract class Creature extends Entity implements IAnimation, IGameEntity
         super(xUnit, yUnit, img);
         solidArea = new Rectangle(x, y, width, height);
     }
+
     long startTime = System.currentTimeMillis();
 
     @Override

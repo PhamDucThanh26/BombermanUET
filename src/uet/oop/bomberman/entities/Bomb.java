@@ -12,21 +12,18 @@ import java.util.List;
 import static uet.oop.bomberman.BombermanGame.*;
 import static uet.oop.bomberman.entities.Interaction.collision;
 import static uet.oop.bomberman.entities.creature.Bomber.bombPower;
-import static uet.oop.bomberman.graphics.Sprite.movingSprite;
 
 public class Bomb extends Entity implements IAnimation {
-
-    protected Sound bombExplosion = new Sound();
-    private final List<Flame> leftFlame = new ArrayList<>();
-    private final List<Flame> rightFlame = new ArrayList<>();
-    private final List<Flame> upFlame = new ArrayList<>();
-    private final List<Flame> downFlame = new ArrayList<>();
     public boolean isExploded = false;
     int animate = 0;
     private int frameCountEx = 0;
     private int frameCount = 0;
     private final long startTime = System.currentTimeMillis();
-
+    protected Sound bombExplosion = new Sound();
+    private final List<Flame> leftFlame = new ArrayList<>();
+    private final List<Flame> rightFlame = new ArrayList<>();
+    private final List<Flame> upFlame = new ArrayList<>();
+    private final List<Flame> downFlame = new ArrayList<>();
     static final Image[] activeBomb = {
             Sprite.bomb.getFxImage(),
             Sprite.bomb_1.getFxImage(),

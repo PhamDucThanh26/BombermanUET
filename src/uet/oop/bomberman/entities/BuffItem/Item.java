@@ -35,7 +35,7 @@ public class Item extends Entity implements IGameEntity {
 
     @Override
     public void update() {
-        if(collision(bomberman, this)) {
+        if (collision(bomberman, this)) {
             this.flag = true;
             itemSound.playGetNewItem();
         }

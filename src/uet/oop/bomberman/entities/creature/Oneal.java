@@ -29,7 +29,7 @@ public class Oneal extends Creature {
 
     @Override
     public void move() {
-        if(collision) {
+        if (collision) {
             xVec = 0;
             yVec = 0;
             collision = false;
@@ -49,10 +49,9 @@ public class Oneal extends Creature {
             frameCount++;
             frameCount %= 3;
         }
-        if(xVec > 0) {
+        if (xVec > 0) {
             img = rightAnimation[frameCount];
-        }
-        else {
+        } else {
             img = leftAnimation[frameCount];
         }
     }
@@ -63,6 +62,5 @@ public class Oneal extends Creature {
         getPlayerPos(bomberman);
         move();
         updateAnimation();
-
     }
 }

@@ -3,7 +3,6 @@ package uet.oop.bomberman.entities;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.stage.Screen;
 import uet.oop.bomberman.graphics.Sprite;
 
 import static uet.oop.bomberman.BombermanGame.bomberman;
@@ -80,7 +79,7 @@ public abstract class Entity {
 
         if (Math.abs(x - bomberman.getX()) < Sprite.WIDTH / 2 + bomberman.width
                 && Math.abs(y - bomberman.getY()) < Sprite.HEIGHT / 2 + bomberman.height + 2 * Sprite.SCALED_SIZE) {
-            gc.drawImage(img, screenX , screenY );
+            gc.drawImage(img, screenX, screenY);
         }
 
     }

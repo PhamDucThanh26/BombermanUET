@@ -29,7 +29,7 @@ public class Balloom extends Creature {
     private double xVec = 1;
 
     protected void move() {
-        if(collision) {
+        if (collision) {
             xVec = -xVec;
             collision = false;
         }
@@ -46,10 +46,9 @@ public class Balloom extends Creature {
             frameCount++;
             frameCount %= 3;
         }
-        if(xVec > 0) {
+        if (xVec > 0) {
             img = leftAnimation[frameCount];
-        }
-        else {
+        } else {
             img = rightAnimation[frameCount];
         }
     }
