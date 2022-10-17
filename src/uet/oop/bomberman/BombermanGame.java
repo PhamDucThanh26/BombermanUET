@@ -9,13 +9,18 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import uet.oop.bomberman.entities.*;
 import uet.oop.bomberman.entities.BuffItem.Item;
 import uet.oop.bomberman.entities.creature.Bomber;
-import uet.oop.bomberman.graphics.Camera;
+import uet.oop.bomberman.graphics.Menu;
 import uet.oop.bomberman.graphics.Sprite;
+import uet.oop.bomberman.path_finding.AStar;
 
+
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +32,7 @@ import static uet.oop.bomberman.graphics.Sprite.HEIGHT;
 import static uet.oop.bomberman.graphics.Sprite.WIDTH;
 
 public class BombermanGame extends Application {
+    Menu menu = new Menu();
     private final String[] containLevel = {
             "\\res\\levels\\Level0.txt",
             "\\res\\levels\\Level1.txt",
@@ -49,7 +55,6 @@ public class BombermanGame extends Application {
 
     // game creatures
     public static Bomber bomberman = new Bomber(2, 2, Sprite.player_right.getFxImage());
-    public static Camera camera = new Camera();
     public static List<Entity> stillObjects = new ArrayList<>();
     public static List<Entity> backgroundTitle = new ArrayList<>();
 
@@ -73,6 +78,7 @@ public class BombermanGame extends Application {
 
         // Tao root container
         Group root = new Group();
+        Menu.createMenu(root);
         root.getChildren().add(canvas);
 
         createMap(System.getProperty("user.dir") + "\\res\\levels\\Level2.txt");
@@ -93,13 +99,19 @@ public class BombermanGame extends Application {
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long l) {
-                update();
+                if(!isPause) {
+                    update();
+                }
                 render();
             }
         };
         timer.start();
 
 //        Thread there
+
+//        AStar algo = new AStar(Sprite.maxWorldCol, Sprite.maxWorldRow, 1, 1, 17, 9);
+//        algo.algorithmProcessing();
+//        algo.printPath();
 
         stage.setScene(scene);
         stage.show();
@@ -134,7 +146,6 @@ public class BombermanGame extends Application {
 
     public void update() {
         //keyboard
-        if(!isPause) {
             bomberman.kbUpdate();
 
             //interaction
@@ -156,8 +167,12 @@ public class BombermanGame extends Application {
             creatures.removeIf(Entity::isFlag);
             stillObjects.removeIf(Entity::isFlag);
             miscellaneous.removeIf(Entity::isFlag);
-            camera.update();
-        }
+//        if(creatures.size() == 0 && collision(bomberman, portal)) {
+//
+//            nextLevel();
+//        }
+//        updateNodesMap();
+
     }
 
     public void render() {
@@ -166,7 +181,8 @@ public class BombermanGame extends Application {
         miscellaneous.forEach(g -> g.render(gc));
         stillObjects.forEach(g -> g.render(gc));
         creatures.forEach(g -> g.render(gc));
-        bomberman.render(gc);
-        gc.drawImage(Sprite.explosion_horizontal.getFxImage(), 0, 0);
+        if(bomberman.isStillRender()) {
+            bomberman.render(gc);
+        }
     }
 }

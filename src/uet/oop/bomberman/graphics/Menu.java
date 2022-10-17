@@ -10,18 +10,21 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
-public class Menu {
-    private ImageView statusGame;
-    public Text level, bomb, time;
-    public Image pauseGame, playGame;
+import static uet.oop.bomberman.BombermanGame.bomberman;
+import static uet.oop.bomberman.BombermanGame.isPause;
 
-    public void createMenu(Group root) {
+public class Menu {
+    private static ImageView statusGame;
+    public static Text level, bomb, time;
+    public static Image pauseGame, playGame;
+
+    public static void createMenu(Group root) { //Create a menu
         level = new Text("Level: 1");
         level.setFont(Font.font("Arial", FontWeight.BOLD, 14));
         level.setFill(Color.WHITE);
-        level.setX(416);
+        level.setX(400);
         level.setY(20);
-        bomb = new Text("Bombs");
+        bomb = new Text("Bombs: 20");
         bomb.setFont(Font.font("Arial", FontWeight.BOLD, 14));
         bomb.setFill(Color.WHITE);
         bomb.setX(512);
@@ -33,9 +36,6 @@ public class Menu {
         time.setY(20);
 
         Image newGame = new Image("images/startButton.png");
-        if(newGame == null) {
-            System.out.println("Wrong file dir");
-        }
         statusGame = new ImageView(newGame);
         statusGame.setX(-75);
         statusGame.setY(-10);
@@ -52,8 +52,31 @@ public class Menu {
 
         playGame = new Image("images/pauseButton.png");
         pauseGame = new Image("images/resumeButton.png");
-    }
-    public void updateMenu() {
+
+        statusGame.setOnMouseClicked(event -> {     //Event when you click the play game button, if your character still alive, the game will pause, else the game will start at level 1
+            if (bomberman.isLife()) {
+                isPause = !isPause;
+            } else {
+            }
+            updateMenu();
+        });
 
     }
+
+    public static void updateMenu() { //Update menu
+        level.setText("Level: ");
+        bomb.setText("Bombs: ");
+
+        if (bomberman.isLife())
+            if (isPause) {
+                statusGame.setImage(pauseGame);
+            } else {
+                statusGame.setImage(playGame);
+            }
+        else {
+            Image newGame = new Image("images/startButton.png");
+            statusGame.setImage(newGame);
+        }
+    }
 }
+
