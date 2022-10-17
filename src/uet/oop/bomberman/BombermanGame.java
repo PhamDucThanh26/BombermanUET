@@ -32,6 +32,7 @@ import static uet.oop.bomberman.graphics.Sprite.HEIGHT;
 import static uet.oop.bomberman.graphics.Sprite.WIDTH;
 
 public class BombermanGame extends Application {
+    //Update menu 17/10/2022
     Menu menu = new Menu();
     private final String[] containLevel = {
             "\\res\\levels\\Level0.txt",
@@ -78,6 +79,7 @@ public class BombermanGame extends Application {
 
         // Tao root container
         Group root = new Group();
+//      Update Menu 17/10.
         Menu.createMenu(root);
         root.getChildren().add(canvas);
 
