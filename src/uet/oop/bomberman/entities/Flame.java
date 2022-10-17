@@ -4,6 +4,9 @@ import javafx.scene.image.Image;
 import uet.oop.bomberman.graphics.IAnimation;
 import uet.oop.bomberman.graphics.Sprite;
 
+import static uet.oop.bomberman.BombermanGame.bomberman;
+import static uet.oop.bomberman.entities.Interaction.collision;
+
 public class Flame extends Entity implements IAnimation {
     private boolean head = false;
     protected int animate = 0;
@@ -69,7 +72,9 @@ public class Flame extends Entity implements IAnimation {
 
     @Override
     public void update() {
-
+        if(collision(bomberman, this)) {
+            bomberman.setLife(false);
+        }
     }
 
     @Override

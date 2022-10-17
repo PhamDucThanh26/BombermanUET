@@ -31,7 +31,23 @@ import static uet.oop.bomberman.graphics.Sprite.WIDTH;
 
 public class BombermanGame extends Application {
 
+    private final String[] containLevel = {
+            "\\res\\levels\\Level0.txt",
+            "\\res\\levels\\Level1.txt",
+            "\\res\\levels\\Level2.txt",
+    };
     // stage
+    static int _level = 0;
+
+    public static boolean isPause = false;
+    void nextLevel() {
+        level++;
+        stillObjects.clear();
+        backgroundTitle.clear();
+        creatures.clear();
+//        bomberman.reset();
+        createMap(containLevel[_level]);
+    }
     public static GraphicsContext gc;
     private Canvas canvas;
 
@@ -61,6 +77,7 @@ public class BombermanGame extends Application {
         // Tao root container
         Group root = new Group();
         root.getChildren().add(canvas);
+
         createMap(System.getProperty("user.dir") + "\\res\\levels\\Level2.txt");
         startStage.playStartStage();
         backGround.playBackGround();
@@ -124,28 +141,34 @@ public class BombermanGame extends Application {
 
     public void update() {
         //keyboard
-        bomberman.kbUpdate();
+        if(!isPause) {
+            bomberman.kbUpdate();
 
-        //interaction
-        stillObjects.forEach((Entity e) -> {
-            if (!(e instanceof Grass || e instanceof Portal || e instanceof Item) && collision(e, bomberman)) {
-                bomberman.setCollision(true);
-            }
-        });
+            //interaction
+            stillObjects.forEach((Entity e) -> {
+                if (!(e instanceof Grass || e instanceof Portal || e instanceof Item) && collision(e, bomberman)) {
+                    bomberman.setCollision(true);
+                }
+            });
 
-        stillObjects.forEach((Entity e) -> creatures.forEach(entity -> {
-            if (collision(e, entity) && !(e instanceof Grass)) {
-                entity.setCollision(true);
-            }
-        }));
-        bomberman.update();
-        creatures.forEach(Entity::update);
-        stillObjects.forEach(Entity::update);
-        miscellaneous.forEach(Item::update);
-        creatures.removeIf(Entity::isFlag);
-        stillObjects.removeIf(Entity::isFlag);
-        miscellaneous.removeIf(Entity::isFlag);
+            stillObjects.forEach((Entity e) -> creatures.forEach(entity -> {
+                if (collision(e, entity) && !(e instanceof Grass)) {
+                    entity.setCollision(true);
+                }
+            }));
+            bomberman.update();
+            creatures.forEach(Entity::update);
+            stillObjects.forEach(Entity::update);
+            miscellaneous.forEach(Item::update);
+            creatures.removeIf(Entity::isFlag);
+            stillObjects.removeIf(Entity::isFlag);
+            miscellaneous.removeIf(Entity::isFlag);
+//        if(creatures.size() == 0 && collision(bomberman, portal)) {
+//
+//            nextLevel();
+//        }
 //        updateNodesMap();
+        }
     }
 
     public void render() {
@@ -154,6 +177,8 @@ public class BombermanGame extends Application {
         miscellaneous.forEach(g -> g.render(gc));
         stillObjects.forEach(g -> g.render(gc));
         creatures.forEach(g -> g.render(gc));
-        bomberman.render(gc);
+        if(bomberman.isStillRender()) {
+            bomberman.render(gc);
+        }
     }
 }
