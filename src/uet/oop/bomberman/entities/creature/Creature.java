@@ -54,5 +54,6 @@ public abstract class Creature extends Entity implements IAnimation, IGameEntity
         frame = getCurrentFrame();
         solidArea.setX(x);
         solidArea.setY(y);
+
     }
 }

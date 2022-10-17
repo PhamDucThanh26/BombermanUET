@@ -6,6 +6,7 @@ import uet.oop.bomberman.graphics.Sprite;
 
 import static uet.oop.bomberman.BombermanGame.bomberman;
 import static uet.oop.bomberman.entities.Interaction.collision;
+import static uet.oop.bomberman.entities.creature.Creature.creatures;
 
 public class Flame extends Entity implements IAnimation {
     private boolean head = false;
@@ -75,6 +76,11 @@ public class Flame extends Entity implements IAnimation {
         if(collision(bomberman, this)) {
             bomberman.setLife(false);
         }
+        creatures.forEach(creature -> {
+            if(collision(this, creature)) {
+                creature.setFlag(false);
+            }
+        });
     }
 
     @Override
