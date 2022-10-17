@@ -1,11 +1,14 @@
 package uet.oop.bomberman.user_input;
-
+import static uet.oop.bomberman.BombermanGame.isPause;
 import javafx.scene.input.KeyEvent;
 
 public class Keyboard {
     public boolean up, down, left, right, plant_bomb;
     public void hold(KeyEvent event) {
         switch (event.getCode()) {
+            case P:
+                isPause = !isPause;
+                break;
             case W:
             case UP:
                 up = true;

@@ -15,6 +15,10 @@ import java.util.List;
 public final class Bomber extends Creature {
     protected double screenX;
     protected double screenY;
+
+    private int animateDead = 0;
+
+    private boolean stillRender = true;
     final Image[] upAnimation = {
             Sprite.player_up.getFxImage(),
             Sprite.player_up_1.getFxImage(),
@@ -36,15 +40,42 @@ public final class Bomber extends Creature {
             Sprite.player_right_1.getFxImage(),
             Sprite.player_right_2.getFxImage()
     };
+
+    protected final Image[] deadAnimation = {
+            Sprite.player_dead1.getFxImage(),
+            Sprite.player_dead1.getFxImage(),
+            Sprite.player_dead2.getFxImage(),
+            Sprite.player_dead2.getFxImage(),
+            Sprite.player_dead3.getFxImage(),
+    };
     private Sound bombSound = new Sound();
     private int bombNumber = 1;
     public static int bombPower = 1;
     private int speed = 1;
+
+    private boolean isLife = true;
+
+    public boolean isStillRender() {
+        return stillRender;
+    }
+
+    public void setStillRender(boolean stillRender) {
+        this.stillRender = stillRender;
+    }
+
     public Keyboard kb = new Keyboard();
     private final List<Bomb> bombs = new ArrayList<>();
 
     public int getBombNumber() {
         return bombNumber;
+    }
+
+    public boolean isLife() {
+        return isLife;
+    }
+
+    public void setLife(boolean life) {
+        isLife = life;
     }
 
     public void setBombNumber(int bombNumber) {
@@ -157,40 +188,65 @@ public final class Bomber extends Creature {
     }
 
     public void updateAnimation() {
-        if (frame % 10 == 0) {
-            frameCount++;
-            frameCount %= 3;
+        if(isLife) {
+
+            if (frame % 10 == 0) {
+                frameCount++;
+                frameCount %= 3;
+            }
+            if (kb.up) {
+                this.setImg(upAnimation[frameCount]);
+            }
+            if (kb.down) {
+                this.setImg(downAnimation[frameCount]);
+            }
+            if (kb.left) {
+                this.setImg(leftAnimation[frameCount]);
+            }
+            if (kb.right) {
+                this.setImg(rightAnimation[frameCount]);
+            }
         }
-        if (kb.up) {
-            this.setImg(upAnimation[frameCount]);
+        else {
+            animateDead++;
+
+            if(animateDead % 20 == 0) {
+                frameCount++;
+            }
+                frameCount %= 5;
+            System.out.println(animateDead + " " + frameCount);
+                this.setImg(deadAnimation[frameCount]);
+                if(frameCount == 4) {
+                    stillRender = false;
+
+                }
+            }
+
         }
-        if (kb.down) {
-            this.setImg(downAnimation[frameCount]);
-        }
-        if (kb.left) {
-            this.setImg(leftAnimation[frameCount]);
-        }
-        if (kb.right) {
-            this.setImg(rightAnimation[frameCount]);
-        }
-    }
+
 
     @Override
     public void update() {
-        super.update();
-        move();
-        updateAnimation();
         bombs.removeIf(Entity::isFlag);
         bombs.forEach(Bomb::update);
-        xVec = 0;
-        yVec = 0;
-        solidArea.setX(x);
-        solidArea.setY(y + 8);
+        if (isLife) {
+            super.update();
+            move();
+            updateAnimation();
+            xVec = 0;
+            yVec = 0;
+            solidArea.setX(x);
+            solidArea.setY(y + 8);
+        }
+        else {
+            updateAnimation();
+        }
     }
 
     @Override
     public void render(GraphicsContext gc) {
         bombs.forEach(bomb -> bomb.render(gc));
-        gc.drawImage(img, screenX , screenY);
+        gc.drawImage(img, screenX, screenY);
+
     }
 }

@@ -115,20 +115,26 @@ public class Bomb extends Entity implements IAnimation {
                 updateFlameList(leftFlame);
                 leftFlame.forEach(flame -> {
                     flame.updateLeftAnimation();
+                    flame.update();
                 });
                 updateFlameList(rightFlame);
                 rightFlame.forEach(flame -> {
                     flame.updateRightAnimation();
+                    flame.update();
                 });
                 updateFlameList(upFlame);
                 upFlame.forEach(flame -> {
                     flame.updateUpAnimation();
+                    flame.update();
                 });
                 updateFlameList(downFlame);
                 downFlame.forEach(flame -> {
                     flame.updateDownAnimation();
+                    flame.update();
                 });
-
+            if(collision(bomberman, this)) {
+                bomberman.setLife(false);
+            }
         }
     }
 
