@@ -85,7 +85,6 @@ public class BombermanGame extends Application {
         timer.start();
 
 //        Thread there
-
         AStar algo = new AStar(Sprite.maxWorldCol, Sprite.maxWorldRow, 1, 1, 17, 9);
         algo.algorithmProcessing();
         algo.printPath();
