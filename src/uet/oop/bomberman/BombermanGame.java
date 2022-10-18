@@ -90,7 +90,6 @@ public class BombermanGame extends Application {
         root = new Group();
 
         root.getChildren().add(canvas);
-//        Menu.creatMenu(root);
         createMap(System.getProperty("user.dir") + "\\res\\levels\\Level2.txt");
         startStage.playStartStage();
         backGround.playBackGround();
@@ -119,15 +118,8 @@ public class BombermanGame extends Application {
         };
         timer.start();
 
-//        Thread there
-
-//        AStar algo = new AStar(Sprite.maxWorldCol, Sprite.maxWorldRow, 1, 1, 17, 9);
-//        algo.algorithmProcessing();
-//        algo.printPath();
-
         stage.setScene(sceneGame);
         stage.show();
-
     }
 
     public void updateNodes(Entity entity) {
@@ -158,11 +150,11 @@ public class BombermanGame extends Application {
     }
 
     public void update() {
-
         //keyboard
         bomberman.kbUpdate();
+
         //interaction
-         stillObjects.forEach((Entity e) -> {
+        stillObjects.forEach((Entity e) -> {
             if (!(e instanceof Grass || e instanceof Portal || e instanceof Item) && collision(e, bomberman)) {
                 bomberman.setCollision(true);
             }
@@ -185,7 +177,6 @@ public class BombermanGame extends Application {
 //            nextLevel();
 //        }
 //        updateNodesMap();
-
     }
 
     public void render() {
