@@ -8,19 +8,19 @@ import java.io.File;
 
 public class Sound {
     //
-    public static String bombExplosion = System.getProperty("user.dir") + "\\res\\sound\\bomb_bang.wav";
-    public static String startStage = System.getProperty("user.dir") + "\\res\\sound\\startstage.wav";
-    public static String bomberDie = System.getProperty("user.dir") + "\\res\\sound\\bomber_die.wav";
+    public final String bombExplosion = System.getProperty("user.dir") + "\\res\\sound\\bomb_bang.wav";
+    public final String startStage = System.getProperty("user.dir") + "\\res\\sound\\startstage.wav";
+    public final String bomberDie = System.getProperty("user.dir") + "\\res\\sound\\bomber_die.wav";
 
-    public static String item = System.getProperty("user.dir") + "\\res\\sound\\item.wav";
-    public static String lose = System.getProperty("user.dir") + "\\res\\sound\\lose.mid";
-    public static String menu = System.getProperty("user.dir") + "\\res\\sound\\menu.wav";
-    public static String monsterDie = System.getProperty("user.dir") + "\\res\\sound\\monster_die.wav";
-    public static String newBomb = System.getProperty("user.dir") + "\\res\\sound\\newbomb.wav";
-    public static String win = System.getProperty("user.dir") + "\\res\\sound\\win.wav";
-    public static String backgroundGame = System.getProperty("user.dir") + "\\res\\sound\\bg_sound.wav";
-    public static String playGame = System.getProperty("user.dir") + "\\res\\sound\\playgame.mid";
-    public static String destroy = System.getProperty("user.dir") + "\\res\\sound\\destroy.wav";
+    public final String item = System.getProperty("user.dir") + "\\res\\sound\\item.wav";
+    public final String lose = System.getProperty("user.dir") + "\\res\\sound\\lose.mid";
+    public final String menu = System.getProperty("user.dir") + "\\res\\sound\\menu.wav";
+    public final String monsterDie = System.getProperty("user.dir") + "\\res\\sound\\monster_die.wav";
+    public final String newBomb = System.getProperty("user.dir") + "\\res\\sound\\newbomb.wav";
+    public final String win = System.getProperty("user.dir") + "\\res\\sound\\win.wav";
+    public final String backgroundGame = System.getProperty("user.dir") + "\\res\\sound\\bg_sound.wav";
+    public final String playGame = System.getProperty("user.dir") + "\\res\\sound\\playgame.mid";
+    public final String destroy = System.getProperty("user.dir") + "\\res\\sound\\destroy.wav";
 
     public Sound() {
     }
