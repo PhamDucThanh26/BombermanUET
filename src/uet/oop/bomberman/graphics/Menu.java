@@ -1,82 +1,122 @@
 package uet.oop.bomberman.graphics;
 
-
+import Level.Level1;
 import javafx.scene.Group;
+import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
-import static uet.oop.bomberman.BombermanGame.bomberman;
-import static uet.oop.bomberman.BombermanGame.isPause;
+import static uet.oop.bomberman.BombermanGame.*;
+import static uet.oop.bomberman.graphics.Map.createMap;
+import static uet.oop.bomberman.graphics.Sprite.HEIGHT;
+import static uet.oop.bomberman.graphics.Sprite.WIDTH;
 
 public class Menu {
-    private static ImageView statusGame;
-    public static Text level, bomb, time;
-    public static Image pauseGame, playGame;
+    public static Image authorImage;
+    public static ImageView author;
+    private static Text newGameText, exitText, optionsText;
+    private static Text item[] = new Text[3];
+    private static Rectangle rect[] = new Rectangle[3];
+    public static Pane layoutMenu;
 
-    public static void createMenu(Group root) { //Create a menu
-        level = new Text("Level: 1");
-        level.setFont(Font.font("Arial", FontWeight.BOLD, 14));
-        level.setFill(Color.WHITE);
-        level.setX(400);
-        level.setY(20);
-        bomb = new Text("Bombs: 20");
-        bomb.setFont(Font.font("Arial", FontWeight.BOLD, 14));
-        bomb.setFill(Color.WHITE);
-        bomb.setX(512);
-        bomb.setY(20);
-        time = new Text("Times: 120");
-        time.setFont(Font.font("Arial", FontWeight.BOLD, 14));
-        time.setFill(Color.WHITE);
-        time.setX(608);
-        time.setY(20);
 
-        Image newGame = new Image("images/startButton.png");
-        statusGame = new ImageView(newGame);
-        statusGame.setX(-75);
-        statusGame.setY(-10);
-        statusGame.setScaleX(0.5);
-        statusGame.setScaleY(0.5);
+    public static void creatMenu(Group root) {
+        authorImage = new Image("images/menu.png");
+        author = new ImageView(authorImage);
+        author.setFitWidth(WIDTH);
+        author.setFitHeight(HEIGHT);
+        author.setX(0);
+        author.setY(0);
 
-        Pane pane = new Pane();
-        pane.getChildren().addAll(level, bomb, time, statusGame);
-        pane.setMinSize(800, 32);
-        pane.setMaxSize(800, 480);
-        pane.setStyle("-fx-background-color: #353535");
-
-        root.getChildren().add(pane);
-
-        playGame = new Image("images/pauseButton.png");
-        pauseGame = new Image("images/resumeButton.png");
-
-        statusGame.setOnMouseClicked(event -> {     //Event when you click the play game button, if your character still alive, the game will pause, else the game will start at level 1
-            if (bomberman.isLife()) {
-                isPause = !isPause;
-            } else {
+        for(int i = 0;i < 3; i++) {
+            item[i] = new Text();
+            if(i == 0) {
+                item[i].setText("New Game");
+                item[i].setX(510);
+                item[i].setY(280);
             }
-            updateMenu();
+            else if(i == 1) {
+                item[i].setText("Options");
+                item[i].setX(520);
+                item[i].setY(340);
+            }
+            else {
+                item[i].setText("Exit");
+                item[i].setX(540);
+                item[i].setY(400);
+            }
+
+            item[i].setFont(Font.font("Arial", FontWeight.BOLD, FontPosture.REGULAR,25));
+            item[i].setFill(Color.WHITE);
+            item[i].setStroke(Color.BLACK);
+        }
+
+        for(int i = 0; i < 3; i++) {
+            rect[i] = new Rectangle();
+            if(i == 0) {
+                rect[i].setY(250);
+            }
+            else if(i == 1) {
+                rect[i].setY(310);
+            }
+            else {
+                rect[i].setY(370);
+            }
+
+            rect[i].setWidth(200);
+            rect[i].setHeight(40);
+            rect[i].setX(WIDTH/2-rect[i].getWidth()/2);
+            rect[i].setFill(Color.ORANGE);
+            rect[i].setArcHeight(30);
+            rect[i].setArcWidth(30);
+            rect[i].setStroke(Color.WHITE);
+            rect[i].setStrokeWidth(3);
+        }
+
+        layoutMenu = new Pane();
+        layoutMenu.getChildren().addAll(rect[0],rect[1],rect[2],item[0],item[1],item[2]);
+        layoutMenu.setMinSize(600,600);
+        layoutMenu.setMaxSize(600,600);
+        root.getChildren().addAll(author,layoutMenu);
+
+
+        rect[0].setOnMouseClicked(event -> {
+            author.setX(-1000);
+            author.setY(-1000);
+            layoutMenu.setTranslateX(-1000);
+            layoutMenu.setTranslateY(-1000);
+            new Level1(root);
+            running = true;
+
         });
 
-    }
+        rect[2].setOnMouseClicked(event->{
+            stage.close();
+        });
 
-    public static void updateMenu() { //Update menu
-        level.setText("Level: ");
-        bomb.setText("Bombs: ");
-
-        if (bomberman.isLife())
-            if (isPause) {
-                statusGame.setImage(pauseGame);
-            } else {
-                statusGame.setImage(playGame);
-            }
-        else {
-            Image newGame = new Image("images/startButton.png");
-            statusGame.setImage(newGame);
+        for(Rectangle Rect:rect) {
+            Rect.setOnMouseEntered(event->{
+                Rect.setFill(Color.rgb(127,255,0));
+            });
+        }
+        for(Rectangle Rect:rect) {
+            Rect.setOnMouseExited(event->{
+                Rect.setFill(Color.ORANGE);
+            });
         }
     }
+
 }
+
+
+
 

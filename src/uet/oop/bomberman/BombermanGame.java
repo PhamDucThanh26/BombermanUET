@@ -33,31 +33,41 @@ import static uet.oop.bomberman.graphics.Sprite.WIDTH;
 
 public class BombermanGame extends Application {
     //Update menu 17/10/2022
-    Menu menu = new Menu();
+
     private final String[] containLevel = {
             "\\res\\levels\\Level0.txt",
             "\\res\\levels\\Level1.txt",
             "\\res\\levels\\Level2.txt",
     };
     // stage
-    static int _level = 0;
 
+    public static boolean running = false;
     public static boolean isPause = false;
+
+    private Scene sceneGame;
+
+    private Scene sceneMenu;
+
     void nextLevel() {
         level++;
         stillObjects.clear();
         backgroundTitle.clear();
         creatures.clear();
 //        bomberman.reset();
-        createMap(containLevel[_level]);
+//        createMap(containLevel[_level]);
     }
+
     public static GraphicsContext gc;
     private Canvas canvas;
+
+    public static Stage stage;
 
     // game creatures
     public static Bomber bomberman = new Bomber(2, 2, Sprite.player_right.getFxImage());
     public static List<Entity> stillObjects = new ArrayList<>();
     public static List<Entity> backgroundTitle = new ArrayList<>();
+
+    public boolean runMenu = true;
 
     public static int heightMap;
     public static int widthMap;
@@ -67,28 +77,27 @@ public class BombermanGame extends Application {
     public Sound startStage = new Sound();
     public Sound backGround = new Sound();
 
-    @Override
-    public void start(Stage stage) {
-        // bgm
-//         music();
+    public static Group root;
 
-        // Tao Canvas
+
+
+    @Override
+    public void start(Stage primaryStage) {
+        stage = new Stage();
         canvas = new Canvas(WIDTH, HEIGHT);
 
         gc = canvas.getGraphicsContext2D();
-
         // Tao root container
-        Group root = new Group();
-//      Update Menu 17/10.
-        Menu.createMenu(root);
-        root.getChildren().add(canvas);
+        root = new Group();
 
-        createMap(System.getProperty("user.dir") + "\\res\\levels\\Level2.txt");
+        root.getChildren().add(canvas);
+        Menu.creatMenu(root);
+//        createMap(System.getProperty("user.dir") + "\\res\\levels\\Level2.txt");
         startStage.playStartStage();
         backGround.playBackGround();
 
         // Tao scene
-        Scene scene = new Scene(root);
+        sceneGame = new Scene(root);
         // Them scene vao stage
         stage.setTitle("Bomberman");
         //Passing FileInputStream object as a parameter
@@ -96,12 +105,14 @@ public class BombermanGame extends Application {
         stage.getIcons().add(img);
         stage.setResizable(false);
 
-        scene.setOnKeyPressed(e -> bomberman.kb.hold(e));
-        scene.setOnKeyReleased(e -> bomberman.kb.release(e));
+        sceneGame.setOnKeyPressed(e -> bomberman.kb.hold(e));
+        sceneGame.setOnKeyReleased(e -> bomberman.kb.release(e));
+
+
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long l) {
-                if(!isPause) {
+                if (!isPause) {
                     update();
                 }
                 render();
@@ -115,8 +126,9 @@ public class BombermanGame extends Application {
 //        algo.algorithmProcessing();
 //        algo.printPath();
 
-        stage.setScene(scene);
+        stage.setScene(sceneGame);
         stage.show();
+
     }
 
     public void updateNodes(Entity entity) {
@@ -147,28 +159,28 @@ public class BombermanGame extends Application {
     }
 
     public void update() {
+
         //keyboard
-            bomberman.kbUpdate();
+        bomberman.kbUpdate();
+        //interaction
+         stillObjects.forEach((Entity e) -> {
+            if (!(e instanceof Grass || e instanceof Portal || e instanceof Item) && collision(e, bomberman)) {
+                bomberman.setCollision(true);
+            }
+        });
 
-            //interaction
-            stillObjects.forEach((Entity e) -> {
-                if (!(e instanceof Grass || e instanceof Portal || e instanceof Item) && collision(e, bomberman)) {
-                    bomberman.setCollision(true);
-                }
-            });
-
-            stillObjects.forEach((Entity e) -> creatures.forEach(entity -> {
-                if (collision(e, entity) && !(e instanceof Grass)) {
-                    entity.setCollision(true);
-                }
-            }));
-            bomberman.update();
-            creatures.forEach(Entity::update);
-            stillObjects.forEach(Entity::update);
-            miscellaneous.forEach(Item::update);
-            creatures.removeIf(Entity::isFlag);
-            stillObjects.removeIf(Entity::isFlag);
-            miscellaneous.removeIf(Entity::isFlag);
+        stillObjects.forEach((Entity e) -> creatures.forEach(entity -> {
+            if (collision(e, entity) && !(e instanceof Grass)) {
+                entity.setCollision(true);
+            }
+        }));
+        bomberman.update();
+        creatures.forEach(Entity::update);
+        stillObjects.forEach(Entity::update);
+        miscellaneous.forEach(Item::update);
+        creatures.removeIf(Entity::isFlag);
+        stillObjects.removeIf(Entity::isFlag);
+        miscellaneous.removeIf(Entity::isFlag);
 //        if(creatures.size() == 0 && collision(bomberman, portal)) {
 //
 //            nextLevel();
@@ -183,7 +195,7 @@ public class BombermanGame extends Application {
         miscellaneous.forEach(g -> g.render(gc));
         stillObjects.forEach(g -> g.render(gc));
         creatures.forEach(g -> g.render(gc));
-        if(bomberman.isStillRender()) {
+        if (bomberman.isStillRender()) {
             bomberman.render(gc);
         }
     }

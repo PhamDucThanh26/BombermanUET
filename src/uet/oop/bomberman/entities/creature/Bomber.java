@@ -153,7 +153,7 @@ public final class Bomber extends Creature {
     }
 
     public void putBomb() {
-        if (bombs.size() <= bombNumber) {
+        if (bombs.size() < bombNumber) {
             double xpos = x / 32;
             double ypos = (double) y / 32;
             xpos = Math.round(xpos);
@@ -189,7 +189,6 @@ public final class Bomber extends Creature {
 
     public void updateAnimation() {
         if(isLife) {
-
             if (frame % 10 == 0) {
                 frameCount++;
                 frameCount %= 3;
@@ -247,6 +246,5 @@ public final class Bomber extends Creature {
     public void render(GraphicsContext gc) {
         bombs.forEach(bomb -> bomb.render(gc));
         gc.drawImage(img, screenX, screenY);
-
     }
 }

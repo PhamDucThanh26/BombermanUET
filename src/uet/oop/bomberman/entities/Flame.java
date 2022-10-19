@@ -13,7 +13,6 @@ public class Flame extends Entity implements IAnimation {
     protected int animate = 0;
     protected int frameCount = 0;
 
-
     public Flame(double xUnit, double yUnit, Image img) {
         super(xUnit, yUnit, img);
     }
@@ -78,7 +77,8 @@ public class Flame extends Entity implements IAnimation {
         }
         creatures.forEach(creature -> {
             if(collision(this, creature)) {
-                creature.setFlag(false);
+                System.out.println("collised");
+                creature.setFlag(true);
             }
         });
     }
