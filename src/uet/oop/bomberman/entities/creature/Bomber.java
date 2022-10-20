@@ -155,7 +155,7 @@ public final class Bomber extends Creature {
     public void putBomb() {
         if (bombs.size() < bombNumber) {
             double xpos = x / 32;
-            double ypos = (double) y / 32;
+            double ypos = y / 32;
             xpos = Math.round(xpos);
             ypos = Math.round(ypos);
             bombs.add(new Bomb(xpos, ypos, Sprite.bomb.getFxImage(), bombPower));
