@@ -46,7 +46,6 @@ public class BombermanGame extends Application {
 
     private Scene sceneGame;
 
-    private Scene sceneMenu;
 
     void nextLevel() {
         level++;
@@ -91,8 +90,8 @@ public class BombermanGame extends Application {
         root = new Group();
 
         root.getChildren().add(canvas);
-        Menu.creatMenu(root);
-//        createMap(System.getProperty("user.dir") + "\\res\\levels\\Level2.txt");
+//        Menu.creatMenu(root);
+        createMap(System.getProperty("user.dir") + "\\res\\levels\\Level2.txt");
         startStage.playStartStage();
         backGround.playBackGround();
 
