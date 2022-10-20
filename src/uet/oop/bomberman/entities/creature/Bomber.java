@@ -155,7 +155,7 @@ public final class Bomber extends Creature {
     public void putBomb() {
         if (bombs.size() <= bombNumber) {
             double xpos = x / 32;
-            double ypos = (double) y / 32;
+            double ypos = y / 32;
             xpos = Math.round(xpos);
             ypos = Math.round(ypos);
             bombs.add(new Bomb(xpos, ypos, Sprite.bomb.getFxImage(), bombPower));
@@ -246,7 +246,12 @@ public final class Bomber extends Creature {
     @Override
     public void render(GraphicsContext gc) {
         bombs.forEach(bomb -> bomb.render(gc));
-        gc.drawImage(img, screenX, screenY);
-
+//        screenX = x < Sprite.WIDTH / 2 ? x : Sprite.WIDTH;
+//        screenY = y < Sprite.HEIGHT / 2 ? y : Sprite.HEIGHT;
+        if ( x < Sprite.WIDTH / 2  || x < Sprite.HEIGHT / 2) {
+                gc.drawImage(img, x, y);
+        } else {
+            gc.drawImage(img, screenX, screenY);
+        }
     }
 }

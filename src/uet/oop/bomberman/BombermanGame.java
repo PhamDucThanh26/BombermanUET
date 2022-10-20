@@ -9,16 +9,12 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import uet.oop.bomberman.entities.*;
 import uet.oop.bomberman.entities.BuffItem.Item;
 import uet.oop.bomberman.entities.creature.Bomber;
 import uet.oop.bomberman.graphics.Sprite;
-import uet.oop.bomberman.path_finding.AStar;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -104,10 +100,6 @@ public class BombermanGame extends Application {
 
 //        Thread there
 
-//        AStar algo = new AStar(Sprite.maxWorldCol, Sprite.maxWorldRow, 1, 1, 17, 9);
-//        algo.algorithmProcessing();
-//        algo.printPath();
-
         stage.setScene(scene);
         stage.show();
     }
@@ -163,11 +155,6 @@ public class BombermanGame extends Application {
             creatures.removeIf(Entity::isFlag);
             stillObjects.removeIf(Entity::isFlag);
             miscellaneous.removeIf(Entity::isFlag);
-//        if(creatures.size() == 0 && collision(bomberman, portal)) {
-//
-//            nextLevel();
-//        }
-//        updateNodesMap();
         }
     }
 
@@ -177,8 +164,7 @@ public class BombermanGame extends Application {
         miscellaneous.forEach(g -> g.render(gc));
         stillObjects.forEach(g -> g.render(gc));
         creatures.forEach(g -> g.render(gc));
-        if(bomberman.isStillRender()) {
-            bomberman.render(gc);
-        }
+        bomberman.render(gc);
+        gc.drawImage(Sprite.explosion_horizontal.getFxImage(), 0, 0);
     }
 }
