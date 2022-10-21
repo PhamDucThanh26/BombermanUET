@@ -5,6 +5,7 @@ import javafx.scene.shape.Rectangle;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.graphics.Sprite;
 
+import static uet.oop.bomberman.BombermanGame.score;
 import static uet.oop.bomberman.level.Game.bomberman;
 
 public class Oneal extends Creature {
@@ -73,6 +74,9 @@ public class Oneal extends Creature {
             updateAnimation();
         } else {
             dead();
+            if(this.flag) {
+                score += 100;
+            }
         }
     }
 

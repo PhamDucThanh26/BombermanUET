@@ -18,6 +18,7 @@ import static uet.oop.bomberman.graphics.Sprite.WIDTH;
 public class BombermanGame extends Application {
     //Update menu 17/10/2022
 
+    public static int score = 0;
     public static GraphicsContext gc;
     public static Canvas canvas;
     public static Stage stage;
@@ -26,6 +27,7 @@ public class BombermanGame extends Application {
     public Sound startStage = new Sound();
     public Sound backGround = new Sound();
 
+    public static Scene sceneGame;
     public static Group root;
 
     @Override
@@ -43,7 +45,7 @@ public class BombermanGame extends Application {
         backGround.playBackGround();
 
         // Tao scene
-        Scene sceneGame = new Scene(root);
+         sceneGame = new Scene(root);
         // Them scene vao stage
         stage.setTitle("Bomberman");
         //Passing FileInputStream object as a parameter
@@ -51,8 +53,7 @@ public class BombermanGame extends Application {
         stage.getIcons().add(img);
         stage.setResizable(false);
 
-        Game.game(System.getProperty("user.dir") + "\\res\\levels\\Level2.txt", sceneGame);
-
+//        Game.game(System.getProperty("user.dir") + "\\res\\levels\\Level2.txt", sceneGame);
         stage.setScene(sceneGame);
         stage.show();
     }

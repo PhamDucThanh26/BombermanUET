@@ -4,6 +4,8 @@ import javafx.scene.image.Image;
 import javafx.scene.shape.Rectangle;
 import uet.oop.bomberman.graphics.Sprite;
 
+import static uet.oop.bomberman.BombermanGame.score;
+
 public class Balloom extends Creature {
     private final double pivot;
 
@@ -74,6 +76,9 @@ public class Balloom extends Creature {
         }
         else {
             dead();
+            if(this.flag) {
+                score += 50;
+            }
         }
     }
 
