@@ -1,9 +1,13 @@
 package uet.oop.bomberman.graphics;
 
 import Level.Level1;
+import SoundEffect.Sound;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -16,12 +20,18 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.FileInputStream;
+
 import static uet.oop.bomberman.BombermanGame.*;
 import static uet.oop.bomberman.graphics.Map.createMap;
 import static uet.oop.bomberman.graphics.Sprite.HEIGHT;
 import static uet.oop.bomberman.graphics.Sprite.WIDTH;
 
 public class Menu {
+//    public static Sound startStage = new Sound();
+    public static Sound backGround = new Sound();
     public static Image authorImage;
     public static ImageView author;
     private static Text newGameText, exitText, optionsText;
@@ -43,101 +53,78 @@ public class Menu {
         author.setX(0);
         author.setY(0);
 
-//        for(int i = 0;i < 3; i++) {
-//            item[i] = new Text();
-//            if(i == 0) {
-//
-//
-//                item[i].setText("New Game");
-//                item[i].setX(510);
-//                item[i].setY(280);
-//            }
-//            else if(i == 1) {
-//                item[i].setText("Options");
-//                item[i].setX(520);
-//                item[i].setY(340);
-//            }
-//            else {
-//                item[i].setText("Exit");
-//                item[i].setX(540);
-//                item[i].setY(400);
-//            }
-//
-//            item[i].setFont(Font.font("Arial", FontWeight.BOLD, FontPosture.REGULAR,25));
-//            item[i].setFill(Color.WHITE);
-//            item[i].setStroke(Color.BLACK);
-//        }
-
-        for(int i = 0; i < 3; i++) {
-//            rect[i] = new Rectangle();
+        for(int i = 0;i < 3; i++) {
+            item[i] = new Text();
             if(i == 0) {
-                menuButton[i] = new Button();
-                menuButton[i].setText("NewGame");
-                menuButton[i].setLayoutY(250);
-//                rect[i].setY(250);
+                item[i].setText("New Game");
+                item[i].setX(325);
+                item[i].setY(280);
             }
             else if(i == 1) {
-                menuButton[i] = new Button();
-                menuButton[i].setText("Option");
-                menuButton[i].setLayoutY(310);
-//                rect[i].setY(310);
+                item[i].setText("Options");
+                item[i].setX(340);
+                item[i].setY(340);
             }
             else {
-                menuButton[i] = new Button();
-                menuButton[i].setText("Exit");
-                menuButton[i].setLayoutY(370);
-//                rect[i].setY(370);
+                item[i].setText("Exit");
+                item[i].setX(360);
+                item[i].setY(400);
             }
-            menuButton[i].setMinWidth(200);
-//            rect[i].setWidth(200);
-//            rect[i].setHeight(40);
-            menuButton[i].setLayoutX(WIDTH / 2 - menuButton[i].getMinWidth() / 2);
-//            rect[i].setX(WIDTH/2-rect[i].getWidth()/2);
-//            rect[i].setFill(Color.ORANGE);
-//            rect[i].setArcHeight(30);
-//            rect[i].setArcWidth(30);
-//            rect[i].setStroke(Color.WHITE);
-//            rect[i].setStrokeWidth(3);
+            item[i].setFont(Font.font("Arial", FontWeight.BOLD, FontPosture.REGULAR,25));
+            item[i].setFill(Color.WHITE);
+            item[i].setStroke(Color.BLACK);
         }
 
+        for(int i = 0; i < 3; i++) {
+            rect[i] = new Rectangle();
+
+            if(i == 0) {
+                rect[i].setY(250);
+            }
+            else if(i == 1) {
+                rect[i].setY(310);
+            }
+            else {
+                rect[i].setY(370);
+            }
+            rect[i].setWidth(200);
+            rect[i].setHeight(40);
+            rect[i].setX(WIDTH/2-rect[i].getWidth()/2);
+            rect[i].setFill(Color.ORANGE);
+            rect[i].setArcHeight(30);
+            rect[i].setArcWidth(30);
+            rect[i].setStroke(Color.WHITE);
+            rect[i].setStrokeWidth(3);
+        }
         layoutMenu = new Pane();
-//        layoutMenu.getChildren().addAll(rect[0], rect[1],rect[2],item[0],item[1],item[2]);
-        layoutMenu.getChildren().addAll(menuButton[0], menuButton[1], menuButton[2]);
+        layoutMenu.getChildren().addAll(rect[0], rect[1],rect[2],item[0],item[1],item[2]);
         layoutMenu.setMinSize(600,600);
         layoutMenu.setMaxSize(600,600);
         root.getChildren().addAll(author,layoutMenu);
-
-
-        menuButton[0].setOnMouseClicked(event -> {
+        for(Text i : item) {
+            i.setOnMouseEntered(event -> {
+                i.setFont(Font.font("BOMBERMA", FontWeight.BOLD, FontPosture.REGULAR, 25));
+                i.setFill(Color.RED);
+                i.setStroke(Color.YELLOW);
+            });
+            i.setOnMouseExited(event -> {
+                i.setFont(Font.font("BOMBERMA", FontWeight.BOLD, FontPosture.REGULAR, 25));
+                i.setFill(Color.WHITE);
+                i.setStroke(Color.BLACK);
+            });
+        }
+        item[0].setOnMouseClicked(event -> {
             author.setX(-1000);
             author.setY(-1000);
             layoutMenu.setTranslateX(-1000);
             layoutMenu.setTranslateY(-1000);
             new Level1(root);
+//            startStage.playStartStage();
+            backGround.playBackGround();
         });
-
-        menuButton[0].setOnAction(event -> {
-            author.setX(-1000);
-            author.setY(-1000);
-            layoutMenu.setTranslateX(-1000);
-            layoutMenu.setTranslateY(-1000);
-            new Level1(root);
-        });
-
-        menuButton[2].setOnMouseClicked(event->{
+        item[2].setOnMouseClicked(event->{
             stage.close();
         });
-
-//        for(Rectangle Rect:rect) {
-//            Rect.setOnMouseEntered(event->{
-//                Rect.setFill(Color.rgb(127,255,0));
-//            });
-//        }
-//        for(Rectangle Rect:rect) {
-//            Rect.setOnMouseExited(event->{
-//                Rect.setFill(Color.ORANGE);
-//            });
-//        }
     }
 
 }

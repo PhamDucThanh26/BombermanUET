@@ -56,7 +56,7 @@ public class Sound {
     }
 
     public void playBomberDie() {
-        this.play(bomberDie, 1, VOLUME);
+        this.play(bomberDie, 1, 0.5);
     }
 
     public void playGetNewItem() {

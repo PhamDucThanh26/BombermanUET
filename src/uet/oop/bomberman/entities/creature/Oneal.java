@@ -6,6 +6,7 @@ import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.graphics.Sprite;
 
 import static uet.oop.bomberman.BombermanGame.bomberman;
+import static uet.oop.bomberman.entities.Interaction.collision;
 
 public class Oneal extends Creature {
     private double playerX;

@@ -26,6 +26,7 @@ public class Keyboard {
                 right = true;
                 break;
             case SPACE:
+            case F:
                 plant_bomb = true;
             default:
                 break;

@@ -71,11 +71,6 @@ public class BombermanGame extends Application {
     public static int heightMap;
     public static int widthMap;
     public static int level;
-
-    // audio
-    public Sound startStage = new Sound();
-    public Sound backGround = new Sound();
-
     public static Group root;
 
 
@@ -88,36 +83,17 @@ public class BombermanGame extends Application {
         gc = canvas.getGraphicsContext2D();
         // Tao root container
         root = new Group();
-
         root.getChildren().add(canvas);
-//        Menu.creatMenu(root);
-        createMap(System.getProperty("user.dir") + "\\res\\levels\\Level2.txt");
-        startStage.playStartStage();
-        backGround.playBackGround();
-
+        Menu.creatMenu(root);
         // Tao scene
         sceneGame = new Scene(root);
-        // Them scene vao stage
         stage.setTitle("Bomberman");
         //Passing FileInputStream object as a parameter
         Image img = new Image("file:res//icon.png");
         stage.getIcons().add(img);
         stage.setResizable(false);
 
-        sceneGame.setOnKeyPressed(e -> bomberman.kb.hold(e));
-        sceneGame.setOnKeyReleased(e -> bomberman.kb.release(e));
-
-
-        AnimationTimer timer = new AnimationTimer() {
-            @Override
-            public void handle(long l) {
-                if (!isPause) {
-                    update();
-                }
-                render();
-            }
-        };
-        timer.start();
+        playGame();
 
 //        Thread there
 
@@ -130,6 +106,20 @@ public class BombermanGame extends Application {
 
     }
 
+    public void playGame() {
+        sceneGame.setOnKeyPressed(e -> bomberman.kb.hold(e));
+        sceneGame.setOnKeyReleased(e -> bomberman.kb.release(e));
+        AnimationTimer timer = new AnimationTimer() {
+            @Override
+            public void handle(long l) {
+                if (!isPause) {
+                    update();
+                }
+                render();
+            }
+        };
+        timer.start();
+    }
     public void updateNodes(Entity entity) {
         double posX = entity.getX();
         double posY = entity.getY();

@@ -1,5 +1,6 @@
 package uet.oop.bomberman.entities.creature;
 
+import SoundEffect.Sound;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 import javafx.scene.shape.Rectangle;
@@ -10,9 +11,14 @@ import uet.oop.bomberman.graphics.IGameEntity;
 import java.util.ArrayList;
 import java.util.List;
 
+import static uet.oop.bomberman.BombermanGame.bomberman;
+import static uet.oop.bomberman.entities.Interaction.collision;
+
 public abstract class Creature extends Entity implements IAnimation, IGameEntity {
     public static List<Creature> creatures = new ArrayList<>();
     protected int frameCount = 0;
+
+
     // movement vector
     protected int xVec = 0;
     protected int yVec = 0;
@@ -54,6 +60,9 @@ public abstract class Creature extends Entity implements IAnimation, IGameEntity
         frame = getCurrentFrame();
         solidArea.setX(x);
         solidArea.setY(y);
+        if(collision(this, bomberman)) {
+            bomberman.setLife(false);
+        }
 
     }
 }
