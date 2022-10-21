@@ -8,7 +8,7 @@ import uet.oop.bomberman.graphics.IGameEntity;
 import java.util.ArrayList;
 import java.util.List;
 
-import static uet.oop.bomberman.BombermanGame.bomberman;
+import static uet.oop.bomberman.level.Game.bomberman;
 import static uet.oop.bomberman.entities.Interaction.collision;
 
 public class Item extends Entity implements IGameEntity {

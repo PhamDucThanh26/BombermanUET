@@ -1,6 +1,4 @@
 package uet.oop.bomberman.graphics;
-
-import Level.Level1;
 import uet.oop.bomberman.SoundEffect.Sound;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
@@ -107,7 +105,6 @@ public class Menu {
             author.setY(-1000);
             layoutMenu.setTranslateX(-1000);
             layoutMenu.setTranslateY(-1000);
-            new Level1(root);
 //            startStage.playStartStage();
             backGround.playBackGround();
         });

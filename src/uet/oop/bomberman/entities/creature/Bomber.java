@@ -13,52 +13,56 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class Bomber extends Creature {
-    protected double screenX;
-    protected double screenY;
-    private Sound bomberDieSound = new Sound();
+
+    Sound bomberDieSound = new Sound();
+    private int animateDead = 0;
+
     private boolean stillRender = true;
     final Image[] upAnimation = {
             Sprite.player_up.getFxImage(),
             Sprite.player_up_1.getFxImage(),
             Sprite.player_up_2.getFxImage()
     };
-    protected final Image[] downAnimation = {
+    private final Image[] downAnimation = {
             Sprite.player_down.getFxImage(),
             Sprite.player_down_1.getFxImage(),
             Sprite.player_down_2.getFxImage()
     };
 
-    protected final Image[] leftAnimation = {
+    private final Image[] leftAnimation = {
             Sprite.player_left.getFxImage(),
             Sprite.player_left_1.getFxImage(),
             Sprite.player_left_2.getFxImage()
     };
-    protected final Image[] rightAnimation = {
+    private final Image[] rightAnimation = {
             Sprite.player_right.getFxImage(),
             Sprite.player_right_1.getFxImage(),
             Sprite.player_right_2.getFxImage()
     };
 
-    protected final Image[] deadAnimation = {
+    private final Image[] deadAnimation = {
             Sprite.player_dead1.getFxImage(),
             Sprite.player_dead1.getFxImage(),
             Sprite.player_dead2.getFxImage(),
             Sprite.player_dead2.getFxImage(),
             Sprite.player_dead3.getFxImage(),
     };
-    private Sound bombSound = new Sound();
+    private final Sound bombSound = new Sound();
     private int bombNumber = 1;
     public static int bombPower = 1;
     private int speed = 1;
-
     private boolean onceTime = true;
 
-    public Keyboard kb = new Keyboard();
 
     public boolean isStillRender() {
         return stillRender;
     }
 
+    public void setStillRender(boolean stillRender) {
+        this.stillRender = stillRender;
+    }
+
+    public Keyboard kb = new Keyboard();
     private final List<Bomb> bombs = new ArrayList<>();
 
     public int getBombNumber() {
@@ -78,47 +82,8 @@ public final class Bomber extends Creature {
         this.speed = speed;
     }
 
-    public double getScreenX() {
-        return screenX;
-    }
-
-    public void setScreenX(double screenX) {
-        this.screenX = screenX;
-    }
-
-    public double getScreenY() {
-        return screenY;
-    }
-
-    public void setScreenY(double screenY) {
-        this.screenY = screenY;
-    }
-
-    //    public static int[] bomberNodes = {
-//            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-//            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-//            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-//            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-//            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-//            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-//            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-//            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-//            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-//            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-//            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-//            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-//            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-//            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-//            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-//            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-//    };
-
     public Bomber(double x, double y, Image img) {
         super(x, y, img);
-
-        screenX = Sprite.WIDTH / 2;
-        screenY = Sprite.HEIGHT / 2 - 2 * Sprite.SCALED_SIZE;
-
         solidArea = new Rectangle(x, y + 8, 24, 24);
         NodesNumber = 1;
     }
@@ -126,35 +91,34 @@ public final class Bomber extends Creature {
     public void updateMove() {
         xVec = 0;
         yVec = 0;
-        if (kb.up) {
+        if (kb.keySet.contains("UP") || kb.keySet.contains("W")) {
             yVec -= speed;
         }
-        if (kb.down) {
+        if (kb.keySet.contains("DOWN") || kb.keySet.contains("S")) {
             yVec += speed;
         }
-        if (kb.left) {
+        if (kb.keySet.contains("LEFT") || kb.keySet.contains("A")) {
             xVec -= speed;
         }
-        if (kb.right) {
+        if (kb.keySet.contains("RIGHT") || kb.keySet.contains("D")) {
             xVec += speed;
         }
     }
 
     public void putBomb() {
         if (bombs.size() < bombNumber) {
-            double xpos = x / 32;
-            double ypos = (double) y / 32;
-            xpos = Math.round(xpos);
-            ypos = Math.round(ypos);
-            bombs.add(new Bomb(xpos, ypos, Sprite.bomb.getFxImage(), bombPower));
+            double xPos = x / 32;
+            double yPos = y / 32;
+            xPos = Math.round(xPos);
+            yPos = Math.round(yPos);
+            bombs.add(new Bomb(xPos, yPos, Sprite.bomb.getFxImage(), bombPower));
             bombSound.playPlaceNewBomb();
         }
     }
 
     private void updateAction() {
-        if (kb.plant_bomb) {
+        if (kb.keySet.contains("SPACE")) {
             this.putBomb();
-            kb.plant_bomb = false;
         }
     }
 
@@ -176,22 +140,21 @@ public final class Bomber extends Creature {
     }
 
     public void updateAnimation() {
-        if (isLife) {
-
+        if(isLife) {
             if (frame % 10 == 0) {
                 frameCount++;
                 frameCount %= 3;
             }
-            if (kb.up) {
+            if (kb.keySet.contains("UP") || kb.keySet.contains("W")) {
                 this.setImg(upAnimation[frameCount]);
             }
-            if (kb.down) {
+            if (kb.keySet.contains("DOWN") || kb.keySet.contains("S")) {
                 this.setImg(downAnimation[frameCount]);
             }
-            if (kb.left) {
+            if (kb.keySet.contains("LEFT") || kb.keySet.contains("A")) {
                 this.setImg(leftAnimation[frameCount]);
             }
-            if (kb.right) {
+            if (kb.keySet.contains("RIGHT") || kb.keySet.contains("D")) {
                 this.setImg(rightAnimation[frameCount]);
             }
         } else {
@@ -204,27 +167,29 @@ public final class Bomber extends Creature {
     public void update() {
         bombs.removeIf(Entity::isFlag);
         bombs.forEach(Bomb::update);
-        if (this.isLife()) {
+        if (isLife) {
+            // Entity update
             frame = getCurrentFrame();
             solidArea.setX(x);
             solidArea.setY(y);
+            // game update
             move();
-            updateAnimation();
+            // solid reset
             xVec = 0;
             yVec = 0;
             solidArea.setX(x);
             solidArea.setY(y + 8);
-        } else {
+            updateAnimation();
+        }
+        else {
             updateAnimation();
         }
     }
-
     @Override
     public void render(GraphicsContext gc) {
         bombs.forEach(bomb -> bomb.render(gc));
-        gc.drawImage(img, screenX, screenY);
+        super.render(gc);
     }
-
     @Override
     public void dead() {
         animateDead++;

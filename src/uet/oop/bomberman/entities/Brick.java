@@ -4,7 +4,6 @@ import javafx.scene.image.Image;
 import uet.oop.bomberman.graphics.IAnimation;
 import uet.oop.bomberman.graphics.Sprite;
 
-
 public class Brick extends Entity implements IAnimation {
     private boolean exploded = false;
     private int frameCount = 0;

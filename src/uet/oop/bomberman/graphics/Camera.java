@@ -2,7 +2,7 @@ package uet.oop.bomberman.graphics;
 
 import uet.oop.bomberman.entities.Entity;
 
-import static uet.oop.bomberman.BombermanGame.bomberman;
+import static uet.oop.bomberman.level.Game.bomberman;
 
 public class Camera {
     private double cameraX;
