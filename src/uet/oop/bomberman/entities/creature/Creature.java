@@ -1,6 +1,5 @@
 package uet.oop.bomberman.entities.creature;
 
-import SoundEffect.Sound;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 import javafx.scene.shape.Rectangle;

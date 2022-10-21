@@ -1,6 +1,6 @@
 package uet.oop.bomberman.entities.BuffItem;
 
-import SoundEffect.Sound;
+import uet.oop.bomberman.SoundEffect.Sound;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.graphics.IGameEntity;

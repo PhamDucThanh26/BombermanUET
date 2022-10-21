@@ -1,4 +1,4 @@
-package SoundEffect;
+package uet.oop.bomberman.SoundEffect;
 
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;

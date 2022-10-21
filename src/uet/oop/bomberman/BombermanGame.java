@@ -1,6 +1,5 @@
 package uet.oop.bomberman;
 
-import SoundEffect.Sound;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Group;
@@ -9,18 +8,14 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import uet.oop.bomberman.entities.*;
 import uet.oop.bomberman.entities.BuffItem.Item;
 import uet.oop.bomberman.entities.creature.Bomber;
 import uet.oop.bomberman.graphics.Menu;
 import uet.oop.bomberman.graphics.Sprite;
-import uet.oop.bomberman.path_finding.AStar;
 
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 

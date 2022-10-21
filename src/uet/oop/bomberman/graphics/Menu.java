@@ -1,16 +1,11 @@
 package uet.oop.bomberman.graphics;
 
 import Level.Level1;
-import SoundEffect.Sound;
-import javafx.event.Event;
-import javafx.event.EventHandler;
+import uet.oop.bomberman.SoundEffect.Sound;
 import javafx.scene.Group;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -18,14 +13,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
-
-import java.awt.event.MouseEvent;
-import java.io.File;
-import java.io.FileInputStream;
 
 import static uet.oop.bomberman.BombermanGame.*;
-import static uet.oop.bomberman.graphics.Map.createMap;
 import static uet.oop.bomberman.graphics.Sprite.HEIGHT;
 import static uet.oop.bomberman.graphics.Sprite.WIDTH;
 
