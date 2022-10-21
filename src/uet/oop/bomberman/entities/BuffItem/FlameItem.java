@@ -19,7 +19,6 @@ public class FlameItem extends Item {
         if (collision(bomberman, this)) {
             super.update();
             bombPower++;
-//            System.out.println("Bomb Power is " + bombPower);
         }
 
     }

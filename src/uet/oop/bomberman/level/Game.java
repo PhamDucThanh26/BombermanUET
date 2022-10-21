@@ -22,13 +22,17 @@ import static uet.oop.bomberman.graphics.Map.createMap;
 import static uet.oop.bomberman.graphics.Map.mapNodes;
 
 public class Game {
+    private final String[] containLevel = {
+            "\\res\\levels\\Level0.txt",
+            "\\res\\levels\\Level1.txt",
+            "\\res\\levels\\Level2.txt",
+    };
     public static boolean isPause = false;
-    public static List<Entity> stillObjects = new ArrayList<>();
-    public static List<Entity> backgroundTitle = new ArrayList<>();
-
     // game creatures
     public static Bomber bomberman = new Bomber(2, 2, Sprite.player_right.getFxImage());
     public static Camera camera = new Camera();
+    public static List<Entity> stillObjects = new ArrayList<>();
+    public static List<Entity> backgroundTitle = new ArrayList<>();
     public static void game(String level, Scene scene) {
         createMap(level);
         scene.setOnKeyPressed(e -> bomberman.kb.hold(e));

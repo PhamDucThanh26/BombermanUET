@@ -4,9 +4,6 @@ import javafx.scene.image.Image;
 import javafx.scene.shape.Rectangle;
 import uet.oop.bomberman.graphics.Sprite;
 
-import static uet.oop.bomberman.BombermanGame.bomberman;
-import static uet.oop.bomberman.entities.Interaction.collision;
-
 public class Balloom extends Creature {
     private final double pivot;
 

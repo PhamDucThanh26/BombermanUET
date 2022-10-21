@@ -6,7 +6,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Keyboard {
-
     public Set<String> keySet = new HashSet<>();
 
     public void hold(KeyEvent e) {

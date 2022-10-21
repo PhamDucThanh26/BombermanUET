@@ -45,7 +45,7 @@ public final class Bomber extends Creature {
             Sprite.player_dead2.getFxImage(),
             Sprite.player_dead3.getFxImage(),
     };
-    private Sound bombSound = new Sound();
+    private final Sound bombSound = new Sound();
     private int bombNumber = 1;
     public static int bombPower = 1;
     private int speed = 1;
@@ -83,7 +83,6 @@ public final class Bomber extends Creature {
         super(x, y, img);
         solidArea = new Rectangle(x, y + 8, 24, 24);
         NodesNumber = 1;
-        center = true;
     }
 
     public void updateMove() {
@@ -105,11 +104,11 @@ public final class Bomber extends Creature {
 
     public void putBomb() {
         if (bombs.size() < bombNumber) {
-            double xpos = x / 32;
-            double ypos = y / 32;
-            xpos = Math.round(xpos);
-            ypos = Math.round(ypos);
-            bombs.add(new Bomb(xpos, ypos, Sprite.bomb.getFxImage(), bombPower));
+            double xPos = x / 32;
+            double yPos = y / 32;
+            xPos = Math.round(xPos);
+            yPos = Math.round(yPos);
+            bombs.add(new Bomb(xPos, yPos, Sprite.bomb.getFxImage(), bombPower));
             bombSound.playPlaceNewBomb();
         }
     }
@@ -162,16 +161,16 @@ public final class Bomber extends Creature {
             if(animateDead % 20 == 0) {
                 frameCount++;
             }
-                frameCount %= 5;
+            frameCount %= 5;
             System.out.println(animateDead + " " + frameCount);
-                this.setImg(deadAnimation[frameCount]);
-                if(frameCount == 4) {
-                    stillRender = false;
+            this.setImg(deadAnimation[frameCount]);
+            if(frameCount == 4) {
+                stillRender = false;
 
-                }
             }
-
         }
+
+    }
 
 
     @Override
@@ -184,8 +183,6 @@ public final class Bomber extends Creature {
 
             // game update
             move();
-//            if(x < Widt)
-
             // solid reset
             xVec = 0;
             yVec = 0;
@@ -203,5 +200,10 @@ public final class Bomber extends Creature {
     public void render(GraphicsContext gc) {
         bombs.forEach(bomb -> bomb.render(gc));
         super.render(gc);
+    }
+
+    @Override
+    public void dead() {
+
     }
 }

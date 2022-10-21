@@ -53,7 +53,6 @@ public class Oneal extends Creature {
 
     @Override
     public void updateAnimation() {
-//        System.out.println(isLife);
         if (frame % 10 == 0) {
             frameCount++;
             frameCount %= 3;

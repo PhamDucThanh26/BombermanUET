@@ -17,14 +17,14 @@ public class Menu {
     public static ImageView author;
     private static Text newGameText, exitText, optionsText;
 
-    private static Button[] menuButton  = new Button[3];
-    private static Text item[] = new Text[3];
-    private static Rectangle rect[] = new Rectangle[3];
+    private static final Button[] menuButton = new Button[3];
+    private static final Text[] item = new Text[3];
+    private static final Rectangle[] rect = new Rectangle[3];
     public static Pane layoutMenu;
 
 
     public static void creatMenu(Group root) {
-        for(int i = 0; i < 3; i++) {
+        for (int i = 0; i < 3; i++) {
             menuButton[i] = new Button();
         }
         authorImage = new Image("images/menu.png");
@@ -59,21 +59,19 @@ public class Menu {
 //            item[i].setStroke(Color.BLACK);
 //        }
 
-        for(int i = 0; i < 3; i++) {
+        for (int i = 0; i < 3; i++) {
 //            rect[i] = new Rectangle();
-            if(i == 0) {
+            if (i == 0) {
                 menuButton[i] = new Button();
                 menuButton[i].setText("NewGame");
                 menuButton[i].setLayoutY(250);
 //                rect[i].setY(250);
-            }
-            else if(i == 1) {
+            } else if (i == 1) {
                 menuButton[i] = new Button();
                 menuButton[i].setText("Option");
                 menuButton[i].setLayoutY(310);
 //                rect[i].setY(310);
-            }
-            else {
+            } else {
                 menuButton[i] = new Button();
                 menuButton[i].setText("Exit");
                 menuButton[i].setLayoutY(370);
@@ -82,7 +80,7 @@ public class Menu {
             menuButton[i].setMinWidth(200);
 //            rect[i].setWidth(200);
 //            rect[i].setHeight(40);
-            menuButton[i].setLayoutX(WIDTH / 2 - menuButton[i].getMinWidth() / 2);
+            menuButton[i].setLayoutX((double) WIDTH / 2 - menuButton[i].getMinWidth() / 2);
 //            rect[i].setX(WIDTH/2-rect[i].getWidth()/2);
 //            rect[i].setFill(Color.ORANGE);
 //            rect[i].setArcHeight(30);
@@ -94,9 +92,9 @@ public class Menu {
         layoutMenu = new Pane();
 //        layoutMenu.getChildren().addAll(rect[0], rect[1],rect[2],item[0],item[1],item[2]);
         layoutMenu.getChildren().addAll(menuButton[0], menuButton[1], menuButton[2]);
-        layoutMenu.setMinSize(600,600);
-        layoutMenu.setMaxSize(600,600);
-        root.getChildren().addAll(author,layoutMenu);
+        layoutMenu.setMinSize(600, 600);
+        layoutMenu.setMaxSize(600, 600);
+        root.getChildren().addAll(author, layoutMenu);
 
 
         menuButton[0].setOnMouseClicked(event -> {
@@ -115,9 +113,7 @@ public class Menu {
             System.out.println("not play");
         });
 
-        menuButton[2].setOnMouseClicked(event->{
-            stage.close();
-        });
+        menuButton[2].setOnMouseClicked(event -> stage.close());
 
 //        for(Rectangle Rect:rect) {
 //            Rect.setOnMouseEntered(event->{

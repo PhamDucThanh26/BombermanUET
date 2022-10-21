@@ -73,7 +73,7 @@ public class Bomb extends Entity implements IAnimation {
         }
         if (isExploded) {
             animate++;
-            if(animate == 10) {
+            if (animate == 10) {
                 frameCountEx++;
                 animate = 0;
             }
@@ -113,27 +113,27 @@ public class Bomb extends Entity implements IAnimation {
         frame = getCurrentFrame();
         updateAnimation();
         if (isExploded) {
-                updateFlameList(leftFlame);
-                leftFlame.forEach(flame -> {
-                    flame.updateLeftAnimation();
-                    flame.update();
-                });
-                updateFlameList(rightFlame);
-                rightFlame.forEach(flame -> {
-                    flame.updateRightAnimation();
-                    flame.update();
-                });
-                updateFlameList(upFlame);
-                upFlame.forEach(flame -> {
-                    flame.updateUpAnimation();
-                    flame.update();
-                });
-                updateFlameList(downFlame);
-                downFlame.forEach(flame -> {
-                    flame.updateDownAnimation();
-                    flame.update();
-                });
-            if(collision(bomberman, this)) {
+            updateFlameList(leftFlame);
+            leftFlame.forEach(flame -> {
+                flame.updateLeftAnimation();
+                flame.update();
+            });
+            updateFlameList(rightFlame);
+            rightFlame.forEach(flame -> {
+                flame.updateRightAnimation();
+                flame.update();
+            });
+            updateFlameList(upFlame);
+            upFlame.forEach(flame -> {
+                flame.updateUpAnimation();
+                flame.update();
+            });
+            updateFlameList(downFlame);
+            downFlame.forEach(flame -> {
+                flame.updateDownAnimation();
+                flame.update();
+            });
+            if (collision(bomberman, this)) {
                 bomberman.setLife(false);
             }
         }

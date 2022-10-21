@@ -1,6 +1,5 @@
 package uet.oop.bomberman;
 
-import uet.oop.bomberman.audio.Sound;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -9,22 +8,17 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 import javafx.stage.Stage;
-import uet.oop.bomberman.graphics.Menu;
+import uet.oop.bomberman.audio.Sound;
+import uet.oop.bomberman.level.Game;
 
-
-import static uet.oop.bomberman.level.Game.game;
+import static uet.oop.bomberman.entities.creature.Creature.creatures;
+import static uet.oop.bomberman.graphics.Map.*;
 import static uet.oop.bomberman.graphics.Sprite.HEIGHT;
 import static uet.oop.bomberman.graphics.Sprite.WIDTH;
+import static uet.oop.bomberman.level.Game.*;
 
 public class BombermanGame extends Application {
     //Update menu 17/10/2022
-    private final String[] containLevel = {
-            "\\res\\levels\\Level0.txt",
-            "\\res\\levels\\Level1.txt",
-            "\\res\\levels\\Level2.txt",
-    };
-
-    private Scene sceneGame;
 
     public static GraphicsContext gc;
     public static Canvas canvas;
@@ -47,12 +41,11 @@ public class BombermanGame extends Application {
         root = new Group();
 
         root.getChildren().add(canvas);
-        Menu.creatMenu(root);
         startStage.playStartStage();
         backGround.playBackGround();
 
         // Tao scene
-        sceneGame = new Scene(root);
+        Scene sceneGame = new Scene(root);
         // Them scene vao stage
         stage.setTitle("Bomberman");
         //Passing FileInputStream object as a parameter
@@ -60,9 +53,10 @@ public class BombermanGame extends Application {
         stage.getIcons().add(img);
         stage.setResizable(false);
 
-        game(System.getProperty("user.dir") + "\\res\\levels\\Level1.txt", sceneGame);
+        Game.game(System.getProperty("user.dir") + "\\res\\levels\\Level2.txt", sceneGame);
 
         stage.setScene(sceneGame);
         stage.show();
     }
+
 }

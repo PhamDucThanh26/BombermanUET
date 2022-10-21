@@ -3,16 +3,12 @@ package uet.oop.bomberman.entities.creature;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.graphics.Sprite;
 
-import static uet.oop.bomberman.BombermanGame.bomberman;
-import static uet.oop.bomberman.entities.Interaction.collision;
-
 public class Doll extends Creature {
     public Doll(int xUnit, int yUnit, Image img) {
         super(xUnit, yUnit, img);
     }
 
     final Image[] deadAnimation = {
-
             Sprite.doll_dead.getFxImage(),
             Sprite.doll_dead.getFxImage(),
             Sprite.mob_dead1.getFxImage(),
@@ -27,11 +23,10 @@ public class Doll extends Creature {
 
     @Override
     public void update() {
-        if(isLife) {
+        if (isLife) {
             super.update();
             updateAnimation();
-        }
-        else {
+        } else {
             dead();
         }
     }
@@ -44,13 +39,13 @@ public class Doll extends Creature {
     @Override
     public void dead() {
         animateDead++;
-        if(animateDead % 40 == 0) {
+        if (animateDead % 40 == 0) {
             frameCount++;
         }
 
         frameCount %= 5;
         img = deadAnimation[frameCount];
-        if(frameCount == 4) {
+        if (frameCount == 4) {
             this.flag = true;
         }
     }

@@ -8,20 +8,12 @@ import uet.oop.bomberman.graphics.Sprite;
 import static uet.oop.bomberman.level.Game.camera;
 
 public abstract class Entity {
-
     protected double x;
     protected double y;
-
-    public boolean center;
-    double screenX = Sprite.WIDTH / 2;
-    double screenY = Sprite.HEIGHT /2 - 2 * Sprite.SCALED_SIZE;
 
     protected double width;
 
     protected boolean isLife = true;
-    public boolean isLife() {
-        return isLife;
-    }
 
     public void setLife(boolean life) {
         isLife = life;
@@ -60,10 +52,6 @@ public abstract class Entity {
         return y;
     }
 
-    public void setY(int y) {
-        this.y = y;
-    }
-
     public Image getImg() {
         return img;
     }
@@ -74,10 +62,6 @@ public abstract class Entity {
 
     public boolean isFlag() {
         return flag;
-    }
-
-    public void setFlag(boolean flag) {
-        this.flag = flag;
     }
 
     public boolean isCollision() {
