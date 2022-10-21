@@ -22,6 +22,14 @@ public class Oneal extends Creature {
             Sprite.oneal_right3.getFxImage()
     };
 
+    final Image[] deadAnimation = {
+            Sprite.oneal_dead.getFxImage(),
+            Sprite.oneal_dead.getFxImage(),
+            Sprite.mob_dead1.getFxImage(),
+            Sprite.mob_dead2.getFxImage(),
+            Sprite.mob_dead3.getFxImage(),
+    };
+
     public Oneal(double xUnit, double yUnit, Image img) {
         super(xUnit, yUnit, img);
         solidArea = new Rectangle(x + 1, y + 1, width - 2, height - 2);
@@ -45,6 +53,7 @@ public class Oneal extends Creature {
 
     @Override
     public void updateAnimation() {
+//        System.out.println(isLife);
         if (frame % 10 == 0) {
             frameCount++;
             frameCount %= 3;
@@ -58,9 +67,28 @@ public class Oneal extends Creature {
 
     @Override
     public void update() {
-        super.update();
-        getPlayerPos(bomberman);
-        move();
-        updateAnimation();
+        if (isLife) {
+            super.update();
+            getPlayerPos(bomberman);
+            move();
+            updateAnimation();
+        } else {
+            dead();
+        }
+    }
+
+
+    @Override
+    public void dead() {
+        animateDead++;
+        if (animateDead % 40 == 0) {
+            frameCount++;
+        }
+
+        frameCount %= 5;
+        img = deadAnimation[frameCount];
+        if (frameCount == 4) {
+            this.flag = true;
+        }
     }
 }

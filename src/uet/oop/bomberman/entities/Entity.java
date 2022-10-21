@@ -17,6 +17,16 @@ public abstract class Entity {
     double screenY = Sprite.HEIGHT /2 - 2 * Sprite.SCALED_SIZE;
 
     protected double width;
+
+    protected boolean isLife = true;
+    public boolean isLife() {
+        return isLife;
+    }
+
+    public void setLife(boolean life) {
+        isLife = life;
+    }
+
     protected double height;
     protected boolean collision = false;
     protected boolean flag = false;
