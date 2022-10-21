@@ -9,13 +9,18 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import uet.oop.bomberman.entities.*;
 import uet.oop.bomberman.entities.BuffItem.Item;
 import uet.oop.bomberman.entities.creature.Bomber;
-import uet.oop.bomberman.graphics.Camera;
+import uet.oop.bomberman.graphics.Menu;
 import uet.oop.bomberman.graphics.Sprite;
+import uet.oop.bomberman.path_finding.AStar;
 
+
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,12 +33,14 @@ import static uet.oop.bomberman.graphics.Sprite.WIDTH;
 
 public class BombermanGame extends Application {
     //Update menu 17/10/2022
+
     private final String[] containLevel = {
             "\\res\\levels\\Level0.txt",
             "\\res\\levels\\Level1.txt",
             "\\res\\levels\\Level2.txt",
     };
     // stage
+
     public static boolean running = false;
     public static boolean isPause = false;
 
@@ -45,6 +52,8 @@ public class BombermanGame extends Application {
         stillObjects.clear();
         backgroundTitle.clear();
         creatures.clear();
+//        bomberman.reset();
+//        createMap(containLevel[_level]);
     }
 
     public static GraphicsContext gc;
@@ -54,11 +63,14 @@ public class BombermanGame extends Application {
 
     // game creatures
     public static Bomber bomberman = new Bomber(2, 2, Sprite.player_right.getFxImage());
-    public static Camera camera = new Camera();
     public static List<Entity> stillObjects = new ArrayList<>();
     public static List<Entity> backgroundTitle = new ArrayList<>();
 
     public boolean runMenu = true;
+
+    public static int heightMap;
+    public static int widthMap;
+    public static int level;
 
     // audio
     public Sound startStage = new Sound();
@@ -76,6 +88,8 @@ public class BombermanGame extends Application {
         root = new Group();
 
         root.getChildren().add(canvas);
+//        Menu.creatMenu(root);
+        createMap(System.getProperty("user.dir") + "\\res\\levels\\Level2.txt");
         startStage.playStartStage();
         backGround.playBackGround();
 
@@ -140,7 +154,6 @@ public class BombermanGame extends Application {
     public void update() {
         //keyboard
         bomberman.kbUpdate();
-
         //interaction
         stillObjects.forEach((Entity e) -> {
             if (!(e instanceof Grass || e instanceof Portal || e instanceof Item) && collision(e, bomberman)) {
