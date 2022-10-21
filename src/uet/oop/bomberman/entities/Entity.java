@@ -12,6 +12,16 @@ public abstract class Entity {
     protected double x;
     protected double y;
     protected double width;
+
+    protected boolean isLife = true;
+    public boolean isLife() {
+        return isLife;
+    }
+
+    public void setLife(boolean life) {
+        isLife = life;
+    }
+
     protected double height;
     protected boolean collision = false;
     protected boolean flag = false;

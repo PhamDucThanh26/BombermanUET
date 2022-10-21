@@ -15,8 +15,6 @@ import java.util.List;
 public final class Bomber extends Creature {
     protected double screenX;
     protected double screenY;
-
-    private int animateDead = 0;
     private Sound bomberDieSound = new Sound();
     private boolean stillRender = true;
     final Image[] upAnimation = {
@@ -54,26 +52,19 @@ public final class Bomber extends Creature {
     private int speed = 1;
 
     private boolean onceTime = true;
-    private boolean isLife = true;
 
     public Keyboard kb = new Keyboard();
 
     public boolean isStillRender() {
         return stillRender;
     }
+
     private final List<Bomb> bombs = new ArrayList<>();
 
     public int getBombNumber() {
         return bombNumber;
     }
 
-    public boolean isLife() {
-        return isLife;
-    }
-
-    public void setLife(boolean life) {
-        isLife = life;
-    }
 
     public void setBombNumber(int bombNumber) {
         this.bombNumber = bombNumber;
@@ -126,7 +117,7 @@ public final class Bomber extends Creature {
         super(x, y, img);
 
         screenX = Sprite.WIDTH / 2;
-        screenY = Sprite.HEIGHT /2 - 2 * Sprite.SCALED_SIZE;
+        screenY = Sprite.HEIGHT / 2 - 2 * Sprite.SCALED_SIZE;
 
         solidArea = new Rectangle(x, y + 8, 24, 24);
         NodesNumber = 1;
@@ -185,7 +176,7 @@ public final class Bomber extends Creature {
     }
 
     public void updateAnimation() {
-        if(isLife) {
+        if (isLife) {
 
             if (frame % 10 == 0) {
                 frameCount++;
@@ -203,33 +194,17 @@ public final class Bomber extends Creature {
             if (kb.right) {
                 this.setImg(rightAnimation[frameCount]);
             }
+        } else {
+            dead();
         }
-        else {
-            animateDead++;
-
-            if(animateDead % 20 == 0) {
-                frameCount++;
-            }
-                frameCount %= 5;
-            System.out.println(animateDead + " " + frameCount);
-                this.setImg(deadAnimation[frameCount]);
-                if(frameCount == 4) {
-                    if(onceTime) {
-                        bomberDieSound.playBomberDie();
-                        onceTime = false;
-                    }
-                    stillRender = false;
-                }
-            }
-
-        }
+    }
 
 
     @Override
     public void update() {
         bombs.removeIf(Entity::isFlag);
         bombs.forEach(Bomb::update);
-        if (isLife) {
+        if (this.isLife()) {
             frame = getCurrentFrame();
             solidArea.setX(x);
             solidArea.setY(y);
@@ -239,9 +214,7 @@ public final class Bomber extends Creature {
             yVec = 0;
             solidArea.setX(x);
             solidArea.setY(y + 8);
-        }
-        else {
-
+        } else {
             updateAnimation();
         }
     }
@@ -250,5 +223,23 @@ public final class Bomber extends Creature {
     public void render(GraphicsContext gc) {
         bombs.forEach(bomb -> bomb.render(gc));
         gc.drawImage(img, screenX, screenY);
+    }
+
+    @Override
+    public void dead() {
+        animateDead++;
+        if (animateDead % 20 == 0) {
+            frameCount++;
+        }
+        frameCount %= 5;
+//        System.out.println(animateDead + " " + frameCount);
+        this.setImg(deadAnimation[frameCount]);
+        if (frameCount == 4) {
+            if (onceTime) {
+                bomberDieSound.playBomberDie();
+                onceTime = false;
+            }
+            stillRender = false;
+        }
     }
 }

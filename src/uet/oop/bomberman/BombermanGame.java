@@ -65,9 +65,6 @@ public class BombermanGame extends Application {
     public static Bomber bomberman = new Bomber(2, 2, Sprite.player_right.getFxImage());
     public static List<Entity> stillObjects = new ArrayList<>();
     public static List<Entity> backgroundTitle = new ArrayList<>();
-
-    public boolean runMenu = true;
-
     public static int heightMap;
     public static int widthMap;
     public static int level;
