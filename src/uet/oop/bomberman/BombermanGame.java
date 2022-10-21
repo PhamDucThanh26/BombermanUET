@@ -11,11 +11,8 @@ import javafx.stage.Stage;
 import uet.oop.bomberman.audio.Sound;
 import uet.oop.bomberman.level.Game;
 
-import static uet.oop.bomberman.entities.creature.Creature.creatures;
-import static uet.oop.bomberman.graphics.Map.*;
 import static uet.oop.bomberman.graphics.Sprite.HEIGHT;
 import static uet.oop.bomberman.graphics.Sprite.WIDTH;
-import static uet.oop.bomberman.level.Game.*;
 
 public class BombermanGame extends Application {
     //Update menu 17/10/2022

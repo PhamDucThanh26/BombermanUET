@@ -23,7 +23,7 @@ public class Menu {
     public static Pane layoutMenu;
 
 
-    public static void creatMenu(Group root) {
+    public static void createMenu(Group root) {
         for (int i = 0; i < 3; i++) {
             menuButton[i] = new Button();
         }
