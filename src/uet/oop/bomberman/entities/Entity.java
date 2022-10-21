@@ -11,6 +11,11 @@ public abstract class Entity {
 
     protected double x;
     protected double y;
+
+    public boolean center;
+    double screenX = Sprite.WIDTH / 2;
+    double screenY = Sprite.HEIGHT /2 - 2 * Sprite.SCALED_SIZE;
+
     protected double width;
 
     protected boolean isLife = true;
@@ -84,14 +89,9 @@ public abstract class Entity {
     }
 
     public void render(GraphicsContext gc) {
-        double screenX = x - bomberman.getX()  + bomberman.getScreenX();
-        double screenY = y - bomberman.getY()  + bomberman.getScreenY();
-
-        if (Math.abs(x - bomberman.getX()) < Sprite.WIDTH  + bomberman.width
-                && Math.abs(y - bomberman.getY()) < Sprite.HEIGHT / 2  + bomberman.height + 2 * Sprite.SCALED_SIZE) {
-            gc.drawImage(img, screenX, screenY);
-        }
-
+        double renderX = x - camera.getCameraX();
+        double renderY = y - camera.getCameraY();
+        gc.drawImage(img, renderX, renderY);
     }
 
     public abstract void update();
