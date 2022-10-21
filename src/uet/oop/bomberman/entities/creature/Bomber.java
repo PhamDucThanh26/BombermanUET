@@ -13,9 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class Bomber extends Creature {
-    protected double screenX;
-    protected double screenY;
-
     private int animateDead = 0;
 
     private boolean stillRender = true;
@@ -90,22 +87,6 @@ public final class Bomber extends Creature {
         this.speed = speed;
     }
 
-    public double getScreenX() {
-        return screenX;
-    }
-
-    public void setScreenX(double screenX) {
-        this.screenX = screenX;
-    }
-
-    public double getScreenY() {
-        return screenY;
-    }
-
-    public void setScreenY(double screenY) {
-        this.screenY = screenY;
-    }
-
     //    public static int[] bomberNodes = {
 //            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 //            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -127,12 +108,9 @@ public final class Bomber extends Creature {
 
     public Bomber(double x, double y, Image img) {
         super(x, y, img);
-
-        screenX = Sprite.WIDTH / 2;
-        screenY = Sprite.HEIGHT /2 - 2 * Sprite.SCALED_SIZE;
-
         solidArea = new Rectangle(x, y + 8, 24, 24);
         NodesNumber = 1;
+        center = true;
     }
 
     public void updateMove() {
@@ -230,13 +208,20 @@ public final class Bomber extends Creature {
         bombs.removeIf(Entity::isFlag);
         bombs.forEach(Bomb::update);
         if (isLife) {
+            // Entity update
             super.update();
+
+            // game update
             move();
-            updateAnimation();
+//            if(x < Widt)
+
+            // solid reset
             xVec = 0;
             yVec = 0;
             solidArea.setX(x);
             solidArea.setY(y + 8);
+
+            updateAnimation();
         }
         else {
             updateAnimation();
@@ -246,12 +231,6 @@ public final class Bomber extends Creature {
     @Override
     public void render(GraphicsContext gc) {
         bombs.forEach(bomb -> bomb.render(gc));
-//        screenX = x < Sprite.WIDTH / 2 ? x : Sprite.WIDTH;
-//        screenY = y < Sprite.HEIGHT / 2 ? y : Sprite.HEIGHT;
-        if ( x < Sprite.WIDTH / 2  || x < Sprite.HEIGHT / 2) {
-                gc.drawImage(img, x, y);
-        } else {
-            gc.drawImage(img, screenX, screenY);
-        }
+        super.render(gc);
     }
 }

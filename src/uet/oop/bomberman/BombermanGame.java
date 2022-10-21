@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 import uet.oop.bomberman.entities.*;
 import uet.oop.bomberman.entities.BuffItem.Item;
 import uet.oop.bomberman.entities.creature.Bomber;
+import uet.oop.bomberman.graphics.Camera;
 import uet.oop.bomberman.graphics.Sprite;
 
 import java.util.ArrayList;
@@ -26,7 +27,6 @@ import static uet.oop.bomberman.graphics.Sprite.HEIGHT;
 import static uet.oop.bomberman.graphics.Sprite.WIDTH;
 
 public class BombermanGame extends Application {
-
     private final String[] containLevel = {
             "\\res\\levels\\Level0.txt",
             "\\res\\levels\\Level1.txt",
@@ -49,6 +49,7 @@ public class BombermanGame extends Application {
 
     // game creatures
     public static Bomber bomberman = new Bomber(2, 2, Sprite.player_right.getFxImage());
+    public static Camera camera = new Camera();
     public static List<Entity> stillObjects = new ArrayList<>();
     public static List<Entity> backgroundTitle = new ArrayList<>();
 
@@ -155,6 +156,7 @@ public class BombermanGame extends Application {
             creatures.removeIf(Entity::isFlag);
             stillObjects.removeIf(Entity::isFlag);
             miscellaneous.removeIf(Entity::isFlag);
+            camera.update();
         }
     }
 
