@@ -1,6 +1,6 @@
 package uet.oop.bomberman.entities.creature;
 
-import SoundEffect.Sound;
+import uet.oop.bomberman.audio.Sound;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.shape.Rectangle;
 import uet.oop.bomberman.entities.Bomb;
@@ -21,24 +21,24 @@ public final class Bomber extends Creature {
             Sprite.player_up_1.getFxImage(),
             Sprite.player_up_2.getFxImage()
     };
-    protected final Image[] downAnimation = {
+    private final Image[] downAnimation = {
             Sprite.player_down.getFxImage(),
             Sprite.player_down_1.getFxImage(),
             Sprite.player_down_2.getFxImage()
     };
 
-    protected final Image[] leftAnimation = {
+    private final Image[] leftAnimation = {
             Sprite.player_left.getFxImage(),
             Sprite.player_left_1.getFxImage(),
             Sprite.player_left_2.getFxImage()
     };
-    protected final Image[] rightAnimation = {
+    private final Image[] rightAnimation = {
             Sprite.player_right.getFxImage(),
             Sprite.player_right_1.getFxImage(),
             Sprite.player_right_2.getFxImage()
     };
 
-    protected final Image[] deadAnimation = {
+    private final Image[] deadAnimation = {
             Sprite.player_dead1.getFxImage(),
             Sprite.player_dead1.getFxImage(),
             Sprite.player_dead2.getFxImage(),
@@ -56,19 +56,11 @@ public final class Bomber extends Creature {
         return stillRender;
     }
 
-    public void setStillRender(boolean stillRender) {
-        this.stillRender = stillRender;
-    }
-
     public Keyboard kb = new Keyboard();
     private final List<Bomb> bombs = new ArrayList<>();
 
     public int getBombNumber() {
         return bombNumber;
-    }
-
-    public boolean isLife() {
-        return isLife;
     }
 
     public void setLife(boolean life) {
@@ -87,25 +79,6 @@ public final class Bomber extends Creature {
         this.speed = speed;
     }
 
-    //    public static int[] bomberNodes = {
-//            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-//            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-//            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-//            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-//            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-//            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-//            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-//            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-//            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-//            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-//            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-//            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-//            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-//            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-//            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-//            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-//    };
-
     public Bomber(double x, double y, Image img) {
         super(x, y, img);
         solidArea = new Rectangle(x, y + 8, 24, 24);
@@ -116,16 +89,16 @@ public final class Bomber extends Creature {
     public void updateMove() {
         xVec = 0;
         yVec = 0;
-        if (kb.up) {
+        if (kb.keySet.contains("UP") || kb.keySet.contains("W")) {
             yVec -= speed;
         }
-        if (kb.down) {
+        if (kb.keySet.contains("DOWN") || kb.keySet.contains("S")) {
             yVec += speed;
         }
-        if (kb.left) {
+        if (kb.keySet.contains("LEFT") || kb.keySet.contains("A")) {
             xVec -= speed;
         }
-        if (kb.right) {
+        if (kb.keySet.contains("RIGHT") || kb.keySet.contains("D")) {
             xVec += speed;
         }
     }
@@ -142,9 +115,8 @@ public final class Bomber extends Creature {
     }
 
     private void updateAction() {
-        if (kb.plant_bomb) {
+        if (kb.keySet.contains("SPACE")) {
             this.putBomb();
-            kb.plant_bomb = false;
         }
     }
 
@@ -171,16 +143,16 @@ public final class Bomber extends Creature {
                 frameCount++;
                 frameCount %= 3;
             }
-            if (kb.up) {
+            if (kb.keySet.contains("UP") || kb.keySet.contains("W")) {
                 this.setImg(upAnimation[frameCount]);
             }
-            if (kb.down) {
+            if (kb.keySet.contains("DOWN") || kb.keySet.contains("S")) {
                 this.setImg(downAnimation[frameCount]);
             }
-            if (kb.left) {
+            if (kb.keySet.contains("LEFT") || kb.keySet.contains("A")) {
                 this.setImg(leftAnimation[frameCount]);
             }
-            if (kb.right) {
+            if (kb.keySet.contains("RIGHT") || kb.keySet.contains("D")) {
                 this.setImg(rightAnimation[frameCount]);
             }
         }

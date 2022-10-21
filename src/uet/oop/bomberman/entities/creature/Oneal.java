@@ -5,7 +5,7 @@ import javafx.scene.shape.Rectangle;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.graphics.Sprite;
 
-import static uet.oop.bomberman.BombermanGame.bomberman;
+import static uet.oop.bomberman.level.Game.bomberman;
 
 public class Oneal extends Creature {
     private double playerX;

@@ -1,59 +1,20 @@
 package uet.oop.bomberman.user_input;
-import static uet.oop.bomberman.BombermanGame.isPause;
+
 import javafx.scene.input.KeyEvent;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class Keyboard {
-    public boolean up, down, left, right, plant_bomb;
-    public void hold(KeyEvent event) {
-        switch (event.getCode()) {
-            case P:
-                isPause = !isPause;
-                break;
-            case W:
-            case UP:
-                up = true;
-                break;
-            case S:
-            case DOWN:
-                down = true;
-                break;
-            case A:
-            case LEFT:
-                left = true;
-                break;
-            case D:
-            case RIGHT:
-                right = true;
-                break;
-            case SPACE:
-                plant_bomb = true;
-            default:
-                break;
-        }
+
+    public Set<String> keySet = new HashSet<>();
+
+    public void hold(KeyEvent e) {
+        keySet.add(e.getCode().toString());
     }
 
-    public void release(KeyEvent event) {
-        switch (event.getCode()) {
-            case W:
-            case UP:
-                up = false;
-                break;
-            case S:
-            case DOWN:
-                down = false;
-                break;
-            case A:
-            case LEFT:
-                left = false;
-                break;
-            case D:
-            case RIGHT:
-                right = false;
-                break;
-            case SPACE:
-                plant_bomb = false;
-            default:
-                break;
-        }
+    public void release(KeyEvent e) {
+        keySet.remove(e.getCode().toString());
     }
+
 }

@@ -5,7 +5,7 @@ import uet.oop.bomberman.graphics.Sprite;
 
 import java.util.*;
 
-import static uet.oop.bomberman.BombermanGame.stillObjects;
+import static uet.oop.bomberman.level.Game.stillObjects;
 
 public class AStar {
     // final cost

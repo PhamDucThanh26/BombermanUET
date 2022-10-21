@@ -1,6 +1,6 @@
 package uet.oop.bomberman.entities;
 
-import SoundEffect.Sound;
+import uet.oop.bomberman.audio.Sound;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.graphics.IAnimation;
@@ -9,7 +9,8 @@ import uet.oop.bomberman.graphics.Sprite;
 import java.util.ArrayList;
 import java.util.List;
 
-import static uet.oop.bomberman.BombermanGame.*;
+import static uet.oop.bomberman.level.Game.bomberman;
+import static uet.oop.bomberman.level.Game.stillObjects;
 import static uet.oop.bomberman.entities.Interaction.collision;
 import static uet.oop.bomberman.entities.creature.Bomber.bombPower;
 

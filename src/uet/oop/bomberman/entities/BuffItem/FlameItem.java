@@ -2,7 +2,7 @@ package uet.oop.bomberman.entities.BuffItem;
 
 import javafx.scene.image.Image;
 
-import static uet.oop.bomberman.BombermanGame.bomberman;
+import static uet.oop.bomberman.level.Game.bomberman;
 import static uet.oop.bomberman.entities.Interaction.collision;
 import static uet.oop.bomberman.entities.creature.Bomber.bombPower;
 
