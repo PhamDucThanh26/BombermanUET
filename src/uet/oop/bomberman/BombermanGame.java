@@ -9,19 +9,13 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import uet.oop.bomberman.entities.*;
 import uet.oop.bomberman.entities.BuffItem.Item;
 import uet.oop.bomberman.entities.creature.Bomber;
 import uet.oop.bomberman.graphics.Camera;
-import uet.oop.bomberman.graphics.Menu;
 import uet.oop.bomberman.graphics.Sprite;
-import uet.oop.bomberman.path_finding.AStar;
 
-
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,14 +28,12 @@ import static uet.oop.bomberman.graphics.Sprite.WIDTH;
 
 public class BombermanGame extends Application {
     //Update menu 17/10/2022
-
     private final String[] containLevel = {
             "\\res\\levels\\Level0.txt",
             "\\res\\levels\\Level1.txt",
             "\\res\\levels\\Level2.txt",
     };
     // stage
-
     public static boolean running = false;
     public static boolean isPause = false;
 
@@ -53,8 +45,6 @@ public class BombermanGame extends Application {
         stillObjects.clear();
         backgroundTitle.clear();
         creatures.clear();
-//        bomberman.reset();
-//        createMap(containLevel[_level]);
     }
 
     public static GraphicsContext gc;
@@ -70,17 +60,11 @@ public class BombermanGame extends Application {
 
     public boolean runMenu = true;
 
-    public static int heightMap;
-    public static int widthMap;
-    public static int level;
-
     // audio
     public Sound startStage = new Sound();
     public Sound backGround = new Sound();
 
     public static Group root;
-
-
 
     @Override
     public void start(Stage primaryStage) {
@@ -92,7 +76,6 @@ public class BombermanGame extends Application {
         root = new Group();
 
         root.getChildren().add(canvas);
-        createMap(System.getProperty("user.dir") + "\\res\\levels\\Level2.txt");
         startStage.playStartStage();
         backGround.playBackGround();
 
@@ -105,10 +88,16 @@ public class BombermanGame extends Application {
         stage.getIcons().add(img);
         stage.setResizable(false);
 
+        game(System.getProperty("user.dir") + "\\res\\levels\\Level2.txt");
+
+        stage.setScene(sceneGame);
+        stage.show();
+    }
+
+    public void game(String level) {
+        createMap(level);
         sceneGame.setOnKeyPressed(e -> bomberman.kb.hold(e));
         sceneGame.setOnKeyReleased(e -> bomberman.kb.release(e));
-
-
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long l) {
@@ -119,9 +108,6 @@ public class BombermanGame extends Application {
             }
         };
         timer.start();
-
-        stage.setScene(sceneGame);
-        stage.show();
     }
 
     public void updateNodes(Entity entity) {
