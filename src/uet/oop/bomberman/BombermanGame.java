@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 import uet.oop.bomberman.entities.*;
 import uet.oop.bomberman.entities.BuffItem.Item;
 import uet.oop.bomberman.entities.creature.Bomber;
+import uet.oop.bomberman.graphics.Camera;
 import uet.oop.bomberman.graphics.Menu;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.path_finding.AStar;
@@ -63,6 +64,7 @@ public class BombermanGame extends Application {
 
     // game creatures
     public static Bomber bomberman = new Bomber(2, 2, Sprite.player_right.getFxImage());
+    public static Camera camera = new Camera();
     public static List<Entity> stillObjects = new ArrayList<>();
     public static List<Entity> backgroundTitle = new ArrayList<>();
 
@@ -172,11 +174,7 @@ public class BombermanGame extends Application {
         creatures.removeIf(Entity::isFlag);
         stillObjects.removeIf(Entity::isFlag);
         miscellaneous.removeIf(Entity::isFlag);
-//        if(creatures.size() == 0 && collision(bomberman, portal)) {
-//
-//            nextLevel();
-//        }
-//        updateNodesMap();
+        camera.update();
     }
 
     public void render() {
