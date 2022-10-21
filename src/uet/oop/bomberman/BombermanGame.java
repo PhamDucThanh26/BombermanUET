@@ -9,6 +9,7 @@ import javafx.scene.image.Image;
 
 import javafx.stage.Stage;
 import uet.oop.bomberman.SoundEffect.Sound;
+import uet.oop.bomberman.graphics.Menu;
 import uet.oop.bomberman.level.Game;
 
 import static uet.oop.bomberman.graphics.Sprite.HEIGHT;
@@ -19,7 +20,6 @@ public class BombermanGame extends Application {
 
     public static GraphicsContext gc;
     public static Canvas canvas;
-
     public static Stage stage;
 
     // audio
@@ -38,6 +38,7 @@ public class BombermanGame extends Application {
         root = new Group();
 
         root.getChildren().add(canvas);
+        Menu.createMenu(root);
         startStage.playStartStage();
         backGround.playBackGround();
 
