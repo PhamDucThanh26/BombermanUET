@@ -15,7 +15,7 @@ import static uet.oop.bomberman.level.Game.*;
 
 public class TaskBar {
 
-    private static int screenY = 544;
+    private static int screenY = 512;
     private static Pane pane;
     private static ImageView statusGame;
     public static Text level, bomb, time, score;
@@ -75,8 +75,8 @@ public class TaskBar {
     }
     public static void updateRender() {
         pane.setLayoutY(screenY);
-        if(bomberman.getY() > 256) {
-            pane.setLayoutY(768 - bomberman.getY());
+        if(bomberman.getY() >= 224) {
+            pane.setLayoutY(736 - bomberman.getY() );
         }
         level.setText("Level :" + level_);
         bomb.setText("Bombs: " + bombNumber);
