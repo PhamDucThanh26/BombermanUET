@@ -10,6 +10,7 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import uet.oop.bomberman.SoundEffect.Sound;
 import uet.oop.bomberman.graphics.Menu;
+import uet.oop.bomberman.graphics.TaskBar;
 import uet.oop.bomberman.level.Game;
 
 import static uet.oop.bomberman.graphics.Sprite.HEIGHT;
@@ -18,7 +19,7 @@ import static uet.oop.bomberman.graphics.Sprite.WIDTH;
 public class BombermanGame extends Application {
     //Update menu 17/10/2022
 
-    public static int score = 0;
+    public static int yourScore = 0;
     public static GraphicsContext gc;
     public static Canvas canvas;
     public static Stage stage;
@@ -41,19 +42,13 @@ public class BombermanGame extends Application {
 
         root.getChildren().add(canvas);
         Menu.createMenu(root);
-        startStage.playStartStage();
-        backGround.playBackGround();
+        sceneGame = new Scene(root);
 
-        // Tao scene
-         sceneGame = new Scene(root);
-        // Them scene vao stage
         stage.setTitle("Bomberman");
         //Passing FileInputStream object as a parameter
         Image img = new Image("file:res//icon.png");
         stage.getIcons().add(img);
         stage.setResizable(false);
-
-//        Game.game(System.getProperty("user.dir") + "\\res\\levels\\Level2.txt", sceneGame);
         stage.setScene(sceneGame);
         stage.show();
     }

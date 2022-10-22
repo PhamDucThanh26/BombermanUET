@@ -9,12 +9,12 @@ import uet.oop.bomberman.entities.Portal;
 import uet.oop.bomberman.entities.creature.Bomber;
 import uet.oop.bomberman.graphics.Camera;
 import uet.oop.bomberman.graphics.Sprite;
+import uet.oop.bomberman.graphics.TaskBar;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static uet.oop.bomberman.BombermanGame.canvas;
-import static uet.oop.bomberman.BombermanGame.gc;
+import static uet.oop.bomberman.BombermanGame.*;
 import static uet.oop.bomberman.entities.BuffItem.Item.miscellaneous;
 import static uet.oop.bomberman.entities.Interaction.collision;
 import static uet.oop.bomberman.entities.creature.Creature.creatures;
@@ -28,14 +28,21 @@ public class Game {
             "\\res\\levels\\Level2.txt",
     };
     public static boolean isPause = false;
+    public static int level_ = 1;
     // game creatures
     public static Bomber bomberman = new Bomber(2, 2, Sprite.player_right.getFxImage());
     public static Camera camera = new Camera();
     public static List<Entity> stillObjects = new ArrayList<>();
     public static List<Entity> backgroundTitle = new ArrayList<>();
     public static void game(String level, Scene scene) {
+        TaskBar.createTaskBar(root);
         createMap(level);
-        scene.setOnKeyPressed(e -> bomberman.kb.hold(e));
+        scene.setOnKeyPressed(e -> {
+            if(e.getCode().toString().equals("P")) {
+                isPause = !isPause;
+            }
+            bomberman.kb.hold(e);
+        });
         scene.setOnKeyReleased(e -> bomberman.kb.release(e));
         AnimationTimer timer = new AnimationTimer() {
             @Override
@@ -77,29 +84,29 @@ public class Game {
     }
 
     public static void update() {
-        //keyboard
-        bomberman.kbUpdate();
+            TaskBar.updateRender();
+            //keyboard
+            bomberman.kbUpdate();
+            //interaction
+            stillObjects.forEach((Entity e) -> {
+                if (!(e instanceof Grass || e instanceof Portal || e instanceof Item) && collision(e, bomberman)) {
+                    bomberman.setCollision(true);
+                }
+            });
 
-        //interaction
-        stillObjects.forEach((Entity e) -> {
-            if (!(e instanceof Grass || e instanceof Portal || e instanceof Item) && collision(e, bomberman)) {
-                bomberman.setCollision(true);
-            }
-        });
-
-        stillObjects.forEach((Entity e) -> creatures.forEach(entity -> {
-            if (collision(e, entity) && !(e instanceof Grass)) {
-                entity.setCollision(true);
-            }
-        }));
-        bomberman.update();
-        creatures.forEach(Entity::update);
-        stillObjects.forEach(Entity::update);
-        miscellaneous.forEach(Item::update);
-        creatures.removeIf(Entity::isFlag);
-        stillObjects.removeIf(Entity::isFlag);
-        miscellaneous.removeIf(Entity::isFlag);
-        camera.update();
+            stillObjects.forEach((Entity e) -> creatures.forEach(entity -> {
+                if (collision(e, entity) && !(e instanceof Grass)) {
+                    entity.setCollision(true);
+                }
+            }));
+            bomberman.update();
+            creatures.forEach(Entity::update);
+            stillObjects.forEach(Entity::update);
+            miscellaneous.forEach(Item::update);
+            creatures.removeIf(Entity::isFlag);
+            stillObjects.removeIf(Entity::isFlag);
+            miscellaneous.removeIf(Entity::isFlag);
+            camera.update();
     }
 
     public static void render() {

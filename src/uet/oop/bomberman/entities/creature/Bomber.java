@@ -12,6 +12,8 @@ import uet.oop.bomberman.user_input.Keyboard;
 import java.util.ArrayList;
 import java.util.List;
 
+import static uet.oop.bomberman.level.Game.isPause;
+
 public final class Bomber extends Creature {
 
     Sound bomberDieSound = new Sound();
@@ -48,7 +50,7 @@ public final class Bomber extends Creature {
             Sprite.player_dead3.getFxImage(),
     };
     private final Sound bombSound = new Sound();
-    private int bombNumber = 1;
+    public static int bombNumber = 1;
     public static int bombPower = 1;
     private int speed = 1;
     private boolean onceTime = true;
@@ -107,6 +109,7 @@ public final class Bomber extends Creature {
 
     public void putBomb() {
         if (bombs.size() < bombNumber) {
+            System.out.println(bombs.size() + " " + bombNumber);
             double xPos = x / 32;
             double yPos = y / 32;
             xPos = Math.round(xPos);
@@ -117,8 +120,10 @@ public final class Bomber extends Creature {
     }
 
     private void updateAction() {
+
         if (kb.keySet.contains("SPACE")) {
             this.putBomb();
+            kb.keySet.remove("SPACE");
         }
     }
 

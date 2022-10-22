@@ -73,7 +73,7 @@ public class Flame extends Entity implements IAnimation {
         }
         creatures.forEach(creature -> {
             if(collision(this, creature)) {
-                System.out.println("Flame has kill this" + creature.getClass());
+//                System.out.println("Flame has kill this" + creature.getClass());
                 creature.setLife(false);
             }
         });

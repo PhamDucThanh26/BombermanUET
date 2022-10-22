@@ -30,7 +30,8 @@ public class Sound {
 
         try {
             String path = new File(filePath).toURI().toString();
-            MediaPlayer player = new MediaPlayer(new Media(path));
+            Media pathFile = new Media(path);
+            MediaPlayer player = new MediaPlayer(pathFile);
             player.setVolume((double) volume);
             player.setCycleCount(loop);
             player.seek(Duration.ZERO);
@@ -85,8 +86,7 @@ public class Sound {
     }
 
     public void playBackGround() {
-
-        this.play(backgroundGame, 1, 0.15);
+        this.play(backgroundGame, 1000, 0.15);
     }
 }
 
