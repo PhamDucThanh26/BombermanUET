@@ -33,9 +33,6 @@ public class Menu {
 
 
     public static void createMenu(Group root) {
-        for (int i = 0; i < 3; i++) {
-            menuButton[i] = new Button();
-        }
         authorImage = new Image("images/menu.png");
         author = new ImageView(authorImage);
         author.setFitWidth(WIDTH);
