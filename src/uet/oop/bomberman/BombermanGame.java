@@ -8,7 +8,9 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import uet.oop.bomberman.sound_effect.Sound;
 import uet.oop.bomberman.graphics.Menu;
+import uet.oop.bomberman.level.Game;
 
 import static uet.oop.bomberman.graphics.Sprite.HEIGHT;
 import static uet.oop.bomberman.graphics.Sprite.WIDTH;

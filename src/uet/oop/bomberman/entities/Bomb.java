@@ -1,6 +1,6 @@
 package uet.oop.bomberman.entities;
 
-import uet.oop.bomberman.SoundEffect.Sound;
+import uet.oop.bomberman.sound_effect.Sound;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.graphics.IAnimation;
