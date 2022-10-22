@@ -33,7 +33,7 @@ public class Menu {
 
 
     public static void createMenu(Group root) {
-        authorImage = new Image("images/menu.png");
+        authorImage = new Image("images/menu.jpg");
         author = new ImageView(authorImage);
         author.setFitWidth(WIDTH);
         author.setFitHeight(HEIGHT + 32);

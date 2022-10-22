@@ -12,12 +12,15 @@ import uet.oop.bomberman.user_input.Keyboard;
 import java.util.ArrayList;
 import java.util.List;
 
+import static uet.oop.bomberman.entities.Interaction.collision;
+import static uet.oop.bomberman.level.Game.bomberman;
 import static uet.oop.bomberman.level.Game.isPause;
 
 public final class Bomber extends Creature {
 
     Sound bomberDieSound = new Sound();
     private int animateDead = 0;
+
 
     private boolean stillRender = true;
     final Image[] upAnimation = {
@@ -172,6 +175,7 @@ public final class Bomber extends Creature {
     public void update() {
         bombs.removeIf(Entity::isFlag);
         bombs.forEach(Bomb::update);
+
         if (isLife) {
             // Entity update
             frame = getCurrentFrame();

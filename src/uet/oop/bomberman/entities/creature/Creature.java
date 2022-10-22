@@ -63,6 +63,5 @@ public abstract class Creature extends Entity implements IAnimation, IGameEntity
             bomberman.setLife(false);
         }
     }
-
     public abstract void dead();
 }

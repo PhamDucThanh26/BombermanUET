@@ -16,6 +16,7 @@ import static uet.oop.bomberman.entities.creature.Bomber.bombPower;
 
 public class Bomb extends Entity implements IAnimation {
     public boolean isExploded = false;
+
     int animate = 0;
     private int frameCountEx = 0;
     private int frameCount = 0;
@@ -39,10 +40,9 @@ public class Bomb extends Entity implements IAnimation {
             Sprite.bomb_exploded.getFxImage(),
     };
 
-    public Bomb(double xUnit, double yUnit, Image img, int n) {
-
+    public Bomb(double xUnit, double yUnit, Image img, int bomPower) {
         super(xUnit, yUnit, img);
-        bombPower = n;
+        bombPower = bomPower;
         for (int i = 0; i < bombPower - 1; i++) {
             leftFlame.add(new Flame(xUnit - 1 - i, yUnit, Sprite.explosion_horizontal.getFxImage()));
             rightFlame.add(new Flame(xUnit + 1 + i, yUnit, Sprite.explosion_horizontal.getFxImage()));
@@ -112,6 +112,7 @@ public class Bomb extends Entity implements IAnimation {
     public void update() {
         frame = getCurrentFrame();
         updateAnimation();
+
         if (isExploded) {
             updateFlameList(leftFlame);
             leftFlame.forEach(flame -> {

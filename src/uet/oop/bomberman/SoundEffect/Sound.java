@@ -22,6 +22,7 @@ public class Sound {
     public final String playGame = System.getProperty("user.dir") + "\\res\\sound\\playgame.mid";
     public final String destroy = System.getProperty("user.dir") + "\\res\\sound\\destroy.wav";
 
+    MediaPlayer player;
     public Sound() {
     }
     static final double VOLUME = 1;
@@ -31,7 +32,7 @@ public class Sound {
         try {
             String path = new File(filePath).toURI().toString();
             Media pathFile = new Media(path);
-            MediaPlayer player = new MediaPlayer(pathFile);
+            player = new MediaPlayer(pathFile);
             player.setVolume((double) volume);
             player.setCycleCount(loop);
             player.seek(Duration.ZERO);
@@ -39,8 +40,6 @@ public class Sound {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
     }
 
     public void playDestroy() {
@@ -78,9 +77,7 @@ public class Sound {
 
     public void playPlaceNewBomb() {
         this.play(newBomb, 1, VOLUME);
-
     }
-
     public void playWin() {
         this.play(win, 1, VOLUME);
     }
@@ -89,4 +86,3 @@ public class Sound {
         this.play(backgroundGame, 1000, 0.15);
     }
 }
-
