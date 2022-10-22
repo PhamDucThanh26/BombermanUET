@@ -8,6 +8,7 @@ import uet.oop.bomberman.entities.Grass;
 import uet.oop.bomberman.entities.Portal;
 import uet.oop.bomberman.entities.creature.Bomber;
 import uet.oop.bomberman.graphics.Camera;
+import uet.oop.bomberman.graphics.Menu;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.graphics.TaskBar;
 
@@ -17,44 +18,52 @@ import java.util.List;
 import static uet.oop.bomberman.BombermanGame.*;
 import static uet.oop.bomberman.entities.BuffItem.Item.miscellaneous;
 import static uet.oop.bomberman.entities.Interaction.collision;
+import static uet.oop.bomberman.entities.creature.Bomber.bombNumber;
+import static uet.oop.bomberman.entities.creature.Bomber.bombPower;
 import static uet.oop.bomberman.entities.creature.Creature.creatures;
 import static uet.oop.bomberman.graphics.Map.createMap;
 import static uet.oop.bomberman.graphics.Map.mapNodes;
 
 public class Game {
+    public Game() {
+        bomberman = new Bomber(2, 2 ,Sprite.player_right_2.getFxImage());
+        bomberman.setSpeed(1);
+        bombNumber = 1;
+        bombPower = 1;
+        reset();
+
+    }
     private final String[] containLevel = {
             "\\res\\levels\\Level0.txt",
             "\\res\\levels\\Level1.txt",
             "\\res\\levels\\Level2.txt",
     };
     public static boolean isPause = false;
+
+    public static boolean running = true;
     public static int level_ = 1;
     // game creatures
     public static Bomber bomberman = new Bomber(2, 2, Sprite.player_right.getFxImage());
     public static Camera camera = new Camera();
     public static List<Entity> stillObjects = new ArrayList<>();
     public static List<Entity> backgroundTitle = new ArrayList<>();
-    public static void game(String level, Scene scene) {
-        TaskBar.createTaskBar(root);
-        createMap(level);
-        scene.setOnKeyPressed(e -> {
-            if(e.getCode().toString().equals("P")) {
-                isPause = !isPause;
-            }
-            bomberman.kb.hold(e);
-        });
-        scene.setOnKeyReleased(e -> bomberman.kb.release(e));
-        AnimationTimer timer = new AnimationTimer() {
-            @Override
-            public void handle(long l) {
-                if (!isPause) {
-                    update();
+    public void game(String level, Scene scene) {
+            TaskBar.createTaskBar(root);
+            createMap(level);
+            scene.setOnKeyPressed(e -> bomberman.kb.hold(e));
+            scene.setOnKeyReleased(e -> bomberman.kb.release(e));
+            AnimationTimer timer = new AnimationTimer() {
+                @Override
+                public void handle(long l) {
+                    if (!isPause) {
+                        update();
+                    }
+                    render();
                 }
-                render();
-            }
-        };
-        timer.start();
-    }
+            };
+            timer.start();
+        }
+
 
     public void updateNodes(Entity entity) {
         double posX = entity.getX();
@@ -84,7 +93,10 @@ public class Game {
     }
 
     public static void update() {
+        if(!bomberman.isLife()) {
+        }
             TaskBar.updateRender();
+            TaskBar.updateMenu();
             //keyboard
             bomberman.kbUpdate();
             //interaction
@@ -118,5 +130,17 @@ public class Game {
         if (bomberman.isStillRender()) {
             bomberman.render(gc);
         }
+    }
+    public static void reset() {
+        bomberman = new Bomber(2, 2, Sprite.player_right.getFxImage());
+        bomberman.setLife(true);
+        bomberman.setStillRender(true);
+        bomberman.setSpeed(1);
+
+        stillObjects.clear();
+        miscellaneous.clear();
+        creatures.clear();
+
+
     }
 }

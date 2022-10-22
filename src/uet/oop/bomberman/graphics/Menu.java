@@ -21,18 +21,20 @@ import static uet.oop.bomberman.level.Game.bomberman;
 
 public class Menu {
     //    public static Sound startStage = new Sound();
-    public static Sound backGround = new Sound();
-    public static Image authorImage;
-    public static ImageView author;
-    private static Text newGameText, exitText, optionsText;
+    public Sound backGround = new Sound();
+    public Image authorImage;
 
-    private static Button[] menuButton = new Button[3];
-    private static Text item[] = new Text[3];
-    private static Rectangle rect[] = new Rectangle[3];
-    public static Pane layoutMenu;
+    public static Game game = new Game();
+    public ImageView author;
+    private Text newGameText, exitText, optionsText;
+
+    private Button[] menuButton = new Button[3];
+    private Text item[] = new Text[3];
+    private Rectangle rect[] = new Rectangle[3];
+    public Pane layoutMenu;
 
 
-    public static void createMenu(Group root) {
+    public void createMenu(Group root) {
         authorImage = new Image("images/menu.jpg");
         author = new ImageView(authorImage);
         author.setFitWidth(WIDTH);
@@ -97,7 +99,8 @@ public class Menu {
             });
         }
         item[0].setOnMouseClicked(event -> {
-            Game.game(System.getProperty("user.dir") + "\\res\\levels\\Level2.txt", sceneGame);
+
+            game.game(System.getProperty("user.dir") + "\\res\\levels\\Level2.txt", sceneGame);
             author.setX(-1000);
             author.setY(-1000);
             layoutMenu.setTranslateX(-1000);

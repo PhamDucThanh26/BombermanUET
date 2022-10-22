@@ -19,6 +19,7 @@ import static uet.oop.bomberman.graphics.Sprite.WIDTH;
 public class BombermanGame extends Application {
     //Update menu 17/10/2022
 
+    private Menu menu;
     public static int yourScore = 0;
     public static GraphicsContext gc;
     public static Canvas canvas;
@@ -41,7 +42,8 @@ public class BombermanGame extends Application {
         root = new Group();
 
         root.getChildren().add(canvas);
-        Menu.createMenu(root);
+        menu = new Menu();
+        menu.createMenu(root);
         sceneGame = new Scene(root);
 
         stage.setTitle("Bomberman");

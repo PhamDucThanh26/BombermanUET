@@ -8,9 +8,14 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import uet.oop.bomberman.level.Game;
+
+import static uet.oop.bomberman.BombermanGame.sceneGame;
 
 import static uet.oop.bomberman.BombermanGame.yourScore;
 import static uet.oop.bomberman.entities.creature.Bomber.bombNumber;
+import static uet.oop.bomberman.graphics.Map.createMap;
+import static uet.oop.bomberman.graphics.Menu.game;
 import static uet.oop.bomberman.level.Game.*;
 
 public class TaskBar {
@@ -59,12 +64,16 @@ public class TaskBar {
             if (bomberman.isLife()) {
                 isPause = !isPause;
             } else {
-                isPause = false;
+                game = new Game();
+                createMap(System.getProperty("user.dir") + "\\res\\levels\\Level2.txt");
+                running = true;
             }
             updateMenu();
         });
     }
     public static void updateMenu() {
+        System.out.println(bomberman.isLife());
+        if(bomberman.isLife()) {
             if (!isPause) {
                 Image pauseGame = new Image("images/pauseButton.png");
                 statusGame.setImage(pauseGame);
@@ -72,6 +81,12 @@ public class TaskBar {
                 Image playGame = new Image("images/startButton.png");
                 statusGame.setImage(playGame);
             }
+        }
+        else {
+            Image newGame = new Image("images/newGame.png");
+            statusGame.setImage(newGame);
+
+        }
     }
     public static void updateRender() {
         pane.setLayoutY(screenY);
