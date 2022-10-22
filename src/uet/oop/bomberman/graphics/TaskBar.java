@@ -50,7 +50,7 @@ public class TaskBar {
         pane.getChildren().addAll(statusGame, level, bomb, score);
 
         pane.setLayoutY(screenY);
-        pane.setMinSize(800, 800);
+        pane.setMinSize(800, 480);
         pane.setMaxSize(800, 480);
         pane.setStyle("-fx-background-color: #353535");
         root.getChildren().add(pane);

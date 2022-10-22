@@ -38,7 +38,7 @@ public class Menu {
         authorImage = new Image("images/menu.png");
         author = new ImageView(authorImage);
         author.setFitWidth(WIDTH);
-        author.setFitHeight(HEIGHT);
+        author.setFitHeight(HEIGHT + 32);
         author.setX(0);
         author.setY(0);
 
