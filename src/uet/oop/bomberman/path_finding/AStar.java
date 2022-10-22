@@ -7,7 +7,7 @@ import java.util.*;
 
 import static uet.oop.bomberman.level.Game.stillObjects;
 
-public class AStar {
+public class AStar implements Runnable {
     // final cost
     public static final int V_H_COST = 10; // Vertical and horizontal g-cost
     public static final int D_COST = 14;    // Pythagoras theorem
@@ -43,9 +43,6 @@ public class AStar {
             }
         } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("out of bound");
-            System.exit(1);
-        } catch (NullPointerException e) {
-            System.out.println("???");
             System.exit(1);
         }
     }
@@ -168,19 +165,29 @@ public class AStar {
         }
     }
 
+    @Override
+    public void run() throws RuntimeException {
+        try {
+            reset();
+            algorithmProcessing();
+            printPath();
+
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     // reset upon changing in map's still object
-    public void reset(int startCol, int startRow, int endCol, int endRow) {
+    public void reset() {
         // heuristic init
         for (int i = 0; i < nodes.length; i++) {
             for (int j = 0; j < nodes.length; j++) {
                 nodes[i][j] = new Node(i, j);
-                nodes[i][j].hCost = Math.abs(i - endCol) + Math.abs(j - endRow);
+                nodes[i][j].hCost = Math.abs(i - end.col) + Math.abs(j - end.row);
                 nodes[i][j].solution = false;
             }
         }
-
-        setStart(startCol, startRow);
-        setEnd(endCol, endRow);
 
         start.fCost = 0;
 

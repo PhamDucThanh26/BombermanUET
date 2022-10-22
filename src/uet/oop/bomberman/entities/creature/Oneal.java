@@ -2,15 +2,15 @@ package uet.oop.bomberman.entities.creature;
 
 import javafx.scene.image.Image;
 import javafx.scene.shape.Rectangle;
-import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.graphics.Sprite;
+import uet.oop.bomberman.path_finding.AStar;
 
-import static uet.oop.bomberman.BombermanGame.yourScore;
 import static uet.oop.bomberman.level.Game.bomberman;
 
 public class Oneal extends Creature {
-    private double playerX;
-    private double playerY;
+    AStar aStar = new AStar(Sprite.maxWorldCol, Sprite.maxWorldRow,
+            (int) x / Sprite.SCALED_SIZE, (int) y / Sprite.SCALED_SIZE,
+            (int) bomberman.getX() / Sprite.SCALED_SIZE, (int) bomberman.getY() / Sprite.SCALED_SIZE);
     final Image[] leftAnimation = {
             Sprite.oneal_left1.getFxImage(),
             Sprite.oneal_left2.getFxImage(),
@@ -34,6 +34,9 @@ public class Oneal extends Creature {
     public Oneal(double xUnit, double yUnit, Image img) {
         super(xUnit, yUnit, img);
         solidArea = new Rectangle(x + 1, y + 1, width - 2, height - 2);
+        SCORE = 100;
+        aStar.algorithmProcessing();
+        aStar.printPath();
     }
 
     @Override
@@ -45,11 +48,6 @@ public class Oneal extends Creature {
         }
         x += xVec;
         y += yVec;
-    }
-
-    public void getPlayerPos(Entity e) {
-        playerX = e.getX();
-        playerY = e.getY();
     }
 
     @Override
@@ -67,16 +65,13 @@ public class Oneal extends Creature {
 
     @Override
     public void update() {
+        // path finding
         if (isLife) {
             super.update();
-            getPlayerPos(bomberman);
             move();
             updateAnimation();
         } else {
             dead();
-            if(this.flag) {
-                yourScore += 100;
-            }
         }
     }
 

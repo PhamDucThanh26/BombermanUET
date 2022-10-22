@@ -18,7 +18,6 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class Map {
-
     public static int heightMap;
     public static int widthMap;
     public static int level;

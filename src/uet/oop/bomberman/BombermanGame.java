@@ -10,16 +10,12 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import uet.oop.bomberman.sound_effect.Sound;
 import uet.oop.bomberman.graphics.Menu;
-import uet.oop.bomberman.level.Game;
 
 import static uet.oop.bomberman.graphics.Sprite.HEIGHT;
 import static uet.oop.bomberman.graphics.Sprite.WIDTH;
 
 public class BombermanGame extends Application {
     //Update menu 17/10/2022
-
-    private Menu menu;
-    public static int yourScore = 0;
     public static GraphicsContext gc;
     public static Canvas canvas;
     public static Stage stage;

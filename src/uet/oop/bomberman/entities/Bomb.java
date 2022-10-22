@@ -1,5 +1,6 @@
 package uet.oop.bomberman.entities;
 
+import uet.oop.bomberman.sound_effect.SFX;
 import uet.oop.bomberman.sound_effect.Sound;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -21,7 +22,7 @@ public class Bomb extends Entity implements IAnimation {
     private int frameCountEx = 0;
     private int frameCount = 0;
     private final long startTime = System.currentTimeMillis();
-    protected Sound bombExplosion = new Sound();
+    protected SFX bombSFX = new SFX();
     private final List<Flame> leftFlame = new ArrayList<>();
     private final List<Flame> rightFlame = new ArrayList<>();
     private final List<Flame> upFlame = new ArrayList<>();
@@ -66,7 +67,7 @@ public class Bomb extends Entity implements IAnimation {
             flag = true;
         } else if (frame == (int) (2.5 * FPS)) {
             isExploded = true;
-            bombExplosion.playBombExplosion();
+            bombSFX.playSFX(Sound.bombExplosion);
         } else if ((frame + 1) % 20 == 0) {
             frameCount++;
             frameCount %= 4;

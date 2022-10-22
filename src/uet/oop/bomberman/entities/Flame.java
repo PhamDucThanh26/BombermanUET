@@ -6,7 +6,7 @@ import uet.oop.bomberman.graphics.Sprite;
 
 import static uet.oop.bomberman.level.Game.bomberman;
 import static uet.oop.bomberman.entities.Interaction.collision;
-import static uet.oop.bomberman.entities.creature.Creature.creatures;
+import static uet.oop.bomberman.level.Game.creatures;
 
 public class Flame extends Entity implements IAnimation {
     private boolean head = false;
@@ -73,7 +73,6 @@ public class Flame extends Entity implements IAnimation {
         }
         creatures.forEach(creature -> {
             if(collision(this, creature)) {
-//                System.out.println("Flame has kill this" + creature.getClass());
                 creature.setLife(false);
             }
         });

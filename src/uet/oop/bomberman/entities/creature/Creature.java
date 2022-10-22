@@ -3,24 +3,16 @@ package uet.oop.bomberman.entities.creature;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 import javafx.scene.shape.Rectangle;
-import uet.oop.bomberman.SoundEffect.Sound;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.graphics.IAnimation;
 import uet.oop.bomberman.graphics.IGameEntity;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static uet.oop.bomberman.entities.Interaction.collision;
 import static uet.oop.bomberman.level.Game.bomberman;
-
-
+import static uet.oop.bomberman.level.Game.creatures;
 
 public abstract class Creature extends Entity implements IAnimation, IGameEntity {
-
-    private Sound dieSound = new Sound();
-    public static List<Creature> creatures = new ArrayList<>();
-
+    public static int SCORE;
     protected int animateDead = 0;
     protected int frameCount = 0;
     // movement vector
@@ -66,9 +58,6 @@ public abstract class Creature extends Entity implements IAnimation, IGameEntity
         solidArea.setY(y);
         if(collision(this, bomberman ) && this.isLife) {
             bomberman.setLife(false);
-        }
-        if(!this.isLife) {
-            dieSound.playMonsterDie();
         }
     }
     public abstract void dead();

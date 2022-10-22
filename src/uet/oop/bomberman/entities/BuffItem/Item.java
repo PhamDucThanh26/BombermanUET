@@ -1,5 +1,6 @@
 package uet.oop.bomberman.entities.BuffItem;
 
+import uet.oop.bomberman.sound_effect.SFX;
 import uet.oop.bomberman.sound_effect.Sound;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.entities.Entity;
@@ -13,7 +14,7 @@ import static uet.oop.bomberman.entities.Interaction.collision;
 
 public class Item extends Entity implements IGameEntity {
 
-    protected Sound itemSound = new Sound();
+    protected SFX itemSFX = new SFX();
     public static List<Item> miscellaneous = new ArrayList<>();
 
     public Item() {
@@ -37,7 +38,7 @@ public class Item extends Entity implements IGameEntity {
     public void update() {
         if (collision(bomberman, this)) {
             this.flag = true;
-            itemSound.playGetNewItem();
+            itemSFX.playSFX(Sound.item);
         }
     }
 }
