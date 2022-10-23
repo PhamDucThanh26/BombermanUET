@@ -14,6 +14,7 @@ import static uet.oop.bomberman.BombermanGame.sceneGame;
 
 import static uet.oop.bomberman.BombermanGame.yourScore;
 import static uet.oop.bomberman.entities.creature.Bomber.bombNumber;
+import static uet.oop.bomberman.entities.creature.Bomber.bombPower;
 import static uet.oop.bomberman.graphics.Map.createMap;
 import static uet.oop.bomberman.graphics.Menu.game;
 import static uet.oop.bomberman.level.Game.*;
@@ -66,6 +67,10 @@ public class TaskBar {
             } else {
                 game = new Game();
                 createMap(System.getProperty("user.dir") + "\\res\\levels\\Level0.txt");
+                yourScore = 0;
+                level_ = 1;
+                bombNumber = 1;
+                bombPower = 1;
             }
             updateMenu();
         });
