@@ -65,14 +65,12 @@ public class TaskBar {
                 isPause = !isPause;
             } else {
                 game = new Game();
-                createMap(System.getProperty("user.dir") + "\\res\\levels\\Level2.txt");
-                running = true;
+                createMap(System.getProperty("user.dir") + "\\res\\levels\\Level0.txt");
             }
             updateMenu();
         });
     }
     public static void updateMenu() {
-        System.out.println(bomberman.isLife());
         if(bomberman.isLife()) {
             if (!isPause) {
                 Image pauseGame = new Image("images/pauseButton.png");

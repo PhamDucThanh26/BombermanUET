@@ -112,7 +112,7 @@ public final class Bomber extends Creature {
 
     public void putBomb() {
         if (bombs.size() < bombNumber) {
-            System.out.println(bombs.size() + " " + bombNumber);
+
             double xPos = x / 32;
             double yPos = y / 32;
             xPos = Math.round(xPos);
@@ -206,7 +206,7 @@ public final class Bomber extends Creature {
             frameCount++;
         }
         frameCount %= 5;
-//        System.out.println(animateDead + " " + frameCount);
+//
         this.setImg(deadAnimation[frameCount]);
         if (frameCount == 4) {
             if (onceTime) {

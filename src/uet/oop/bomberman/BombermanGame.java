@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import uet.oop.bomberman.graphics.Menu;
 
@@ -23,6 +24,8 @@ public class BombermanGame extends Application {
     public static Scene sceneGame;
     public static Group root;
 
+    public static ImageView authorView;
+
     @Override
     public void start(Stage primaryStage) {
         stage = new Stage();
@@ -31,8 +34,13 @@ public class BombermanGame extends Application {
         gc = canvas.getGraphicsContext2D();
         // Tao root container
         root = new Group();
-
+        Image author = new Image("images/levelUp.png");
+        authorView = new ImageView(author);
+        authorView.setFitHeight(HEIGHT);
+        authorView.setFitWidth(WIDTH - 64);
+        root.getChildren().add(authorView);
         root.getChildren().add(canvas);
+
         menu = new Menu();
         menu.createMenu(root);
         sceneGame = new Scene(root);

@@ -1,7 +1,9 @@
 package uet.oop.bomberman.level;
 
 import javafx.animation.AnimationTimer;
+import javafx.animation.PauseTransition;
 import javafx.scene.Scene;
+import javafx.util.Duration;
 import uet.oop.bomberman.entities.BuffItem.Item;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.Grass;
@@ -18,11 +20,13 @@ import java.util.List;
 import static uet.oop.bomberman.BombermanGame.*;
 import static uet.oop.bomberman.entities.BuffItem.Item.miscellaneous;
 import static uet.oop.bomberman.entities.Interaction.collision;
+import static uet.oop.bomberman.entities.Portal.isPortal;
 import static uet.oop.bomberman.entities.creature.Bomber.bombNumber;
 import static uet.oop.bomberman.entities.creature.Bomber.bombPower;
 import static uet.oop.bomberman.entities.creature.Creature.creatures;
 import static uet.oop.bomberman.graphics.Map.createMap;
 import static uet.oop.bomberman.graphics.Map.mapNodes;
+import static uet.oop.bomberman.level.NextLevel.*;
 
 public class Game {
     public Game() {
@@ -33,12 +37,6 @@ public class Game {
         reset();
 
     }
-
-    public static final String[] containLevel = {
-            "\\res\\levels\\Level0.txt",
-            "\\res\\levels\\Level1.txt",
-            "\\res\\levels\\Level2.txt",
-    };
     public static boolean isPause = false;
 
     public static boolean running = true;
@@ -119,6 +117,20 @@ public class Game {
         stillObjects.removeIf(Entity::isFlag);
         miscellaneous.removeIf(Entity::isFlag);
         camera.update();
+        if (creatures.size() == 0 && !isPortal && !wait) {
+            Entity portal = new Portal(2,  2, Sprite.portal.getFxImage());
+            stillObjects.add(portal);
+            if (collision(bomberman, portal)) {
+                PauseTransition pause = new PauseTransition(Duration.seconds(2000));
+                pause.setOnFinished(event ->
+                        root.getChildren().add(authorView));
+                wait = true;
+                waitingTime = System.currentTimeMillis();
+                System.out.println(waitingTime);
+            }
+        }
+        waitToLevelUp();
+
     }
 
     public static void render() {

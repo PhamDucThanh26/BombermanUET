@@ -45,9 +45,8 @@ public class Map {
                         object = new Wall(i, j, Sprite.wall.getFxImage());
                     } else if (s.charAt(i) == '*') {
                         object = new Brick(i, j, Sprite.brick.getFxImage());
-                    } else if (s.charAt(i) == 'x') {
-                        object = new Brick(i, j, Sprite.brick.getFxImage());
-                    } else if (s.charAt(i) == '1') {
+                    }
+                    else if (s.charAt(i) == '1') {
                         object = new Oneal(i, j, Sprite.oneal_right1.getFxImage());
                     } else if (s.charAt(i) == '2') {
                         object = new Balloom(i, j, Sprite.balloom_left1.getFxImage());
@@ -65,7 +64,7 @@ public class Map {
                     } else {
                         continue;
                     }
-                    if (object instanceof Brick || object instanceof Wall) {
+                    if (object instanceof Brick || object instanceof Wall || object instanceof Portal) {
                         stillObjects.add(object);
                     } else if (object instanceof Item) {
                         ((Item) object).addStage();

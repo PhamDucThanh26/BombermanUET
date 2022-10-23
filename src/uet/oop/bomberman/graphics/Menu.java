@@ -13,11 +13,13 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import uet.oop.bomberman.level.Game;
+import uet.oop.bomberman.level.Level1;
+import uet.oop.bomberman.level.Level2;
 
 import static uet.oop.bomberman.BombermanGame.*;
 import static uet.oop.bomberman.graphics.Sprite.HEIGHT;
 import static uet.oop.bomberman.graphics.Sprite.WIDTH;
-import static uet.oop.bomberman.level.Game.bomberman;
+
 
 public class Menu {
     //    public static Sound startStage = new Sound();
@@ -26,7 +28,6 @@ public class Menu {
 
     public static Game game = new Game();
     public ImageView author;
-    private Text newGameText, exitText, optionsText;
 
     private Button[] menuButton = new Button[3];
     private Text item[] = new Text[3];
@@ -99,8 +100,8 @@ public class Menu {
             });
         }
         item[0].setOnMouseClicked(event -> {
+            game.game(System.getProperty("user.dir") + "\\res\\levels\\Level0.txt",sceneGame);
 
-            game.game(System.getProperty("user.dir") + "\\res\\levels\\Level2.txt", sceneGame);
             author.setX(-1000);
             author.setY(-1000);
             layoutMenu.setTranslateX(-1000);
