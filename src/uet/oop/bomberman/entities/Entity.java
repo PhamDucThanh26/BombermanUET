@@ -25,7 +25,7 @@ public abstract class Entity {
     protected double height;
     protected boolean collision = false;
     protected boolean flag = false;
-    public int NodesNumber;
+    public int nodeNumber;
     protected Image img;
 
     protected long frame = 0;
@@ -40,7 +40,7 @@ public abstract class Entity {
         this.img = img;
         width = img.getWidth();
         height = img.getHeight();
-        NodesNumber = '0';
+        nodeNumber = '0';
     }
 
     public double getX() {
@@ -55,10 +55,6 @@ public abstract class Entity {
         return y;
     }
 
-    public void setY(int y) {
-        this.y = y;
-    }
-
     public Image getImg() {
         return img;
     }
@@ -71,9 +67,6 @@ public abstract class Entity {
         return flag;
     }
 
-    public void setFlag(boolean flag) {
-        this.flag = flag;
-    }
 
     public boolean isCollision() {
         return collision;

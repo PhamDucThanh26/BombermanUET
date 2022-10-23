@@ -3,8 +3,6 @@ package uet.oop.bomberman.level;
 import javafx.scene.image.Image;
 
 import static uet.oop.bomberman.BombermanGame.authorView;
-import static uet.oop.bomberman.graphics.Map.createMap;
-import static uet.oop.bomberman.graphics.Menu.game;
 import static uet.oop.bomberman.level.Game.level_;
 import static uet.oop.bomberman.entities.Portal.isPortal;
 

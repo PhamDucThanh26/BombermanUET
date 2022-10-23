@@ -8,6 +8,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import uet.oop.bomberman.sound_effect.Sound;
 import uet.oop.bomberman.graphics.Menu;
 
 import static uet.oop.bomberman.graphics.Sprite.HEIGHT;
@@ -15,9 +16,6 @@ import static uet.oop.bomberman.graphics.Sprite.WIDTH;
 
 public class BombermanGame extends Application {
     //Update menu 17/10/2022
-
-    private Menu menu;
-    public static int yourScore = 0;
     public static GraphicsContext gc;
     public static Canvas canvas;
     public static Stage stage;
@@ -41,8 +39,7 @@ public class BombermanGame extends Application {
         root.getChildren().add(authorView);
         root.getChildren().add(canvas);
 
-        menu = new Menu();
-        menu.createMenu(root);
+        Menu.createMenu(root);
         sceneGame = new Scene(root);
 
         stage.setTitle("Bomberman");

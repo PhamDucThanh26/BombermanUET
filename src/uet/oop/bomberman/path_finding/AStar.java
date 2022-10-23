@@ -19,14 +19,15 @@ public class AStar {
 
     Node start, end, current;
 
-    public AStar(int width, int height, int startCol, int startRow, int endCol, int endRow) {
+    public AStar(int startCol, int startRow, int endCol, int endRow) {
         // graph init
-        nodes = new Node[width][height];
+        nodes = new Node[Sprite.maxWorldCol][Sprite.maxWorldRow];
 
         // heuristic init
         for (int i = 0; i < nodes.length; i++) {
             for (int j = 0; j < nodes.length; j++) {
                 nodes[i][j] = new Node(i, j);
+                nodes[i][j].gCost = 1;
                 nodes[i][j].hCost = Math.abs(i - endCol) + Math.abs(j - endRow);    // h cost compared to end node
                 nodes[i][j].solution = false;
             }
@@ -44,31 +45,20 @@ public class AStar {
         } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("out of bound");
             System.exit(1);
-        } catch (NullPointerException e) {
-            System.out.println("???");
-            System.exit(1);
         }
     }
 
     public void addBlockOnMap(int i, int j) {
-        nodes[i][j] = null;
+        nodes[i][j].gCost = -1;
     }
 
-    public void setStart(int i, int j) {
-        start = nodes[i][j];
-    }
-
-    public void setEnd(int i, int j) {
-        end = nodes[i][j];
-    }
-
-    public void updateCost(Node current, Node connectingNode, int fCost) {
+    public void updateCost(Node current, Node connectingNode, int gCost) {
         // if connecting node is a still object, or it is checked
-        if (connectingNode == null || closedNodes.contains(connectingNode)) {
+        if (connectingNode.gCost == -1 || closedNodes.contains(connectingNode)) {
             return;
         }
 
-        int calculatedFinalCost = connectingNode.hCost + fCost;
+        int calculatedFinalCost = connectingNode.hCost + gCost;
         boolean isInOpenNodes = openNodes.contains(connectingNode);
 
         // if connecting node isn't in open nodes, or the current node lead to it has lower cost
@@ -115,6 +105,7 @@ public class AStar {
                 break;
             }
 
+            current.solution = true;
             closedNodes.add(current);
 
             if (current.equals(end)) {
@@ -134,7 +125,7 @@ public class AStar {
                 }
 
                 if (current.col + 1 < nodes[0].length) {
-                    surrounding = nodes[current.col - 1][current.row + 1];
+                    surrounding = nodes[current.col + 1][current.row + 1];
                     updateCost(current, surrounding, current.fCost + D_COST);
                 }
             }
@@ -161,42 +152,20 @@ public class AStar {
                 }
 
                 if (current.col + 1 < nodes[0].length) {
-                    surrounding = nodes[current.col - 1][current.row - 1];
+                    surrounding = nodes[current.col + 1][current.row - 1];
                     updateCost(current, surrounding, current.fCost + D_COST);
                 }
             }
         }
     }
 
-    // reset upon changing in map's still object
-    public void reset(int startCol, int startRow, int endCol, int endRow) {
-        // heuristic init
-        for (int i = 0; i < nodes.length; i++) {
-            for (int j = 0; j < nodes.length; j++) {
-                nodes[i][j] = new Node(i, j);
-                nodes[i][j].hCost = Math.abs(i - endCol) + Math.abs(j - endRow);
-                nodes[i][j].solution = false;
-            }
-        }
-
-        setStart(startCol, startRow);
-        setEnd(endCol, endRow);
-
-        start.fCost = 0;
-
-        // clear openNodes and closeNodes
-        openNodes.clear();
-        closedNodes.clear();
-    }
-
     public void printPath() {
-        if (closedNodes.contains(end)) {
+        if (end.solution) {
             Node current = end;
             Stack<Node> path = new Stack<>();
-            path.push(current);
-            while (current.parent != start) {
-                current = current.parent;
+            while (current.parent != null) {
                 path.push(current);
+                current = current.parent;
             }
             System.out.print(start);
             while (!path.isEmpty()) {
@@ -207,5 +176,18 @@ public class AStar {
         } else {
             System.out.println("no possible path");
         }
+    }
+
+    public List<Node> nodeList() {
+        List<Node> result = new ArrayList<>();
+        if (end.solution) {
+            Node current = end;
+            result.add(0,current);
+            while (current.parent != start && current.parent != null) {
+                current = current.parent;
+                result.add(0, current);
+            }
+        }
+        return result;
     }
 }

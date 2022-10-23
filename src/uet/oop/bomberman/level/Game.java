@@ -1,16 +1,14 @@
 package uet.oop.bomberman.level;
 
 import javafx.animation.AnimationTimer;
-import javafx.animation.PauseTransition;
 import javafx.scene.Scene;
-import javafx.util.Duration;
 import uet.oop.bomberman.entities.BuffItem.Item;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.Grass;
 import uet.oop.bomberman.entities.Portal;
 import uet.oop.bomberman.entities.creature.Bomber;
+import uet.oop.bomberman.entities.creature.Creature;
 import uet.oop.bomberman.graphics.Camera;
-import uet.oop.bomberman.graphics.Menu;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.graphics.TaskBar;
 
@@ -20,37 +18,34 @@ import java.util.List;
 import static uet.oop.bomberman.BombermanGame.*;
 import static uet.oop.bomberman.entities.BuffItem.Item.miscellaneous;
 import static uet.oop.bomberman.entities.Interaction.collision;
-import static uet.oop.bomberman.entities.Portal.isPortal;
-import static uet.oop.bomberman.entities.creature.Bomber.bombNumber;
-import static uet.oop.bomberman.entities.creature.Bomber.bombPower;
-import static uet.oop.bomberman.entities.creature.Creature.creatures;
 import static uet.oop.bomberman.graphics.Map.createMap;
 import static uet.oop.bomberman.graphics.Map.mapNodes;
-import static uet.oop.bomberman.level.NextLevel.*;
 
 public class Game {
-    public Game() {
-        bomberman = new Bomber(2, 2, Sprite.player_right_2.getFxImage());
-        bomberman.setSpeed(1);
-        bombNumber = 1;
-        bombPower = 1;
-        reset();
+    // progress
 
-    }
+    public static int yourScore = 0;
     public static boolean isPause = false;
-
-    public static boolean running = true;
     public static int level_ = 1;
-    // game creatures
-    public static Bomber bomberman = new Bomber(2, 2, Sprite.player_right.getFxImage());
-    public static Camera camera = new Camera();
+
+    // game entities
     public static List<Entity> stillObjects = new ArrayList<>();
     public static List<Entity> backgroundTitle = new ArrayList<>();
+    public static Bomber bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
+    public static List<Creature> creatures = new ArrayList<>();
 
-    public void game(String level, Scene scene) {
+    // camera lock on player's position
+    public static Camera camera = new Camera();
+
+    public static void game(String level, Scene scene) {
         TaskBar.createTaskBar(root);
         createMap(level);
-        scene.setOnKeyPressed(e -> bomberman.kb.hold(e));
+        scene.setOnKeyPressed(e -> {
+            if (e.getCode().toString().equals("P")) {
+                isPause = !isPause;
+            }
+            bomberman.kb.hold(e);
+        });
         scene.setOnKeyReleased(e -> bomberman.kb.release(e));
         AnimationTimer timer = new AnimationTimer() {
             @Override
@@ -64,18 +59,11 @@ public class Game {
         timer.start();
     }
 
-
-    public void updateNodes(Entity entity) {
-        double posX = entity.getX();
-        double posY = entity.getY();
-        int width = (int) entity.getBoundary().getWidth();
-        int height = (int) entity.getBoundary().getHeight();
+    public static void updateNodes(Entity entity) {
+        int nodeX = (int) entity.getX() / Sprite.SCALED_SIZE;
+        int nodeY = (int) entity.getY() / Sprite.SCALED_SIZE;
         try {
-            for (int i = (int) posX; i < posX + width; i++) {
-                for (int j = (int) posY; j < posY + height; j++) {
-                    mapNodes[i][j] = entity.NodesNumber;
-                }
-            }
+            mapNodes[nodeX][nodeY] = entity.nodeNumber;
         } catch (NullPointerException e) {
             System.out.println("map too big");
             System.exit(1);
@@ -85,16 +73,15 @@ public class Game {
         }
     }
 
-    public void updateNodesMap() {
-        stillObjects.forEach(this::updateNodes);
-        creatures.forEach(this::updateNodes);
-        miscellaneous.forEach(this::updateNodes);
+    public static void updateNodeMap() {
+        stillObjects.forEach(Game::updateNodes);
+        creatures.forEach(Game::updateNodes);
+        miscellaneous.forEach(Game::updateNodes);
         updateNodes(bomberman);
     }
 
     public static void update() {
         TaskBar.updateRender();
-        TaskBar.updateMenu();
         //keyboard
         bomberman.kbUpdate();
         //interaction
@@ -113,50 +100,28 @@ public class Game {
         creatures.forEach(Entity::update);
         stillObjects.forEach(Entity::update);
         miscellaneous.forEach(Item::update);
-        creatures.removeIf(Entity::isFlag);
+        for (int i = 0; i < creatures.size(); i++) {
+            if (creatures.get(i).isFlag()) {
+                yourScore += creatures.get(i).SCORE;
+                creatures.remove(i);
+                i--;
+
+            }
+        }
         stillObjects.removeIf(Entity::isFlag);
         miscellaneous.removeIf(Entity::isFlag);
         camera.update();
-        if (creatures.size() == 0 && !isPortal && !wait) {
-            Entity portal = new Portal(2,  2, Sprite.portal.getFxImage());
-            stillObjects.add(portal);
-            if (collision(bomberman, portal)) {
-                PauseTransition pause = new PauseTransition(Duration.seconds(2000));
-                pause.setOnFinished(event ->
-                        root.getChildren().add(authorView));
-                wait = true;
-                waitingTime = System.currentTimeMillis();
-                System.out.println(waitingTime);
-            }
-        }
-        waitToLevelUp();
-
+        updateNodeMap();
     }
 
     public static void render() {
-        if(!wait) {
-            gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-            backgroundTitle.forEach(g -> g.render(gc));
-            miscellaneous.forEach(g -> g.render(gc));
-            stillObjects.forEach(g -> g.render(gc));
-            creatures.forEach(g -> g.render(gc));
-            if (bomberman.isStillRender()) {
-                bomberman.render(gc);
-            }
+        gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+        backgroundTitle.forEach(g -> g.render(gc));
+        miscellaneous.forEach(g -> g.render(gc));
+        stillObjects.forEach(g -> g.render(gc));
+        creatures.forEach(g -> g.render(gc));
+        if (bomberman.isStillRender()) {
+            bomberman.render(gc);
         }
-        else {
-            root.getChildren().remove(canvas);
-
-        }
-    }
-
-    public static void reset() {
-        bomberman = new Bomber(2, 2, Sprite.player_right.getFxImage());
-        bomberman.setLife(true);
-        bomberman.setStillRender(true);
-        bomberman.setSpeed(1);
-        stillObjects.clear();
-        miscellaneous.clear();
-        creatures.clear();
     }
 }

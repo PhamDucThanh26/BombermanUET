@@ -4,8 +4,6 @@ import javafx.scene.image.Image;
 import javafx.scene.shape.Rectangle;
 import uet.oop.bomberman.graphics.Sprite;
 
-import static uet.oop.bomberman.BombermanGame.yourScore;
-
 public class Balloom extends Creature {
     private final double pivot;
 
@@ -32,7 +30,7 @@ public class Balloom extends Creature {
         super(xUnit, yUnit, img);
         solidArea = new Rectangle(x + 1, y + 1, width - 2, height - 2);
         pivot = x;
-        NodesNumber = 1;
+        SCORE = 50;
     }
 
     private double xVec = 1;
@@ -51,17 +49,16 @@ public class Balloom extends Creature {
 
     @Override
     public void updateAnimation() {
-
-            if (frame % 10 == 0) {
-                frameCount++;
-                frameCount %= 3;
-            }
-            if (xVec > 0) {
-                img = leftAnimation[frameCount];
-            } else {
-                img = rightAnimation[frameCount];
-            }
+        if (frame % 10 == 0) {
+            frameCount++;
+            frameCount %= 3;
         }
+        if (xVec > 0) {
+            img = leftAnimation[frameCount];
+        } else {
+            img = rightAnimation[frameCount];
+        }
+    }
 
 
 
@@ -76,9 +73,6 @@ public class Balloom extends Creature {
         }
         else {
             dead();
-            if(this.flag) {
-                yourScore += 50;
-            }
         }
     }
 

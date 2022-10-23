@@ -1,6 +1,7 @@
 package uet.oop.bomberman.entities;
 
-import uet.oop.bomberman.SoundEffect.Sound;
+import uet.oop.bomberman.sound_effect.SFX;
+import uet.oop.bomberman.sound_effect.Sound;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.graphics.IAnimation;
@@ -12,7 +13,6 @@ import java.util.List;
 import static uet.oop.bomberman.level.Game.bomberman;
 import static uet.oop.bomberman.level.Game.stillObjects;
 import static uet.oop.bomberman.entities.Interaction.collision;
-import static uet.oop.bomberman.entities.creature.Bomber.bombPower;
 
 public class Bomb extends Entity implements IAnimation {
     public boolean isExploded = false;
@@ -21,7 +21,7 @@ public class Bomb extends Entity implements IAnimation {
     private int frameCountEx = 0;
     private int frameCount = 0;
     private final long startTime = System.currentTimeMillis();
-    protected Sound bombExplosion = new Sound();
+    protected SFX bombSFX = new SFX();
     private final List<Flame> leftFlame = new ArrayList<>();
     private final List<Flame> rightFlame = new ArrayList<>();
     private final List<Flame> upFlame = new ArrayList<>();
@@ -40,9 +40,8 @@ public class Bomb extends Entity implements IAnimation {
             Sprite.bomb_exploded.getFxImage(),
     };
 
-    public Bomb(double xUnit, double yUnit, Image img, int bomPower) {
+    public Bomb(double xUnit, double yUnit, Image img, int bombPower) {
         super(xUnit, yUnit, img);
-        bombPower = bomPower;
         for (int i = 0; i < bombPower - 1; i++) {
             leftFlame.add(new Flame(xUnit - 1 - i, yUnit, Sprite.explosion_horizontal.getFxImage()));
             rightFlame.add(new Flame(xUnit + 1 + i, yUnit, Sprite.explosion_horizontal.getFxImage()));
@@ -66,7 +65,7 @@ public class Bomb extends Entity implements IAnimation {
             flag = true;
         } else if (frame == (int) (2.5 * FPS)) {
             isExploded = true;
-            bombExplosion.playBombExplosion();
+            bombSFX.playSFX(Sound.bombExplosion);
         } else if ((frame + 1) % 20 == 0) {
             frameCount++;
             frameCount %= 4;

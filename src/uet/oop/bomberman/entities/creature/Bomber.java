@@ -1,6 +1,7 @@
 package uet.oop.bomberman.entities.creature;
 
-import uet.oop.bomberman.SoundEffect.Sound;
+import uet.oop.bomberman.sound_effect.SFX;
+import uet.oop.bomberman.sound_effect.Sound;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.shape.Rectangle;
 import uet.oop.bomberman.entities.Bomb;
@@ -12,16 +13,7 @@ import uet.oop.bomberman.user_input.Keyboard;
 import java.util.ArrayList;
 import java.util.List;
 
-import static uet.oop.bomberman.entities.Interaction.collision;
-import static uet.oop.bomberman.level.Game.bomberman;
-import static uet.oop.bomberman.level.Game.isPause;
-
 public final class Bomber extends Creature {
-
-    Sound bomberDieSound = new Sound();
-    private int animateDead = 0;
-
-
     private boolean stillRender = true;
     final Image[] upAnimation = {
             Sprite.player_up.getFxImage(),
@@ -52,12 +44,22 @@ public final class Bomber extends Creature {
             Sprite.player_dead2.getFxImage(),
             Sprite.player_dead3.getFxImage(),
     };
-    private final Sound bombSound = new Sound();
-    public static int bombNumber = 1;
-    public static int bombPower = 1;
-    private int speed = 1;
-    private boolean onceTime = true;
 
+    // sfx
+    private final SFX bomberSFX = new SFX();
+
+    // control
+    public Keyboard kb = new Keyboard();
+
+    // ability
+    private final List<Bomb> bombs = new ArrayList<>();
+
+    // stat
+    public int bombNumber = 1;
+    public int bombPower = 1;
+    public int speed = 1;
+    private boolean onceTime = true;
+    private int animateDead = 0;
 
     public boolean isStillRender() {
         return stillRender;
@@ -67,13 +69,9 @@ public final class Bomber extends Creature {
         this.stillRender = stillRender;
     }
 
-    public Keyboard kb = new Keyboard();
-    private final List<Bomb> bombs = new ArrayList<>();
-
     public int getBombNumber() {
         return bombNumber;
     }
-
 
     public void setBombNumber(int bombNumber) {
         this.bombNumber = bombNumber;
@@ -89,8 +87,8 @@ public final class Bomber extends Creature {
 
     public Bomber(double x, double y, Image img) {
         super(x, y, img);
-        solidArea = new Rectangle(x, y + 8, 24, 24);
-        NodesNumber = 1;
+        solidArea = new Rectangle(x + 2, y + 8, 24, 24);
+        nodeNumber = 2;
     }
 
     public void updateMove() {
@@ -118,7 +116,7 @@ public final class Bomber extends Creature {
             xPos = Math.round(xPos);
             yPos = Math.round(yPos);
             bombs.add(new Bomb(xPos, yPos, Sprite.bomb.getFxImage(), bombPower));
-            bombSound.playPlaceNewBomb();
+            bomberSFX.playSFX(Sound.newBomb);
         }
     }
 
@@ -148,7 +146,7 @@ public final class Bomber extends Creature {
     }
 
     public void updateAnimation() {
-        if(isLife) {
+        if (isLife) {
             if (frame % 10 == 0) {
                 frameCount++;
                 frameCount %= 3;
@@ -175,30 +173,27 @@ public final class Bomber extends Creature {
     public void update() {
         bombs.removeIf(Entity::isFlag);
         bombs.forEach(Bomb::update);
-
         if (isLife) {
-            // Entity update
             frame = getCurrentFrame();
-            solidArea.setX(x);
-            solidArea.setY(y);
             // game update
             move();
-            // solid reset
+            // reset movement and solid
             xVec = 0;
             yVec = 0;
-            solidArea.setX(x);
+            solidArea.setX(x + 2);
             solidArea.setY(y + 8);
             updateAnimation();
-        }
-        else {
+        } else {
             updateAnimation();
         }
     }
+
     @Override
     public void render(GraphicsContext gc) {
         bombs.forEach(bomb -> bomb.render(gc));
         super.render(gc);
     }
+
     @Override
     public void dead() {
         animateDead++;
@@ -210,7 +205,7 @@ public final class Bomber extends Creature {
         this.setImg(deadAnimation[frameCount]);
         if (frameCount == 4) {
             if (onceTime) {
-                bomberDieSound.playBomberDie();
+                bomberSFX.playSFX(Sound.bomberDie);
                 onceTime = false;
             }
             stillRender = false;

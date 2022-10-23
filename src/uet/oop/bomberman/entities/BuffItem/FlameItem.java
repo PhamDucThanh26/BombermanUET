@@ -4,7 +4,6 @@ import javafx.scene.image.Image;
 
 import static uet.oop.bomberman.level.Game.bomberman;
 import static uet.oop.bomberman.entities.Interaction.collision;
-import static uet.oop.bomberman.entities.creature.Bomber.bombPower;
 
 public class FlameItem extends Item {
     public FlameItem() {
@@ -18,7 +17,7 @@ public class FlameItem extends Item {
     public void update() {
         if (collision(bomberman, this)) {
             super.update();
-            bombPower++;
+            bomberman.setLife(false);
         }
 
     }

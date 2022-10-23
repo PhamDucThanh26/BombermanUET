@@ -3,11 +3,10 @@ package uet.oop.bomberman.entities.creature;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.graphics.Sprite;
 
-import static uet.oop.bomberman.BombermanGame.yourScore;
-
 public class Doll extends Creature {
     public Doll(int xUnit, int yUnit, Image img) {
         super(xUnit, yUnit, img);
+        SCORE = 50;
     }
 
     final Image[] deadAnimation = {
@@ -30,9 +29,6 @@ public class Doll extends Creature {
             updateAnimation();
         } else {
             dead();
-            if(this.flag) {
-                yourScore += 50;
-            }
         }
     }
 
