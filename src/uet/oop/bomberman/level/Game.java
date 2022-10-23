@@ -34,7 +34,7 @@ public class Game {
 
     }
 
-    private final String[] containLevel = {
+    public static final String[] containLevel = {
             "\\res\\levels\\Level0.txt",
             "\\res\\levels\\Level1.txt",
             "\\res\\levels\\Level2.txt",
@@ -140,7 +140,5 @@ public class Game {
         stillObjects.clear();
         miscellaneous.clear();
         creatures.clear();
-
-
     }
 }
