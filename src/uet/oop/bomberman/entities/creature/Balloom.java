@@ -61,7 +61,6 @@ public class Balloom extends Creature {
     }
 
 
-
     @Override
     public void update() {
         if(isLife) {
