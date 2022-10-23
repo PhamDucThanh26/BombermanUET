@@ -104,7 +104,7 @@ public class Menu {
             author.setY(-1000);
             layoutMenu.setTranslateX(-1000);
             layoutMenu.setTranslateY(-1000);
-            bgm.stopBgm();
+//            bgm.stopBgm();
         });
         buttonText[2].setOnMouseClicked(event -> stage.close());
     }

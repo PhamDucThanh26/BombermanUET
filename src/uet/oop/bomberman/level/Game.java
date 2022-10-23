@@ -81,6 +81,7 @@ public class Game {
     }
 
     public static void update() {
+        TaskBar.updateMenu();
         TaskBar.updateRender();
         //keyboard
         bomberman.kbUpdate();
@@ -123,5 +124,12 @@ public class Game {
         if (bomberman.isStillRender()) {
             bomberman.render(gc);
         }
+    }
+    public static void reset() {
+        backgroundTitle.clear();
+        miscellaneous.clear();
+        stillObjects.clear();
+        creatures.clear();
+        bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
     }
 }
