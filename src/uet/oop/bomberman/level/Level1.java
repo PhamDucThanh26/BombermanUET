@@ -2,7 +2,6 @@ package uet.oop.bomberman.level;
 
 import uet.oop.bomberman.entities.creature.Bomber;
 import uet.oop.bomberman.graphics.Sprite;
-import uet.oop.bomberman.graphics.TaskBar;
 
 import static uet.oop.bomberman.BombermanGame.*;
 import static uet.oop.bomberman.entities.BuffItem.Item.miscellaneous;
@@ -18,7 +17,6 @@ public class Level1 {
     };
     public Level1() {
         root.getChildren().add(canvas);
-        TaskBar.createTaskBar(root);
         stillObjects.clear();
         miscellaneous.clear();
         creatures.clear();

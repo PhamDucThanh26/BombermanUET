@@ -1,8 +1,7 @@
 package uet.oop.bomberman.graphics;
 
-
+import uet.oop.bomberman.sound_effect.Bgm;
 import javafx.scene.Group;
-import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -13,57 +12,53 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import uet.oop.bomberman.level.Game;
-import uet.oop.bomberman.level.Level1;
-import uet.oop.bomberman.level.Level2;
-import uet.oop.bomberman.sound_effect.Sound;
 
 import static uet.oop.bomberman.BombermanGame.*;
 import static uet.oop.bomberman.graphics.Sprite.HEIGHT;
 import static uet.oop.bomberman.graphics.Sprite.WIDTH;
 
-
 public class Menu {
-    //    public static Sound startStage = new Sound();
-    public Sound backGround = new Sound();
-    public Image authorImage;
+    public static Image authorImage;
+    public static ImageView author;
+    private static final Text[] buttonText = new Text[3];
+    private static final Rectangle[] rect = new Rectangle[3];
+    public static Pane layoutMenu;
+    static Bgm bgm = new Bgm();
 
-    public static Game game = new Game();
-    public ImageView author;
+    public static void createMenu(Group root) {
+        // bgm
+        bgm.startBgm(Bgm.menuBgm, Bgm.DEFAULT_VOLUME);
 
-    private Button[] menuButton = new Button[3];
-    private Text item[] = new Text[3];
-    private Rectangle rect[] = new Rectangle[3];
-    public Pane layoutMenu;
-
-
-    public void createMenu(Group root) {
-        authorImage = new Image("images/menu.jpg");
+        // background image
+        authorImage = new Image("images/menu.png");
         author = new ImageView(authorImage);
         author.setFitWidth(WIDTH);
-        author.setFitHeight(HEIGHT + 32);
+        author.setFitHeight(HEIGHT);
         author.setX(0);
         author.setY(0);
 
+        // set text
         for (int i = 0; i < 3; i++) {
-            item[i] = new Text();
+            buttonText[i] = new Text();
             if (i == 0) {
-                item[i].setText("New Game");
-                item[i].setX(325);
-                item[i].setY(280);
+                buttonText[i].setText("New Game");
+                buttonText[i].setX(325);
+                buttonText[i].setY(280);
             } else if (i == 1) {
-                item[i].setText("Options");
-                item[i].setX(340);
-                item[i].setY(340);
+                buttonText[i].setText("Options");
+                buttonText[i].setX(340);
+                buttonText[i].setY(340);
             } else {
-                item[i].setText("Exit");
-                item[i].setX(360);
-                item[i].setY(400);
+                buttonText[i].setText("Exit");
+                buttonText[i].setX(360);
+                buttonText[i].setY(400);
             }
-            item[i].setFont(Font.font("Arial", FontWeight.BOLD, FontPosture.REGULAR, 25));
-            item[i].setFill(Color.WHITE);
-            item[i].setStroke(Color.BLACK);
+            buttonText[i].setFont(Font.font("Arial", FontWeight.BOLD, FontPosture.REGULAR, 25));
+            buttonText[i].setFill(Color.WHITE);
+            buttonText[i].setStroke(Color.BLACK);
         }
 
+        // rect
         for (int i = 0; i < 3; i++) {
             rect[i] = new Rectangle();
 
@@ -76,7 +71,7 @@ public class Menu {
             }
             rect[i].setWidth(200);
             rect[i].setHeight(40);
-            rect[i].setX(WIDTH / 2 - rect[i].getWidth() / 2);
+            rect[i].setX((double) WIDTH / 2 - rect[i].getWidth() / 2);
             rect[i].setFill(Color.ORANGE);
             rect[i].setArcHeight(30);
             rect[i].setArcWidth(30);
@@ -84,11 +79,13 @@ public class Menu {
             rect[i].setStrokeWidth(3);
         }
         layoutMenu = new Pane();
-        layoutMenu.getChildren().addAll(rect[0], rect[1], rect[2], item[0], item[1], item[2]);
-        layoutMenu.setMinSize(600, 600);
-        layoutMenu.setMaxSize(600, 600);
+        layoutMenu.getChildren().addAll(rect[0], rect[1], rect[2], buttonText[0], buttonText[1], buttonText[2]);
+        layoutMenu.setMinSize(WIDTH, HEIGHT);
+        layoutMenu.setMaxSize(WIDTH, HEIGHT);
         root.getChildren().addAll(author, layoutMenu);
-        for (Text i : item) {
+
+
+        for (Text i : buttonText) {
             i.setOnMouseEntered(event -> {
                 i.setFont(Font.font("BOMBERMA", FontWeight.BOLD, FontPosture.REGULAR, 25));
                 i.setFill(Color.RED);
@@ -100,18 +97,20 @@ public class Menu {
                 i.setStroke(Color.BLACK);
             });
         }
-        item[0].setOnMouseClicked(event -> {
-            game.game(System.getProperty("user.dir") + "\\res\\levels\\Level0.txt",sceneGame);
 
+        buttonText[0].setOnMouseClicked(event -> {
+            Game.game(System.getProperty("user.dir") + "\\res\\levels\\Level0.txt", sceneGame);
             author.setX(-1000);
             author.setY(-1000);
             layoutMenu.setTranslateX(-1000);
             layoutMenu.setTranslateY(-1000);
-//            backGround.playBackGround();
+            bgm.stopBgm();
         });
-        item[2].setOnMouseClicked(event -> {
-            stage.close();
-        });
+        buttonText[2].setOnMouseClicked(event -> stage.close());
     }
 
 }
+
+
+
+

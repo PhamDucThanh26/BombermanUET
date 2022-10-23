@@ -22,7 +22,6 @@ public class BombermanGame extends Application {
     public static Scene sceneGame;
     public static Group root;
 
-    public Menu menu = new Menu();
     public static ImageView authorView;
 
     @Override
@@ -40,7 +39,7 @@ public class BombermanGame extends Application {
         root.getChildren().add(authorView);
         root.getChildren().add(canvas);
 
-        menu.createMenu(root);
+        Menu.createMenu(root);
         sceneGame = new Scene(root);
 
         stage.setTitle("Bomberman");
