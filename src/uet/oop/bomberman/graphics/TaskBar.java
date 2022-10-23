@@ -90,9 +90,11 @@ public class TaskBar {
     }
     public static void updateRender() {
         pane.setLayoutY(screenY);
-        if(bomberman.getY() >= 224) {
-            pane.setLayoutY(736 - bomberman.getY() );
-        }
+//        if(bomberman.getY() >= 224) {
+//            System.out.println(bomberman.getY());
+//            pane.setLayoutY(736 - bomberman.getY());
+//            System.out.println(pane.getLayoutY());
+//        }
         level.setText("Level :" + level_);
         bomb.setText("Bombs: " + bombNumber);
         score.setText("Score: " + yourScore);
