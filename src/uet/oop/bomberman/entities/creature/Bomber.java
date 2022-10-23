@@ -59,8 +59,8 @@ public final class Bomber extends Creature {
     }
 
     // stat
-    public int bombNumber = 1;
-    public int bombPower = 1;
+    public static int bombNumber = 1;
+    public static int bombPower = 1;
     public int speed = 1;
     private boolean onceTime = true;
     private int animateDead = 0;
