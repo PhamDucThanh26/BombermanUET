@@ -17,7 +17,7 @@ public class FlameItem extends Item {
     public void update() {
         if (collision(bomberman, this)) {
             super.update();
-            bomberman.setLife(false);
+            bomberman.bombPower++;
         }
 
     }
