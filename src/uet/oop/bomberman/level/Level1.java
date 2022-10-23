@@ -3,7 +3,7 @@ package uet.oop.bomberman.level;
 import uet.oop.bomberman.entities.creature.Bomber;
 import uet.oop.bomberman.graphics.Sprite;
 
-import static uet.oop.bomberman.BombermanGame.sceneGame;
+import static uet.oop.bomberman.BombermanGame.*;
 import static uet.oop.bomberman.entities.BuffItem.Item.miscellaneous;
 import static uet.oop.bomberman.entities.creature.Bomber.bombNumber;
 import static uet.oop.bomberman.entities.creature.Bomber.bombPower;
@@ -20,6 +20,7 @@ public class Level1 {
             "\\res\\levels\\Level2.txt",
     };
     public Level1() {
+        root.getChildren().add(canvas);
         stillObjects.clear();
         miscellaneous.clear();
         creatures.clear();

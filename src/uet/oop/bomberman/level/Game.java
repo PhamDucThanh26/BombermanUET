@@ -134,13 +134,19 @@ public class Game {
     }
 
     public static void render() {
-        gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        backgroundTitle.forEach(g -> g.render(gc));
-        miscellaneous.forEach(g -> g.render(gc));
-        stillObjects.forEach(g -> g.render(gc));
-        creatures.forEach(g -> g.render(gc));
-        if (bomberman.isStillRender()) {
-            bomberman.render(gc);
+        if(!wait) {
+            gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+            backgroundTitle.forEach(g -> g.render(gc));
+            miscellaneous.forEach(g -> g.render(gc));
+            stillObjects.forEach(g -> g.render(gc));
+            creatures.forEach(g -> g.render(gc));
+            if (bomberman.isStillRender()) {
+                bomberman.render(gc);
+            }
+        }
+        else {
+            root.getChildren().remove(canvas);
+
         }
     }
 
