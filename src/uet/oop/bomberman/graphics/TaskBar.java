@@ -12,7 +12,6 @@ import uet.oop.bomberman.level.Game;
 
 import static uet.oop.bomberman.BombermanGame.sceneGame;
 
-import static uet.oop.bomberman.BombermanGame.yourScore;
 import static uet.oop.bomberman.entities.creature.Bomber.bombNumber;
 import static uet.oop.bomberman.entities.creature.Bomber.bombPower;
 import static uet.oop.bomberman.graphics.Map.createMap;
@@ -75,8 +74,9 @@ public class TaskBar {
             updateMenu();
         });
     }
+
     public static void updateMenu() {
-        if(bomberman.isLife()) {
+        if (bomberman.isLife()) {
             if (!isPause) {
                 Image pauseGame = new Image("images/pauseButton.png");
                 statusGame.setImage(pauseGame);
@@ -84,13 +84,13 @@ public class TaskBar {
                 Image playGame = new Image("images/startButton.png");
                 statusGame.setImage(playGame);
             }
-        }
-        else {
+        } else {
             Image newGame = new Image("images/newGame.png");
             statusGame.setImage(newGame);
 
         }
     }
+
     public static void updateRender() {
         pane.setLayoutY(screenY);
 //        if(bomberman.getY() >= 224) {
