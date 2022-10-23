@@ -10,11 +10,7 @@ import static uet.oop.bomberman.level.Game.*;
 
 public class Level2 {
     public Level2() {
-        root.getChildren().add(canvas);
-        stillObjects.clear();
-        miscellaneous.clear();
-        creatures.clear();
-        bomberman = new Bomber(2, 2, Sprite.player_right.getFxImage());
+        Game.reset();
         createMap(System.getProperty("user.dir") + "\\res\\levels\\Level2.txt");
         bomberman.setLife(true);
         bomberman.bombNumber = 1;
