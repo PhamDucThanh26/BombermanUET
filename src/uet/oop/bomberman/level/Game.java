@@ -18,8 +18,12 @@ import java.util.List;
 import static uet.oop.bomberman.BombermanGame.*;
 import static uet.oop.bomberman.entities.BuffItem.Item.miscellaneous;
 import static uet.oop.bomberman.entities.Interaction.collision;
+import static uet.oop.bomberman.entities.Portal.isPortal;
 import static uet.oop.bomberman.graphics.Map.createMap;
 import static uet.oop.bomberman.graphics.Map.mapNodes;
+import static uet.oop.bomberman.level.NextLevel.wait;
+import static uet.oop.bomberman.level.NextLevel.waitToLevelUp;
+import static uet.oop.bomberman.level.NextLevel.waitingTime;
 
 public class Game {
     // progress
@@ -113,6 +117,17 @@ public class Game {
         miscellaneous.removeIf(Entity::isFlag);
         camera.update();
         updateNodeMap();
+
+        if (creatures.size() == 0 && !isPortal && !wait) {
+            Entity portal = new Portal(1, 1, Sprite.portal.getFxImage());
+            stillObjects.add(portal);
+            if (collision(bomberman, portal)) {
+//                root.getChildren().remove(canvas);
+                wait = true;
+                waitingTime = System.currentTimeMillis();
+            }
+        }
+        waitToLevelUp();
     }
 
     public static void render() {
@@ -132,4 +147,6 @@ public class Game {
         creatures.clear();
         bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
     }
+
+
 }
