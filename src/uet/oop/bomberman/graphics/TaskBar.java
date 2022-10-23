@@ -60,6 +60,7 @@ public class TaskBar {
                 isPause = !isPause;
             } else {
 //                game = new Game();
+                Game.reset();
                 createMap(System.getProperty("user.dir") + "\\res\\levels\\Level0.txt");
             }
             updateMenu();
@@ -78,7 +79,6 @@ public class TaskBar {
         else {
             Image newGame = new Image("images/newGame.png");
             statusGame.setImage(newGame);
-
         }
     }
     public static void updateRender() {
