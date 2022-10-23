@@ -10,12 +10,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import uet.oop.bomberman.level.Game;
 
-import static uet.oop.bomberman.BombermanGame.sceneGame;
-
-import static uet.oop.bomberman.BombermanGame.yourScore;
-import static uet.oop.bomberman.entities.creature.Bomber.bombNumber;
 import static uet.oop.bomberman.graphics.Map.createMap;
-import static uet.oop.bomberman.graphics.Menu.game;
 import static uet.oop.bomberman.level.Game.*;
 
 public class TaskBar {
@@ -37,7 +32,7 @@ public class TaskBar {
         level.setX(200);
         level.setY(20);
 
-        bomb = new Text("Bombs: " + bombNumber);
+        bomb = new Text("Bombs: " + bomberman.bombNumber);
         bomb.setFont(Font.font("Arial", FontWeight.BOLD, 14));
         bomb.setFill(Color.WHITE);
         bomb.setX(700);
@@ -64,7 +59,7 @@ public class TaskBar {
             if (bomberman.isLife()) {
                 isPause = !isPause;
             } else {
-                game = new Game();
+//                game = new Game();
                 createMap(System.getProperty("user.dir") + "\\res\\levels\\Level0.txt");
             }
             updateMenu();
@@ -94,7 +89,7 @@ public class TaskBar {
 //            System.out.println(pane.getLayoutY());
 //        }
         level.setText("Level :" + level_);
-        bomb.setText("Bombs: " + bombNumber);
+        bomb.setText("Bombs: " + bomberman.bombNumber);
         score.setText("Score: " + yourScore);
     }
 }

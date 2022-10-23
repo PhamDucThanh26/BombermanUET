@@ -39,8 +39,7 @@ public class BombermanGame extends Application {
         root.getChildren().add(authorView);
         root.getChildren().add(canvas);
 
-        menu = new Menu();
-        menu.createMenu(root);
+        Menu.createMenu(root);
         sceneGame = new Scene(root);
 
         stage.setTitle("Bomberman");
