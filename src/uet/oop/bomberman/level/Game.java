@@ -26,13 +26,14 @@ import static uet.oop.bomberman.graphics.Map.mapNodes;
 
 public class Game {
     public Game() {
-        bomberman = new Bomber(2, 2 ,Sprite.player_right_2.getFxImage());
+        bomberman = new Bomber(2, 2, Sprite.player_right_2.getFxImage());
         bomberman.setSpeed(1);
         bombNumber = 1;
         bombPower = 1;
         reset();
 
     }
+
     private final String[] containLevel = {
             "\\res\\levels\\Level0.txt",
             "\\res\\levels\\Level1.txt",
@@ -47,22 +48,23 @@ public class Game {
     public static Camera camera = new Camera();
     public static List<Entity> stillObjects = new ArrayList<>();
     public static List<Entity> backgroundTitle = new ArrayList<>();
+
     public void game(String level, Scene scene) {
-            TaskBar.createTaskBar(root);
-            createMap(level);
-            scene.setOnKeyPressed(e -> bomberman.kb.hold(e));
-            scene.setOnKeyReleased(e -> bomberman.kb.release(e));
-            AnimationTimer timer = new AnimationTimer() {
-                @Override
-                public void handle(long l) {
-                    if (!isPause) {
-                        update();
-                    }
-                    render();
+        TaskBar.createTaskBar(root);
+        createMap(level);
+        scene.setOnKeyPressed(e -> bomberman.kb.hold(e));
+        scene.setOnKeyReleased(e -> bomberman.kb.release(e));
+        AnimationTimer timer = new AnimationTimer() {
+            @Override
+            public void handle(long l) {
+                if (!isPause) {
+                    update();
                 }
-            };
-            timer.start();
-        }
+                render();
+            }
+        };
+        timer.start();
+    }
 
 
     public void updateNodes(Entity entity) {
@@ -93,32 +95,30 @@ public class Game {
     }
 
     public static void update() {
-        if(!bomberman.isLife()) {
-        }
-            TaskBar.updateRender();
-            TaskBar.updateMenu();
-            //keyboard
-            bomberman.kbUpdate();
-            //interaction
-            stillObjects.forEach((Entity e) -> {
-                if (!(e instanceof Grass || e instanceof Portal || e instanceof Item) && collision(e, bomberman)) {
-                    bomberman.setCollision(true);
-                }
-            });
+        TaskBar.updateRender();
+        TaskBar.updateMenu();
+        //keyboard
+        bomberman.kbUpdate();
+        //interaction
+        stillObjects.forEach((Entity e) -> {
+            if (!(e instanceof Grass || e instanceof Portal || e instanceof Item) && collision(e, bomberman)) {
+                bomberman.setCollision(true);
+            }
+        });
 
-            stillObjects.forEach((Entity e) -> creatures.forEach(entity -> {
-                if (collision(e, entity) && !(e instanceof Grass)) {
-                    entity.setCollision(true);
-                }
-            }));
-            bomberman.update();
-            creatures.forEach(Entity::update);
-            stillObjects.forEach(Entity::update);
-            miscellaneous.forEach(Item::update);
-            creatures.removeIf(Entity::isFlag);
-            stillObjects.removeIf(Entity::isFlag);
-            miscellaneous.removeIf(Entity::isFlag);
-            camera.update();
+        stillObjects.forEach((Entity e) -> creatures.forEach(entity -> {
+            if (collision(e, entity) && !(e instanceof Grass)) {
+                entity.setCollision(true);
+            }
+        }));
+        bomberman.update();
+        creatures.forEach(Entity::update);
+        stillObjects.forEach(Entity::update);
+        miscellaneous.forEach(Item::update);
+        creatures.removeIf(Entity::isFlag);
+        stillObjects.removeIf(Entity::isFlag);
+        miscellaneous.removeIf(Entity::isFlag);
+        camera.update();
     }
 
     public static void render() {
@@ -131,12 +131,12 @@ public class Game {
             bomberman.render(gc);
         }
     }
+
     public static void reset() {
         bomberman = new Bomber(2, 2, Sprite.player_right.getFxImage());
         bomberman.setLife(true);
         bomberman.setStillRender(true);
         bomberman.setSpeed(1);
-
         stillObjects.clear();
         miscellaneous.clear();
         creatures.clear();
