@@ -12,12 +12,17 @@ import static uet.oop.bomberman.level.Game.bomberman;
 import static uet.oop.bomberman.level.Game.creatures;
 
 public abstract class Creature extends Entity implements IAnimation, IGameEntity {
-    public static int SCORE;
+    public int SCORE;
+
+    // animation timer
+    long startTime = System.currentTimeMillis();
     protected int animateDead = 0;
     protected int frameCount = 0;
+
     // movement vector
     protected int xVec = 0;
     protected int yVec = 0;
+
     // collision detection
     protected Rectangle solidArea;
 
@@ -26,7 +31,9 @@ public abstract class Creature extends Entity implements IAnimation, IGameEntity
         solidArea = new Rectangle(x, y, width, height);
     }
 
-    long startTime = System.currentTimeMillis();
+    public Rectangle getSolidArea() {
+        return solidArea;
+    }
 
     @Override
     public long getCurrentFrame() {

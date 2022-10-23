@@ -9,7 +9,7 @@ public class Node {
     Node parent;
 
     // cost
-    int gCost; // graph cost
+    int gCost; // graph cost, 1 if it can go and -1 if it can't
     int hCost; // heuristic cost, calculated by Euclidean distance
     int fCost; // final cost = graph + heuristic
 
@@ -24,5 +24,13 @@ public class Node {
     @Override
     public String toString() {
         return "(" + col + "," + row + ")";
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof Node) {
+            return ((Node) obj).row == row && ((Node) obj).col == col;
+        }
+        return false;
     }
 }

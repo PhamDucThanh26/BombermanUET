@@ -37,7 +37,7 @@ public class Map {
             sc.nextLine();
             while (sc.hasNextLine() && j < heightMap) {
                 String s = sc.nextLine();
-                for (int i = 0; i < s.length(); i++) {
+                for (int i = 0; i < widthMap; i++) {
                     backgroundTitle.add(new Grass(i, j, Sprite.grass.getFxImage()));
                     Entity object;
                     if (s.charAt(i) == '#') {
@@ -75,6 +75,8 @@ public class Map {
             System.out.println("can not find file");
             e.printStackTrace();
             System.exit(1);
+        } catch (NullPointerException e) {
+            System.out.println("format");
         }
     }
 

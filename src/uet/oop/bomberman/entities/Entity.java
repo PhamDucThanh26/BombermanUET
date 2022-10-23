@@ -55,10 +55,6 @@ public abstract class Entity {
         return y;
     }
 
-    public void setY(int y) {
-        this.y = y;
-    }
-
     public Image getImg() {
         return img;
     }
@@ -71,9 +67,6 @@ public abstract class Entity {
         return flag;
     }
 
-    public void setFlag(boolean flag) {
-        this.flag = flag;
-    }
 
     public boolean isCollision() {
         return collision;

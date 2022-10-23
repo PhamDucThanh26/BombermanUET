@@ -13,7 +13,6 @@ import java.util.List;
 import static uet.oop.bomberman.level.Game.bomberman;
 import static uet.oop.bomberman.level.Game.stillObjects;
 import static uet.oop.bomberman.entities.Interaction.collision;
-import static uet.oop.bomberman.entities.creature.Bomber.bombPower;
 
 public class Bomb extends Entity implements IAnimation {
     public boolean isExploded = false;
@@ -41,9 +40,8 @@ public class Bomb extends Entity implements IAnimation {
             Sprite.bomb_exploded.getFxImage(),
     };
 
-    public Bomb(double xUnit, double yUnit, Image img, int bomPower) {
+    public Bomb(double xUnit, double yUnit, Image img, int bombPower) {
         super(xUnit, yUnit, img);
-        bombPower = bomPower;
         for (int i = 0; i < bombPower - 1; i++) {
             leftFlame.add(new Flame(xUnit - 1 - i, yUnit, Sprite.explosion_horizontal.getFxImage()));
             rightFlame.add(new Flame(xUnit + 1 + i, yUnit, Sprite.explosion_horizontal.getFxImage()));

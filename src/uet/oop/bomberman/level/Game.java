@@ -31,7 +31,7 @@ public class Game {
     // game entities
     public static List<Entity> stillObjects = new ArrayList<>();
     public static List<Entity> backgroundTitle = new ArrayList<>();
-    public static Bomber bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
+    public static Bomber bomberman = new Bomber(11, 3, Sprite.player_right.getFxImage());
     public static List<Creature> creatures = new ArrayList<>();
 
     // camera lock on player's position
@@ -102,7 +102,7 @@ public class Game {
         miscellaneous.forEach(Item::update);
         for (int i = 0; i < creatures.size(); i++) {
             if (creatures.get(i).isFlag()) {
-                yourScore += Creature.SCORE;
+                yourScore += creatures.get(i).SCORE;
                 creatures.remove(i);
                 i--;
 
