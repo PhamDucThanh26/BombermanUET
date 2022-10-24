@@ -17,6 +17,12 @@ import static uet.oop.bomberman.entities.Interaction.collision;
 public class Bomb extends Entity implements IAnimation {
     public boolean isExploded = false;
 
+    public boolean _allowedToPassThroght = true;
+    protected boolean isAllowedToPassThroght() {
+        return _allowedToPassThroght;
+    }
+
+
     int animate = 0;
     private int frameCountEx = 0;
     private int frameCount = 0;

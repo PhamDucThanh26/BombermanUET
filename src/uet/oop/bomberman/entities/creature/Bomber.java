@@ -54,6 +54,10 @@ public final class Bomber extends Creature {
     // ability
     private final List<Bomb> bombs = new ArrayList<>();
 
+    public List<Bomb> getBombs() {
+        return bombs;
+    }
+
     // stat
     public int bombNumber = 1;
     public int bombPower = 1;

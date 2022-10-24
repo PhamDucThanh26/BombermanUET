@@ -62,6 +62,10 @@ public class TaskBar {
 //                game = new Game();
                 Game.reset();
                 createMap(System.getProperty("user.dir") + "\\res\\levels\\Level0.txt");
+                level_ = 1;
+                bomberman.bombPower = 1;
+                bomberman.bombNumber = 1;
+                bomberman.setSpeed(1);
             }
             updateMenu();
         });
