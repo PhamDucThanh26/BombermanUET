@@ -98,10 +98,16 @@ public class Oneal extends Creature {
         } else if (nextX > x) {
             xVec = 1;
         }
+        bomberman.getBombs().forEach(Bomb -> {
+            if(collision(Bomb, this)) {
+                xVec = 0;
+            }
+        });
         stillObjects.forEach(e -> {
             if (collision(e, this)) {
                 xVec = 0;
             }
+
         });
 
         if (nextY < y) {
@@ -111,6 +117,12 @@ public class Oneal extends Creature {
         }
         stillObjects.forEach(e -> {
             if (collision(e, this)) {
+                yVec = 0;
+            }
+        });
+
+        bomberman.getBombs().forEach(Bomb -> {
+            if(collision(Bomb, this)) {
                 yVec = 0;
             }
         });
