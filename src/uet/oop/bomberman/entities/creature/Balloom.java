@@ -59,8 +59,6 @@ public class Balloom extends Creature {
             img = rightAnimation[frameCount];
         }
     }
-
-
     @Override
     public void update() {
         if(isLife) {

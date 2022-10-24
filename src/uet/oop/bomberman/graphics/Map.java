@@ -10,6 +10,8 @@ import uet.oop.bomberman.entities.creature.Creature;
 import uet.oop.bomberman.entities.creature.Doll;
 import uet.oop.bomberman.entities.creature.Oneal;
 
+import static uet.oop.bomberman.graphics.Camera.MAP_HEIGHT;
+import static uet.oop.bomberman.graphics.Camera.MAP_WIDTH;
 import static uet.oop.bomberman.level.Game.backgroundTitle;
 import static uet.oop.bomberman.level.Game.stillObjects;
 
@@ -34,6 +36,8 @@ public class Map {
             level = sc.nextInt();
             heightMap = sc.nextInt();
             widthMap = sc.nextInt();
+            MAP_HEIGHT = heightMap * 32;
+            MAP_WIDTH = widthMap * 32;
             sc.nextLine();
             while (sc.hasNextLine() && j < heightMap) {
                 String s = sc.nextLine();

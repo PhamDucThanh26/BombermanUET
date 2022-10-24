@@ -80,6 +80,7 @@ public abstract class Entity {
         double renderX = x - camera.getCameraX();
         double renderY = y - camera.getCameraY();
         gc.drawImage(img, renderX, renderY);
+//        gc.drawImage(img, x, y);
     }
 
     public abstract void update();

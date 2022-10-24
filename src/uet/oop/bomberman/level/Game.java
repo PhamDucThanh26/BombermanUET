@@ -26,8 +26,8 @@ public class Game {
     // progress
     public static final String[] levelLoad = {
             System.getProperty("user.dir") + "\\res\\levels\\Level0.txt",
-            System.getProperty("user.dir") + "\\res\\levels\\Level2.txt",
-            System.getProperty("user.dir") + "\\res\\levels\\Level1.txt"
+            System.getProperty("user.dir") + "\\res\\levels\\Level1.txt",
+            System.getProperty("user.dir") + "\\res\\levels\\Level2.txt"
     };
 
     public static boolean wait;
@@ -158,8 +158,6 @@ public class Game {
 
     public static void waitToLevelUp() {
         if (wait) {
-            Image waitToNext = new Image("images/levelUp.png");
-            authorView.setImage(waitToNext);
             long now = System.currentTimeMillis();
             if (now - waitingTime > 3000) {
                 System.out.println("Yes");

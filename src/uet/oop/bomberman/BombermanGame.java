@@ -27,21 +27,22 @@ public class BombermanGame extends Application {
     @Override
     public void start(Stage primaryStage) {
         stage = new Stage();
-        canvas = new Canvas(WIDTH, HEIGHT);
+        canvas = new Canvas(WIDTH  , HEIGHT );
 
         gc = canvas.getGraphicsContext2D();
         // Tao root container
         root = new Group();
-        Image author = new Image("images/levelUp.png");
-        authorView = new ImageView(author);
-        authorView.setFitHeight(HEIGHT);
-        authorView.setFitWidth(WIDTH - 64);
-        root.getChildren().add(authorView);
+//        Image author = new Image("images/levelUp.png");
+//        authorView = new ImageView(author);
+//        authorView.setFitHeight(HEIGHT);
+//        authorView.setFitWidth(WIDTH - 64);
+//        root.getChildren().add(authorView);
         root.getChildren().add(canvas);
 
         Menu.createMenu(root);
         sceneGame = new Scene(root);
-
+        stage.setMaxWidth(WIDTH);
+        stage.setMaxHeight(HEIGHT);
         stage.setTitle("Bomberman");
         //Passing FileInputStream object as a parameter
         Image img = new Image("file:res//icon.png");
