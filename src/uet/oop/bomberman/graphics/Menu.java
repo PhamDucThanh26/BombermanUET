@@ -99,7 +99,7 @@ public class Menu {
         }
 
         buttonText[0].setOnMouseClicked(event -> {
-            Game.game(System.getProperty("user.dir") + "\\res\\levels\\Level0.txt", sceneGame);
+            Game.game(System.getProperty("user.dir") + "\\res\\levels\\Level2.txt", sceneGame);
             author.setX(-1000);
             author.setY(-1000);
             layoutMenu.setTranslateX(-1000);

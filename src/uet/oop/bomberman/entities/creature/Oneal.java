@@ -48,7 +48,7 @@ public class Oneal extends Creature {
         @Override
         public void run() {
             try {
-                Thread.sleep(1000);
+                Thread.sleep(2000);
                 getPositionOnGrid();
                 AStar pathFindingAlgorithm = new AStar(startX, startY, endX, endY);
 
