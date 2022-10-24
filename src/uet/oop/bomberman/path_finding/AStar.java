@@ -119,15 +119,15 @@ public class AStar {
                 surrounding = nodes[current.col][current.row + 1];
                 updateCost(current, surrounding, current.fCost + V_H_COST);
 
-                if (current.col - 1 >= 0) {
-                    surrounding = nodes[current.col - 1][current.row + 1];
-                    updateCost(current, surrounding, current.fCost + D_COST);
-                }
-
-                if (current.col + 1 < nodes[0].length) {
-                    surrounding = nodes[current.col + 1][current.row + 1];
-                    updateCost(current, surrounding, current.fCost + D_COST);
-                }
+//                if (current.col - 1 >= 0) {
+//                    surrounding = nodes[current.col - 1][current.row + 1];
+//                    updateCost(current, surrounding, current.fCost + D_COST);
+//                }
+//
+//                if (current.col + 1 < nodes[0].length) {
+//                    surrounding = nodes[current.col + 1][current.row + 1];
+//                    updateCost(current, surrounding, current.fCost + D_COST);
+//                }
             }
 
             // checking side
@@ -146,15 +146,15 @@ public class AStar {
                 surrounding = nodes[current.col][current.row - 1];
                 updateCost(current, surrounding, current.fCost + V_H_COST);
 
-                if (current.col - 1 >= 0) {
-                    surrounding = nodes[current.col - 1][current.row - 1];
-                    updateCost(current, surrounding, current.fCost + D_COST);
-                }
-
-                if (current.col + 1 < nodes[0].length) {
-                    surrounding = nodes[current.col + 1][current.row - 1];
-                    updateCost(current, surrounding, current.fCost + D_COST);
-                }
+//                if (current.col - 1 >= 0) {
+//                    surrounding = nodes[current.col - 1][current.row - 1];
+//                    updateCost(current, surrounding, current.fCost + D_COST);
+//                }
+//
+//                if (current.col + 1 < nodes[0].length) {
+//                    surrounding = nodes[current.col + 1][current.row - 1];
+//                    updateCost(current, surrounding, current.fCost + D_COST);
+//                }
             }
         }
     }

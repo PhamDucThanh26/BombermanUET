@@ -12,7 +12,6 @@ public class NextLevel {
 
     public static void waitToLevelUp() {
         if (wait) {
-
             Image waitToNext = new Image("images/levelUp.png");
             authorView.setImage(waitToNext);
             long now = System.currentTimeMillis();

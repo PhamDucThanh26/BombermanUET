@@ -63,7 +63,7 @@ public class Map {
                     } else {
                         continue;
                     }
-                    if (object instanceof Brick || object instanceof Wall || object instanceof Portal) {
+                    if (object instanceof Brick || object instanceof Wall) {
                         stillObjects.add(object);
                     } else if (object instanceof Item) {
                         ((Item) object).addStage();
