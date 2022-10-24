@@ -40,6 +40,8 @@ public class Camera {
             cameraX = focusObject.getX() - (double) Sprite.WIDTH / 2;
             cameraY = focusObject.getY() - (double) Sprite.HEIGHT / 2 + Sprite.SCALED_SIZE * 2;
             setWithinMap();
+        } else {
+            System.out.println("focus is null");
         }
     }
 

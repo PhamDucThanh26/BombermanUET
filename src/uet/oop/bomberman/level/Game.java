@@ -59,6 +59,7 @@ public class Game {
     public static void game(String level, Scene scene) {
         TaskBar.createTaskBar(root);
         createMap(level);
+        camera.setFocusObject(bomberman);
         scene.setOnKeyPressed(e -> {
             if (e.getCode().toString().equals("P")) {
                 isPause = !isPause;
@@ -158,8 +159,6 @@ public class Game {
         });
         creatures.clear();
         bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
-        bomberman.setLife(true);
-        camera.setFocusObject(bomberman);
     }
 
     public static void waitToLevelUp() {
