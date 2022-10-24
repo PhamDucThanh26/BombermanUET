@@ -2,6 +2,7 @@ package uet.oop.bomberman.level;
 
 import javafx.animation.AnimationTimer;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import uet.oop.bomberman.entities.BuffItem.Item;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.Grass;
@@ -21,13 +22,16 @@ import static uet.oop.bomberman.entities.Interaction.collision;
 import static uet.oop.bomberman.entities.Portal.isPortal;
 import static uet.oop.bomberman.graphics.Map.createMap;
 import static uet.oop.bomberman.graphics.Map.mapNodes;
-import static uet.oop.bomberman.level.NextLevel.wait;
-import static uet.oop.bomberman.level.NextLevel.waitToLevelUp;
-import static uet.oop.bomberman.level.NextLevel.waitingTime;
-
 public class Game {
     // progress
+    public static final String[] levelLoad = {
+            System.getProperty("user.dir") + "\\res\\levels\\Level0.txt",
+            System.getProperty("user.dir") + "\\res\\levels\\Level2.txt",
+            System.getProperty("user.dir") + "\\res\\levels\\Level1.txt"
+    };
 
+    public static boolean wait;
+    public static long waitingTime;
     public static int yourScore = 0;
     public static boolean isPause = false;
     public static int level_ = 1;
@@ -37,6 +41,16 @@ public class Game {
     public static List<Entity> backgroundTitle = new ArrayList<>();
     public static Bomber bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
     public static List<Creature> creatures = new ArrayList<>();
+
+    private static AnimationTimer timer = new AnimationTimer() {
+        @Override
+        public void handle(long l) {
+            if (!isPause) {
+                update();
+            }
+            render();
+        }
+    };
 
     // camera lock on player's position
     public static Camera camera = new Camera();
@@ -51,15 +65,7 @@ public class Game {
             bomberman.kb.hold(e);
         });
         scene.setOnKeyReleased(e -> bomberman.kb.release(e));
-        AnimationTimer timer = new AnimationTimer() {
-            @Override
-            public void handle(long l) {
-                if (!isPause) {
-                    update();
-                }
-                render();
-            }
-        };
+
         timer.start();
     }
 
@@ -122,7 +128,6 @@ public class Game {
             Entity portal = new Portal(1, 1, Sprite.portal.getFxImage());
             stillObjects.add(portal);
             if (collision(bomberman, portal)) {
-//                root.getChildren().remove(canvas);
                 wait = true;
                 waitingTime = System.currentTimeMillis();
             }
@@ -141,11 +146,43 @@ public class Game {
         }
     }
     public static void reset() {
+        timer.stop();
         backgroundTitle.clear();
         miscellaneous.clear();
         stillObjects.clear();
         creatures.clear();
         bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
+        bomberman.setLife(true);
+        camera.setFocusObject(bomberman);
+    }
+
+    public static void waitToLevelUp() {
+        if (wait) {
+            Image waitToNext = new Image("images/levelUp.png");
+            authorView.setImage(waitToNext);
+            long now = System.currentTimeMillis();
+            if (now - waitingTime > 3000) {
+                System.out.println("Yes");
+                switch (level_) {
+                    case 1:
+                        isPortal = false;
+                        Game.reset();
+                        Game.game(levelLoad[level_], sceneGame);
+                        level_ = 2;
+                        break;
+                    case 2:
+                        Game.reset();
+                        Game.game(levelLoad[level_], sceneGame);
+                        level_ = 0;
+                        break;
+                    case 3:
+                        Game.reset();
+                        Game.game(levelLoad[level_], sceneGame);
+                        level_ = 1;
+                }
+                wait = false;
+            }
+        }
     }
 
 

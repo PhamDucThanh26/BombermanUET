@@ -10,12 +10,13 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import uet.oop.bomberman.level.Game;
 
+import static uet.oop.bomberman.BombermanGame.sceneGame;
 import static uet.oop.bomberman.graphics.Map.createMap;
 import static uet.oop.bomberman.level.Game.*;
 
 public class TaskBar {
 
-    private static int screenY = 512;
+    private static int screenY = 480;
     private static Pane pane;
     private static ImageView statusGame;
     public static Text level, bomb, time, score;
@@ -59,13 +60,13 @@ public class TaskBar {
             if (bomberman.isLife()) {
                 isPause = !isPause;
             } else {
-//                game = new Game();
                 Game.reset();
-                createMap(System.getProperty("user.dir") + "\\res\\levels\\Level0.txt");
+                Game.game((System.getProperty("user.dir") + "\\res\\levels\\Level0.txt"), sceneGame);
                 level_ = 1;
                 bomberman.bombPower = 1;
                 bomberman.bombNumber = 1;
                 bomberman.setSpeed(1);
+                yourScore = 0;
             }
             updateMenu();
         });
