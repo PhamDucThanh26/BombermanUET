@@ -2,19 +2,11 @@ package uet.oop.bomberman.graphics;
 
 import uet.oop.bomberman.entities.Entity;
 
-import static uet.oop.bomberman.graphics.Map.heightMap;
-import static uet.oop.bomberman.graphics.Map.widthMap;
 import static uet.oop.bomberman.level.Game.bomberman;
 
 public class Camera {
     private double cameraX;
     private double cameraY;
-
-    public static double MAP_HEIGHT;
-    public static double MAP_WIDTH;
-    private final double cameraW = Sprite.WIDTH ;
-
-    private final double cameraH =  Sprite.HEIGHT;
 
     private Entity focusObject = bomberman;
 
@@ -44,11 +36,9 @@ public class Camera {
     }
 
     public void update() {
-        System.out.println(MAP_HEIGHT + " " + MAP_WIDTH);
         if(focusObject != null) {
-            cameraX = focusObject.getX() - cameraW / 2;
-//            cameraY = focusObject.getY() - cameraH / 2 + Sprite.SCALED_SIZE * 2;
-            cameraY = focusObject.getY() - cameraH / 2 + Sprite.SCALED_SIZE * 2;;
+            cameraX = focusObject.getX() - (double) Sprite.WIDTH / 2;
+            cameraY = focusObject.getY() - (double) Sprite.HEIGHT / 2 + Sprite.SCALED_SIZE * 2;
             setWithinMap();
         }
     }
@@ -60,14 +50,13 @@ public class Camera {
         if(cameraY < 0) {
             cameraY = 0;
         }
-        if(cameraX > MAP_WIDTH - cameraW) {
-            cameraX = MAP_WIDTH - cameraW;
-            System.out.println(focusObject.getX() + " " + focusObject.getY());
-            System.out.println("update width");
+
+        if(cameraX + Sprite.WIDTH > Map.widthMap * Sprite.SCALED_SIZE) {
+            cameraX = Map.widthMap * Sprite.SCALED_SIZE - Sprite.WIDTH;
         }
-        if(cameraY > MAP_HEIGHT - cameraH) {
-            cameraY = (double) Sprite.HEIGHT - cameraH + 32;
-            System.out.println("update height");
+
+        if(cameraY + Sprite.HEIGHT > Map.heightMap * Sprite.SCALED_SIZE) {
+            cameraY = Map.heightMap * Sprite.SCALED_SIZE - Sprite.HEIGHT;
         }
     }
 }

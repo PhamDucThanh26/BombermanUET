@@ -13,6 +13,8 @@ import uet.oop.bomberman.user_input.Keyboard;
 import java.util.ArrayList;
 import java.util.List;
 
+import static uet.oop.bomberman.entities.Interaction.collision;
+
 public final class Bomber extends Creature {
     private boolean stillRender = true;
     final Image[] upAnimation = {
@@ -91,7 +93,7 @@ public final class Bomber extends Creature {
 
     public Bomber(double x, double y, Image img) {
         super(x, y, img);
-        solidArea = new Rectangle(x + 2, y + 8, 24, 24);
+        solidArea = new Rectangle(x + 2, y + 8, 20, 24);
         nodeNumber = 2;
     }
 
@@ -114,7 +116,6 @@ public final class Bomber extends Creature {
 
     public void putBomb() {
         if (bombs.size() < bombNumber) {
-
             double xPos = x / 32;
             double yPos = y / 32;
             xPos = Math.round(xPos);
@@ -125,7 +126,6 @@ public final class Bomber extends Creature {
     }
 
     private void updateAction() {
-
         if (kb.keySet.contains("SPACE")) {
             this.putBomb();
             kb.keySet.remove("SPACE");
@@ -139,6 +139,11 @@ public final class Bomber extends Creature {
 
     @Override
     public void move() {
+        bombs.forEach(bomb -> {
+            if(bomb.isBomberOut() && collision(this, bomb)) {
+                collision = true;
+            }
+        });
         if (collision) {
             xVec = 0;
             yVec = 0;

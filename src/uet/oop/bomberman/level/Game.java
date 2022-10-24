@@ -9,6 +9,7 @@ import uet.oop.bomberman.entities.Grass;
 import uet.oop.bomberman.entities.Portal;
 import uet.oop.bomberman.entities.creature.Bomber;
 import uet.oop.bomberman.entities.creature.Creature;
+import uet.oop.bomberman.entities.creature.Oneal;
 import uet.oop.bomberman.graphics.Camera;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.graphics.TaskBar;
@@ -150,6 +151,11 @@ public class Game {
         backgroundTitle.clear();
         miscellaneous.clear();
         stillObjects.clear();
+        creatures.forEach(e -> {
+            if(e instanceof Oneal) {
+                ((Oneal) e).closeTimertask();
+            }
+        });
         creatures.clear();
         bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
         bomberman.setLife(true);

@@ -17,11 +17,7 @@ import static uet.oop.bomberman.entities.Interaction.collision;
 public class Bomb extends Entity implements IAnimation {
     public boolean isExploded = false;
 
-    public boolean _allowedToPassThroght = true;
-    protected boolean isAllowedToPassThroght() {
-        return _allowedToPassThroght;
-    }
-
+    private boolean bomberOut = false;
 
     int animate = 0;
     private int frameCountEx = 0;
@@ -63,6 +59,10 @@ public class Bomb extends Entity implements IAnimation {
         rightFlame.get(leftFlame.size() - 1).setHead(true);
         upFlame.get(leftFlame.size() - 1).setHead(true);
         downFlame.get(leftFlame.size() - 1).setHead(true);
+    }
+
+    public boolean isBomberOut() {
+        return bomberOut;
     }
 
     @Override
@@ -117,7 +117,11 @@ public class Bomb extends Entity implements IAnimation {
     public void update() {
         frame = getCurrentFrame();
         updateAnimation();
-
+        if(!bomberOut) {
+            if(!collision(this, bomberman)) {
+                bomberOut = true;
+            }
+        }
         if (isExploded) {
             updateFlameList(leftFlame);
             leftFlame.forEach(flame -> {

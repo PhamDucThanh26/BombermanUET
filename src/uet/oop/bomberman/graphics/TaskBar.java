@@ -11,11 +11,9 @@ import javafx.scene.text.Text;
 import uet.oop.bomberman.level.Game;
 
 import static uet.oop.bomberman.BombermanGame.sceneGame;
-import static uet.oop.bomberman.graphics.Map.createMap;
 import static uet.oop.bomberman.level.Game.*;
 
 public class TaskBar {
-
     private static int screenY = 480;
     private static Pane pane;
     private static ImageView statusGame;
