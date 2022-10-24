@@ -9,7 +9,7 @@ public class Doll extends Creature {
         SCORE = 50;
     }
 
-    final Image[] deadAnimation = {
+    private final Image[] deadAnimation = {
             Sprite.doll_dead.getFxImage(),
             Sprite.doll_dead.getFxImage(),
             Sprite.mob_dead1.getFxImage(),
@@ -17,8 +17,28 @@ public class Doll extends Creature {
             Sprite.mob_dead3.getFxImage(),
     };
 
+//    private final Image[] leftAnimation = {
+//            Sprite.doll_left1.getFxImage(),
+//            Sprite.doll_left2.getFxImage(),
+//            Sprite.doll_left3.getFxImage(),
+//    };
+
+    private final Image[] moveAnimation = {
+            Sprite.doll_left1.getFxImage(),
+            Sprite.doll_right1.getFxImage(),
+            Sprite.doll_left2.getFxImage(),
+            Sprite.doll_right2.getFxImage(),
+            Sprite.doll_left3.getFxImage(),
+            Sprite.doll_right3.getFxImage(),
+    };
+
+
+
+
     @Override
     protected void move() {
+        xVec = 0;
+        yVec = 0;
 
     }
 
@@ -34,8 +54,13 @@ public class Doll extends Creature {
 
     @Override
     public void updateAnimation() {
-
+        if (frame % 10 == 0) {
+            frameCount++;
+            frameCount %= 6;
+        }
+        img = moveAnimation[frameCount];
     }
+
 
     @Override
     public void dead() {

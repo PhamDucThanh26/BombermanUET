@@ -5,10 +5,7 @@ import uet.oop.bomberman.entities.BuffItem.BombItem;
 import uet.oop.bomberman.entities.BuffItem.FlameItem;
 import uet.oop.bomberman.entities.BuffItem.Item;
 import uet.oop.bomberman.entities.BuffItem.SpeedItem;
-import uet.oop.bomberman.entities.creature.Balloom;
-import uet.oop.bomberman.entities.creature.Creature;
-import uet.oop.bomberman.entities.creature.Doll;
-import uet.oop.bomberman.entities.creature.Oneal;
+import uet.oop.bomberman.entities.creature.*;
 
 import static uet.oop.bomberman.graphics.Camera.MAP_HEIGHT;
 import static uet.oop.bomberman.graphics.Camera.MAP_WIDTH;
@@ -64,7 +61,14 @@ public class Map {
                         object = new SpeedItem(i, j, Sprite.powerup_speed.getFxImage());
                     } else if (s.charAt(i) == '3') {
                         object = new Doll(i, j, Sprite.doll_left1.getFxImage());
-                    } else {
+                    }
+                    else if (s.charAt(i) == '4'){
+                        object = new Minvo(i, j, Sprite.minvo_right2.getFxImage());
+                    }
+                    else if(s.charAt(i) == '5') {
+                        object = new Kondoria(i, j, Sprite.kondoria_right1.getFxImage());
+                    }
+                    else {
                         continue;
                     }
                     if (object instanceof Brick || object instanceof Wall) {
