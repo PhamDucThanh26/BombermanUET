@@ -15,7 +15,7 @@ public class Sprite {
 
     //window size
     public static final int maxScreenCol = 24;
-    public static final int maxScreenRow = 18;
+    public static final int maxScreenRow = 16;
     public static final int WIDTH = maxScreenCol * SCALED_SIZE;
     public static final int HEIGHT = maxScreenRow * SCALED_SIZE;
 
