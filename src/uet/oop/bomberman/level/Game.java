@@ -63,6 +63,7 @@ public class Game {
     public static void game(String level, Scene scene) {
         TaskBar.createTaskBar(root);
         createMap(level);
+        camera.setFocusObject(bomberman);
         scene.setOnKeyPressed(e -> {
             if (e.getCode().toString().equals("P")) {
                 isPause = !isPause;
@@ -119,6 +120,7 @@ public class Game {
                 yourScore += creatures.get(i).SCORE;
                 creatures.remove(i);
                 i--;
+
             }
         }
         stillObjects.removeIf(Entity::isFlag);
