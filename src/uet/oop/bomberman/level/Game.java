@@ -73,7 +73,7 @@ public class Game {
         int nodeX = (int) entity.getX() / Sprite.SCALED_SIZE;
         int nodeY = (int) entity.getY() / Sprite.SCALED_SIZE;
         try {
-            mapNodes[nodeX][nodeY] = entity.nodeNumber;
+            mapNodes[nodeX][nodeY] = entity.getNodeNumber();
         } catch (NullPointerException e) {
             System.out.println("map too big");
             System.exit(1);

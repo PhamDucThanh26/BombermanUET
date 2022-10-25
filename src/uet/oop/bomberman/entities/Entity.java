@@ -14,6 +14,13 @@ public abstract class Entity {
     protected double width;
 
     protected boolean isLife = true;
+    protected int nodeNumber;
+    protected Image img;
+
+    protected long frame = 0;
+    protected double height;
+    protected boolean collision = false;
+    protected boolean flag = false;
     public boolean isLife() {
         return isLife;
     }
@@ -22,13 +29,9 @@ public abstract class Entity {
         isLife = life;
     }
 
-    protected double height;
-    protected boolean collision = false;
-    protected boolean flag = false;
-    public int nodeNumber;
-    protected Image img;
-
-    protected long frame = 0;
+    public int getNodeNumber() {
+        return nodeNumber;
+    }
 
     public Entity() {
     }
@@ -53,6 +56,10 @@ public abstract class Entity {
 
     public double getY() {
         return y;
+    }
+
+    public void setY(double y) {
+        this.y = y;
     }
 
     public Image getImg() {

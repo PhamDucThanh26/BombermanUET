@@ -44,10 +44,8 @@ public class Camera {
     }
 
     public void update() {
-        System.out.println(MAP_HEIGHT + " " + MAP_WIDTH);
         if(focusObject != null) {
             cameraX = focusObject.getX() - cameraW / 2;
-//            cameraY = focusObject.getY() - cameraH / 2 + Sprite.SCALED_SIZE * 2;
             cameraY = focusObject.getY() - cameraH / 2;;
             setWithinMap();
         }
@@ -62,11 +60,9 @@ public class Camera {
         }
         if(cameraX > MAP_WIDTH - cameraW) {
             cameraX = MAP_WIDTH - cameraW;
-            System.out.println("update width");
         }
         if(cameraY > MAP_HEIGHT - cameraH) {
             cameraY = (double) MAP_HEIGHT - cameraH + Sprite.SCALED_SIZE;
-            System.out.println("update height");
         }
     }
 }
