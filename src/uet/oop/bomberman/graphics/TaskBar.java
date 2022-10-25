@@ -43,7 +43,7 @@ public class TaskBar {
         bomb.setFill(Color.WHITE);
         bomb.setX(700);
         bomb.setY(20);
-        Image overGame = new Image("images/gameOver.webp");
+
 
         Image quitGame = new Image("images/quitGame.png");
 
