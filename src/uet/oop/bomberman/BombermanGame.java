@@ -38,7 +38,6 @@ public class BombermanGame extends Application {
 //        authorView.setFitWidth(WIDTH - 64);
 //        root.getChildren().add(authorView);
         root.getChildren().add(canvas);
-
         Menu.createMenu(root);
         sceneGame = new Scene(root);
         stage.setMaxWidth(WIDTH);

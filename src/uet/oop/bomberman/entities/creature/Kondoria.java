@@ -82,6 +82,7 @@ public class Kondoria extends Creature {
     @Override
     public void update() {
         if (isLife) {
+            System.out.println(x + " " + y);
             super.update();
             move();
             updateAnimation();

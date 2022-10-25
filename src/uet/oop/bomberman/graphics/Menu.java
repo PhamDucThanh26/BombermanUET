@@ -19,10 +19,13 @@ import static uet.oop.bomberman.graphics.Sprite.WIDTH;
 
 public class Menu {
     public static Image authorImage;
+
+    public static Image overGame;
     public static ImageView author;
     private static final Text[] buttonText = new Text[3];
     private static final Rectangle[] rect = new Rectangle[3];
     public static Pane layoutMenu;
+    public static ImageView gameOver;
     static Bgm bgm = new Bgm();
 
     public static void createMenu(Group root) {
@@ -36,6 +39,13 @@ public class Menu {
         author.setFitHeight(HEIGHT);
         author.setX(0);
         author.setY(0);
+
+        overGame = new Image("images/gameOver.png");
+        gameOver = new ImageView(overGame);
+        gameOver.setFitHeight(HEIGHT);
+        gameOver.setFitWidth(WIDTH);
+        gameOver.setX(-1000);
+        gameOver.setY(-1000);
 
         // set text
         for (int i = 0; i < 3; i++) {
@@ -82,7 +92,7 @@ public class Menu {
         layoutMenu.getChildren().addAll(rect[0], rect[1], rect[2], buttonText[0], buttonText[1], buttonText[2]);
         layoutMenu.setMinSize(WIDTH, HEIGHT);
         layoutMenu.setMaxSize(WIDTH, HEIGHT);
-        root.getChildren().addAll(author, layoutMenu);
+        root.getChildren().addAll(author, layoutMenu, gameOver);
 
 
         for (Text i : buttonText) {
@@ -107,6 +117,8 @@ public class Menu {
 //            bgm.stopBgm();
         });
         buttonText[2].setOnMouseClicked(event -> stage.close());
+
+
     }
 
 }

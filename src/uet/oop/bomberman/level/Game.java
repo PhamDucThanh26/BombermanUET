@@ -3,6 +3,7 @@ package uet.oop.bomberman.level;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import uet.oop.bomberman.entities.BuffItem.Item;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.Grass;
@@ -22,6 +23,9 @@ import static uet.oop.bomberman.entities.Interaction.collision;
 import static uet.oop.bomberman.entities.Portal.isPortal;
 import static uet.oop.bomberman.graphics.Map.createMap;
 import static uet.oop.bomberman.graphics.Map.mapNodes;
+import static uet.oop.bomberman.graphics.Sprite.HEIGHT;
+import static uet.oop.bomberman.graphics.Sprite.WIDTH;
+
 public class Game {
     // progress
     public static final String[] levelLoad = {
@@ -133,6 +137,7 @@ public class Game {
             }
         }
         waitToLevelUp();
+
     }
 
     public static void render() {
