@@ -12,6 +12,7 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import uet.oop.bomberman.level.Game;
+import uet.oop.bomberman.sound_effect.Sound;
 
 import static uet.oop.bomberman.BombermanGame.*;
 import static uet.oop.bomberman.graphics.Sprite.HEIGHT;
@@ -20,6 +21,7 @@ import static uet.oop.bomberman.graphics.Sprite.WIDTH;
 public class Menu {
     public static Image authorImage;
 
+    public static boolean hasMusic = true;
     public static Image overGame;
     public static ImageView author;
     private static final Text[] buttonText = new Text[3];
@@ -30,6 +32,7 @@ public class Menu {
 
     public static void createMenu(Group root) {
         // bgm
+
         bgm.startBgm(Bgm.menuBgm, Bgm.DEFAULT_VOLUME);
 
         // background image
@@ -55,8 +58,8 @@ public class Menu {
                 buttonText[i].setX(325);
                 buttonText[i].setY(280);
             } else if (i == 1) {
-                buttonText[i].setText("Options");
-                buttonText[i].setX(340);
+                buttonText[i].setText("Sound:On");
+                buttonText[i].setX(325);
                 buttonText[i].setY(340);
             } else {
                 buttonText[i].setText("Exit");
@@ -117,7 +120,18 @@ public class Menu {
 //            bgm.stopBgm();
         });
         buttonText[2].setOnMouseClicked(event -> stage.close());
-
+        buttonText[1].setOnMouseClicked(event -> {
+            if(hasMusic) {
+                buttonText[1].setText("Sound: OFF");
+                bgm.stopBgm();
+                hasMusic = false;
+            }
+            else {
+                hasMusic = true;
+                buttonText[1].setText("Sound: ON");
+                bgm.startBgm(Bgm.menuBgm, Bgm.DEFAULT_VOLUME);
+            }
+        });
 
     }
 
