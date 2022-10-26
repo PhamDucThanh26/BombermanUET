@@ -30,11 +30,6 @@ public class Item extends Entity implements IGameEntity {
     }
 
     @Override
-    public void clearStage() {
-        miscellaneous.clear();
-    }
-
-    @Override
     public void update() {
         if (collision(bomberman, this)) {
             this.flag = true;

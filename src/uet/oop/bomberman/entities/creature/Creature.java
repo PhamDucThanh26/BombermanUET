@@ -51,11 +51,6 @@ public abstract class Creature extends Entity implements IAnimation, IGameEntity
         creatures.add(this);
     }
 
-    @Override
-    public void clearStage() {
-        creatures.clear();
-    }
-
     protected abstract void move();
 
     @Override

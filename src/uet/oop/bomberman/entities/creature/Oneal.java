@@ -57,6 +57,10 @@ public class Oneal extends Creature {
                 pathFindingAlgorithm.printPath();
                 path.clear();
                 path = pathFindingAlgorithm.nodeList();
+                if(!isLife) {
+                    timer.cancel();
+                    timer.purge();
+                }
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
@@ -67,7 +71,7 @@ public class Oneal extends Creature {
         super(xUnit, yUnit, img);
         solidArea = new Rectangle(x + 1, y + 1, width - 2, height - 2);
         SCORE = 100;
-        timer.schedule(task, 0, 5000);
+        timer.schedule(task, 0, 3000);
     }
 
     void getPositionOnGrid() {
@@ -76,6 +80,11 @@ public class Oneal extends Creature {
 
         endX = (int) bomberman.getSolidArea().getX() / Sprite.SCALED_SIZE;
         endY = (int) bomberman.getSolidArea().getY() / Sprite.SCALED_SIZE;
+    }
+
+    public void closeTimertask() {
+        timer.cancel();
+        timer.purge();
     }
 
     @Override
@@ -163,7 +172,7 @@ public class Oneal extends Creature {
 
     @Override
     public void dead() {
-        timer.cancel();
+        closeTimertask();
         animateDead++;
         if (animateDead % 40 == 0) {
             frameCount++;
