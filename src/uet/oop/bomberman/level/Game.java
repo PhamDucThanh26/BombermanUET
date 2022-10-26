@@ -22,10 +22,6 @@ import static uet.oop.bomberman.entities.Interaction.collision;
 import static uet.oop.bomberman.entities.Portal.isPortal;
 import static uet.oop.bomberman.graphics.Map.createMap;
 import static uet.oop.bomberman.graphics.Map.mapNodes;
-import static uet.oop.bomberman.graphics.Score.*;
-import static uet.oop.bomberman.graphics.Sprite.HEIGHT;
-import static uet.oop.bomberman.graphics.Sprite.WIDTH;
-
 public class Game {
     // progress
     public static final String[] levelLoad = {
@@ -37,7 +33,10 @@ public class Game {
 
     public static boolean wait;
     public static long waitingTime;
+    public static int yourScore = 0;
 
+    public static long pauseTime = 0;
+    public static long pauseDuration = 0;
     public static boolean isPause = false;
     public static int level_ = 1;
 
@@ -50,7 +49,9 @@ public class Game {
     private static AnimationTimer timer = new AnimationTimer() {
         @Override
         public void handle(long l) {
-            if (!isPause) {
+            if (isPause) {
+                pauseDuration = System.currentTimeMillis() - pauseTime;
+            } else {
                 update();
             }
             render();
@@ -66,11 +67,19 @@ public class Game {
         camera.setFocusObject(bomberman);
         scene.setOnKeyPressed(e -> {
             if (e.getCode().toString().equals("P")) {
+                if(isPause) {
+                    pauseDuration = 0;
+                    pauseTime = 0;
+                } else {
+                    pauseTime = System.currentTimeMillis();
+                    pauseDuration = 0;
+                }
                 isPause = !isPause;
             }
             bomberman.kb.hold(e);
         });
         scene.setOnKeyReleased(e -> bomberman.kb.release(e));
+
         timer.start();
     }
 

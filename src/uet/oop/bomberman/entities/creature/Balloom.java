@@ -4,23 +4,7 @@ import javafx.scene.image.Image;
 import javafx.scene.shape.Rectangle;
 import uet.oop.bomberman.graphics.Sprite;
 
-import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
-
-import static uet.oop.bomberman.entities.Interaction.collision;
-import static uet.oop.bomberman.graphics.Map.heightMap;
-import static uet.oop.bomberman.graphics.Map.widthMap;
-import static uet.oop.bomberman.level.Game.bomberman;
-import static uet.oop.bomberman.level.Game.stillObjects;
-
 public class Balloom extends Creature {
-
-    private int randomMove;
-    private int speed = 1;
-
-
-    private String direction;
-
     final Image[] deadAnimation = {
             Sprite.balloom_dead.getFxImage(),
             Sprite.balloom_dead.getFxImage(),
@@ -28,106 +12,66 @@ public class Balloom extends Creature {
             Sprite.mob_dead2.getFxImage(),
             Sprite.mob_dead3.getFxImage(),
     };
-
-
-    final Image[] moveAnimation = {
+    final Image[] leftAnimation = {
             Sprite.balloom_left1.getFxImage(),
-            Sprite.balloom_right1.getFxImage(),
             Sprite.balloom_left2.getFxImage(),
-            Sprite.balloom_right2.getFxImage(),
-            Sprite.balloom_left3.getFxImage(),
-            Sprite.balloom_right3.getFxImage()
+            Sprite.balloom_left3.getFxImage()
     };
 
-    public Balloom(int xUnit, int yUnit, Image img) {
+    final Image[] rightAnimation = {
+            Sprite.balloom_right1.getFxImage(),
+            Sprite.balloom_right2.getFxImage(),
+            Sprite.balloom_right3.getFxImage()
+    };
+    private double pivot;
+    boolean moveHorizontal;
+
+    public Balloom(int xUnit, int yUnit, Image img, int speed, boolean moveHorizontal) {
         super(xUnit, yUnit, img);
-        solidArea = new Rectangle(x, y, width , height);
+        solidArea = new Rectangle(x + 1, y + 1, width - 2, height - 2);
+        this.moveHorizontal = moveHorizontal;
+        if(moveHorizontal) {
+            pivot = x;
+            xVec = speed;
+            yVec = 0;
+        } else {
+            pivot = x;
+            yVec = speed;
+            xVec = 0;
+        }
         SCORE = 50;
     }
 
-
-
     protected void move() {
-        setRandomMove();
-        switch (direction) {
-            case "UP":
-                moveUp();
-                if(collision) {
-                    moveDown();
-                }
-                break;
-            case "DOWN":
-                moveDown();
-                if(collision) {
-                    moveUp();
-
-                }
-                break;
-            case "LEFT":
-                moveLeft();
-                if(collision) {
-                   moveRight();
-
-                }
-                break;
-            case "RIGHT":
-                moveRight();
-                if(collision) {
-                    moveLeft();
-
-                } ;
-                break;
+        if (collision) {
+            xVec = -xVec;
+            collision = false;
         }
-
-
-
-    }
-
-    boolean checkLocation() {
-        return (y % 32 == 0 && x % 32 == 0);
-    }
-
-    public void setRandomMove() {
-        if (checkLocation()) {
-            randomMove = new Random().nextInt(4);
-            switch (randomMove) {
-                case 0:
-                    direction = "UP";
-                    break;
-                case 1:
-                    direction = "DOWN";
-                    break;
-                case 2:
-                    direction = "LEFT";
-                    break;
-                case 3:
-                    direction = "RIGHT";
-                    break;
+        x += xVec;
+        if(moveHorizontal) {
+            if (x + xVec > pivot + 3 * Sprite.SCALED_SIZE || x + xVec < pivot - 3 * Sprite.SCALED_SIZE) {
+                x -= xVec;
+                xVec = -xVec;
+            }
+        } else {
+            if (y + yVec > pivot + 3 * Sprite.SCALED_SIZE || y + yVec < pivot - 3 * Sprite.SCALED_SIZE) {
+                y -= yVec;
+                yVec = -yVec;
             }
         }
     }
-    private void moveUp() {
-        y -= speed;
-    }
-    private void moveDown() {
-        y += speed;
-    }
-    private void moveLeft() {
-        x -= speed;
-
-    }
-    private void moveRight() {
-        x += speed;
-    }
-
 
     @Override
     public void updateAnimation() {
         if (frame % 10 == 0) {
             frameCount++;
-            frameCount %= 6;
+            frameCount %= 3;
         }
-        img = moveAnimation[frameCount];
+        if (xVec > 0) {
+            img = leftAnimation[frameCount];
+        } else {
+            img = rightAnimation[frameCount];
+        }
     }
     @Override
     public void update() {

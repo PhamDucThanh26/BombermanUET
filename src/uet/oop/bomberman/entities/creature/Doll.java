@@ -1,18 +1,23 @@
 package uet.oop.bomberman.entities.creature;
 
 import javafx.scene.image.Image;
+import javafx.scene.shape.Rectangle;
 import uet.oop.bomberman.graphics.Sprite;
 
 import java.util.Random;
 
+import static uet.oop.bomberman.level.Game.bomberman;
+import static uet.oop.bomberman.level.Game.creatures;
+
 public class Doll extends Creature {
-    private final double pivotX;
-    private final double pivotY;
+    private final double pivot;
+    private boolean bombDetected = false;
 
     public Doll(int xUnit, int yUnit, Image img) {
         super(xUnit, yUnit, img);
-        pivotX = x;
-        pivotY = y;
+        solidArea = new Rectangle(x + 1, y + 1, 20, 20);
+        pivot = x;
+        xVec = 1;
         SCORE = 50;
     }
 
@@ -24,12 +29,6 @@ public class Doll extends Creature {
             Sprite.mob_dead3.getFxImage(),
     };
 
-//    private final Image[] leftAnimation = {
-//            Sprite.doll_left1.getFxImage(),
-//            Sprite.doll_left2.getFxImage(),
-//            Sprite.doll_left3.getFxImage(),
-//    };
-
     private final Image[] moveAnimation = {
             Sprite.doll_left1.getFxImage(),
             Sprite.doll_right1.getFxImage(),
@@ -39,24 +38,32 @@ public class Doll extends Creature {
             Sprite.doll_right3.getFxImage(),
     };
 
-
-
+    Thread spawnUponDeath = new Thread(() -> {
+        try {
+            Thread.sleep(200);
+            creatures.add(new Balloom( (int) (x + 10) / Sprite.SCALED_SIZE,
+                    (int) y / Sprite.SCALED_SIZE, Sprite.doll_left1.getFxImage(), 1, true));
+            creatures.add(new Balloom( (int) (x - 10) / Sprite.SCALED_SIZE,
+                    (int) y / Sprite.SCALED_SIZE, Sprite.doll_left1.getFxImage(), -1, true));
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    });
 
     @Override
     protected void move() {
-        xVec = 0;
-        yVec = 0;
+        bomberman.getBombs().forEach(bomb -> {
+            if( Math.abs(bomb.getX() - x) < 2 * Sprite.SCALED_SIZE
+                    || Math.abs( bomb.getY() - y) < 2 * Sprite.SCALED_SIZE) {
+                findSafePlace( (int) bomb.getX() / Sprite.SCALED_SIZE,
+                        (int) bomb.getY() / Sprite.SCALED_SIZE);
+                bombDetected = true;
+            }
+        });
+    }
 
-        if (collision) {
-            xVec = -xVec;
-            yVec = -yVec;
-            collision = false;
-        }
-        x += xVec;
-        if (x + xVec > pivotX + 3 * Sprite.SCALED_SIZE || x + xVec < pivotX - 3 * Sprite.SCALED_SIZE) {
-            x -= xVec;
-            xVec = -xVec;
-        }
+    private void findSafePlace(int dangerX, int dangerY) {
+
     }
 
     @Override
@@ -93,6 +100,7 @@ public class Doll extends Creature {
         img = deadAnimation[frameCount];
         if (frameCount == 4) {
             this.flag = true;
+            spawnUponDeath.start();
         }
     }
 }

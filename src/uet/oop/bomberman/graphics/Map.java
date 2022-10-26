@@ -45,7 +45,7 @@ public class Map {
                     else if (s.charAt(i) == '1') {
                         object = new Oneal(i, j, Sprite.oneal_right1.getFxImage());
                     } else if (s.charAt(i) == '2') {
-                        object = new Balloom(i, j, Sprite.balloom_left1.getFxImage());
+                        object = new Balloom(i, j, Sprite.balloom_left1.getFxImage(), 1, true);
                     } else if (s.charAt(i) == 'b') {
                         stillObjects.add(new Brick(i, j, Sprite.brick.getFxImage()));
                         object = new BombItem(i, j, Sprite.powerup_bombs.getFxImage());
