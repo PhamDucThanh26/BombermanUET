@@ -2,8 +2,6 @@ package uet.oop.bomberman.level;
 
 import javafx.animation.AnimationTimer;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import uet.oop.bomberman.entities.BuffItem.Item;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.Grass;
@@ -23,6 +21,7 @@ import static uet.oop.bomberman.entities.Interaction.collision;
 import static uet.oop.bomberman.entities.Portal.isPortal;
 import static uet.oop.bomberman.graphics.Map.createMap;
 import static uet.oop.bomberman.graphics.Map.mapNodes;
+import static uet.oop.bomberman.graphics.Score.*;
 import static uet.oop.bomberman.graphics.Sprite.HEIGHT;
 import static uet.oop.bomberman.graphics.Sprite.WIDTH;
 
@@ -31,19 +30,20 @@ public class Game {
     public static final String[] levelLoad = {
             System.getProperty("user.dir") + "\\res\\levels\\Level0.txt",
             System.getProperty("user.dir") + "\\res\\levels\\Level1.txt",
-            System.getProperty("user.dir") + "\\res\\levels\\Level2.txt"
+            System.getProperty("user.dir") + "\\res\\levels\\Level2.txt",
+            System.getProperty("user.dir") + "\\res\\levels\\level3.txt",
     };
 
     public static boolean wait;
     public static long waitingTime;
-    public static int yourScore = 0;
+
     public static boolean isPause = false;
     public static int level_ = 1;
 
     // game entities
     public static List<Entity> stillObjects = new ArrayList<>();
     public static List<Entity> backgroundTitle = new ArrayList<>();
-    public static Bomber bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
+    public static Bomber bomberman = new Bomber(1, 2, Sprite.player_right.getFxImage());
     public static List<Creature> creatures = new ArrayList<>();
 
     private static AnimationTimer timer = new AnimationTimer() {
@@ -69,7 +69,6 @@ public class Game {
             bomberman.kb.hold(e);
         });
         scene.setOnKeyReleased(e -> bomberman.kb.release(e));
-
         timer.start();
     }
 
@@ -105,7 +104,6 @@ public class Game {
                 bomberman.setCollision(true);
             }
         });
-
         stillObjects.forEach((Entity e) -> creatures.forEach(entity -> {
             if (collision(e, entity) && !(e instanceof Grass)) {
                 entity.setCollision(true);
@@ -120,16 +118,16 @@ public class Game {
                 yourScore += creatures.get(i).SCORE;
                 creatures.remove(i);
                 i--;
-
             }
         }
         stillObjects.removeIf(Entity::isFlag);
         miscellaneous.removeIf(Entity::isFlag);
         camera.update();
-        updateNodeMap();
-
+        if(!bomberman.isLife()) {
+            updateNodeMap();
+        }
         if (creatures.size() == 0 && !isPortal && !wait) {
-            Entity portal = new Portal(1, 1, Sprite.portal.getFxImage());
+            Entity portal = new Portal(1, 2, Sprite.portal.getFxImage());
             stillObjects.add(portal);
             if (collision(bomberman, portal)) {
                 wait = true;
@@ -137,7 +135,9 @@ public class Game {
             }
         }
         waitToLevelUp();
-
+        if(!bomberman.isLife()) {
+            updateHighScore();
+        }
     }
 
     public static void render() {
@@ -156,7 +156,7 @@ public class Game {
         miscellaneous.clear();
         stillObjects.clear();
         creatures.clear();
-        bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
+        bomberman = new Bomber(1, 2, Sprite.player_right.getFxImage());
         bomberman.setLife(true);
         camera.setFocusObject(bomberman);
     }
@@ -168,25 +168,29 @@ public class Game {
                 System.out.println("Yes");
                 switch (level_) {
                     case 1:
+                        level_ = 2;
                         isPortal = false;
                         Game.reset();
-                        Game.game(levelLoad[level_], sceneGame);
-                        level_ = 2;
+                        Game.game(levelLoad[level_ - 1], sceneGame);
                         break;
                     case 2:
+                        level_ = 3;
+                        isPortal = false;
                         Game.reset();
-                        Game.game(levelLoad[level_], sceneGame);
-                        level_ = 0;
+                        Game.game(levelLoad[level_ - 1], sceneGame);
                         break;
                     case 3:
+                        level_ = 4;
                         Game.reset();
-                        Game.game(levelLoad[level_], sceneGame);
+                        Game.game(levelLoad[level_ - 1], sceneGame);
+                        break;
+                    case 4:
                         level_ = 1;
+                        Game.reset();
+                        Game.game(levelLoad[level_ - 1], sceneGame);
                 }
                 wait = false;
             }
         }
     }
-
-
 }

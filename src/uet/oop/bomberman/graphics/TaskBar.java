@@ -8,7 +8,12 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import uet.oop.bomberman.entities.creature.Bomber;
 import uet.oop.bomberman.level.Game;
+
+import static uet.oop.bomberman.entities.BuffItem.Item.miscellaneous;
+import static uet.oop.bomberman.graphics.Score.updateHighScore;
+import static uet.oop.bomberman.graphics.Score.yourScore;
 
 import static uet.oop.bomberman.BombermanGame.sceneGame;
 import static uet.oop.bomberman.BombermanGame.stage;
@@ -19,15 +24,13 @@ import static uet.oop.bomberman.graphics.Sprite.WIDTH;
 import static uet.oop.bomberman.level.Game.*;
 
 public class TaskBar {
-
-    private static int screenY = 480;
-    private static Pane pane;
+    private static Pane pane = new Pane();
     private static ImageView statusGame;
     private static ImageView quit;
     public static Text level, bomb, time, score;
 
     public static void createTaskBar(Group root) {
-        score = new Text("Score: 0");
+        score = new Text("Score: " + yourScore);
         score.setFont(Font.font("Arial", FontWeight.BOLD, 14));
         score.setFill(Color.WHITE);
         score.setX(500);
@@ -59,13 +62,11 @@ public class TaskBar {
         statusGame.setY(-10);
         statusGame.setScaleX(0.5);
         statusGame.setScaleY(0.5);
-
         pane = new Pane();
         pane.getChildren().addAll(statusGame, level, bomb, score, quit);
-
-        pane.setLayoutY(screenY);
-        pane.setMinSize(800, 480);
-        pane.setMaxSize(800, 480);
+//        pane.setLayoutY(screenY);
+        pane.setMinSize(200, 32);
+        pane.setMaxSize(800, 32);
         pane.setStyle("-fx-background-color: #353535");
         root.getChildren().add(pane);
 
@@ -108,17 +109,10 @@ public class TaskBar {
         else {
             Image newGame = new Image("images/newGame.png");
             statusGame.setImage(newGame);
-
         }
     }
     public static void updateRender() {
-        pane.setLayoutY(screenY);
-//        if(bomberman.getY() >= 224) {
-//            System.out.println(bomberman.getY());
-//            pane.setLayoutY(736 - bomberman.getY());
-//            System.out.println(pane.getLayoutY());
-//        }
-        level.setText("Level :" + level_);
+        level.setText("Level :" + Map.level);
         bomb.setText("Bombs: " + bomberman.bombNumber);
         score.setText("Score: " + yourScore);
     }

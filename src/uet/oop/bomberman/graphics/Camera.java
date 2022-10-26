@@ -62,7 +62,7 @@ public class Camera {
             cameraX = MAP_WIDTH - cameraW;
         }
         if(cameraY > MAP_HEIGHT - cameraH) {
-            cameraY = (double) MAP_HEIGHT - cameraH + Sprite.SCALED_SIZE;
+            cameraY = MAP_HEIGHT - cameraH;
         }
     }
 }
