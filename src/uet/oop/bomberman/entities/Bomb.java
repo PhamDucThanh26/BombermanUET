@@ -1,5 +1,6 @@
 package uet.oop.bomberman.entities;
 
+import uet.oop.bomberman.level.Game;
 import uet.oop.bomberman.sound_effect.SFX;
 import uet.oop.bomberman.sound_effect.Sound;
 import javafx.scene.canvas.GraphicsContext;
@@ -162,6 +163,6 @@ public class Bomb extends Entity implements IAnimation {
 
     @Override
     public long getCurrentFrame() {
-        return (System.currentTimeMillis() - startTime) * 60 / 1000;
+        return (System.currentTimeMillis() - startTime - Game.pauseDuration) * 60 / 1000;
     }
 }

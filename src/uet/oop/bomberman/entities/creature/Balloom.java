@@ -23,8 +23,6 @@ public class Balloom extends Creature {
             Sprite.balloom_right2.getFxImage(),
             Sprite.balloom_right3.getFxImage()
     };
-    private double pivot;
-    boolean moveHorizontal;
 
     public Balloom(int xUnit, int yUnit, Image img, int speed, boolean moveHorizontal) {
         super(xUnit, yUnit, img);

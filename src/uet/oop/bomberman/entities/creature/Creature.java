@@ -14,7 +14,8 @@ import static uet.oop.bomberman.level.Game.creatures;
 
 public abstract class Creature extends Entity implements IAnimation, IGameEntity {
     public int SCORE;
-
+    protected double pivot;
+    protected boolean moveHorizontal;
     // animation timer
     long startTime = System.currentTimeMillis();
     protected int animateDead = 0;

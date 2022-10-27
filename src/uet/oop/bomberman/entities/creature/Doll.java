@@ -11,7 +11,13 @@ import static uet.oop.bomberman.level.Game.creatures;
 
 public class Doll extends Creature {
     private final double pivot;
-    private boolean bombDetected = false;
+    private final int[] moveAbleArea = {
+            0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0
+    };
 
     public Doll(int xUnit, int yUnit, Image img) {
         super(xUnit, yUnit, img);
@@ -41,9 +47,9 @@ public class Doll extends Creature {
     Thread spawnUponDeath = new Thread(() -> {
         try {
             Thread.sleep(200);
-            creatures.add(new Balloom( (int) (x + 10) / Sprite.SCALED_SIZE,
+            creatures.add(new Balloom((int) (x + 10) / Sprite.SCALED_SIZE,
                     (int) y / Sprite.SCALED_SIZE, Sprite.doll_left1.getFxImage(), 1, true));
-            creatures.add(new Balloom( (int) (x - 10) / Sprite.SCALED_SIZE,
+            creatures.add(new Balloom((int) (x - 10) / Sprite.SCALED_SIZE,
                     (int) y / Sprite.SCALED_SIZE, Sprite.doll_left1.getFxImage(), -1, true));
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
@@ -52,14 +58,7 @@ public class Doll extends Creature {
 
     @Override
     protected void move() {
-        bomberman.getBombs().forEach(bomb -> {
-            if( Math.abs(bomb.getX() - x) < 2 * Sprite.SCALED_SIZE
-                    || Math.abs( bomb.getY() - y) < 2 * Sprite.SCALED_SIZE) {
-                findSafePlace( (int) bomb.getX() / Sprite.SCALED_SIZE,
-                        (int) bomb.getY() / Sprite.SCALED_SIZE);
-                bombDetected = true;
-            }
-        });
+        // create random move within boundary
     }
 
     private void findSafePlace(int dangerX, int dangerY) {

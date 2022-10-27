@@ -5,6 +5,7 @@ import uet.oop.bomberman.graphics.Sprite;
 
 import java.util.*;
 
+import static uet.oop.bomberman.level.Game.bomberman;
 import static uet.oop.bomberman.level.Game.stillObjects;
 
 public class AStar {
@@ -39,6 +40,9 @@ public class AStar {
         nodes[startCol][startRow].fCost = 0;
 
         try {
+            bomberman.getBombs().forEach(bomb -> {
+                addBlockOnMap((int) bomb.getX() / Sprite.SCALED_SIZE, (int) bomb.getY() / Sprite.SCALED_SIZE);
+            });
             for (Entity e : stillObjects) {
                 addBlockOnMap((int) e.getX() / Sprite.SCALED_SIZE, (int) e.getY() / Sprite.SCALED_SIZE);
             }
