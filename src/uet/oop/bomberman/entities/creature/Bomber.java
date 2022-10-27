@@ -71,18 +71,6 @@ public final class Bomber extends Creature {
         return stillRender;
     }
 
-    public void setStillRender(boolean stillRender) {
-        this.stillRender = stillRender;
-    }
-
-    public int getBombNumber() {
-        return bombNumber;
-    }
-
-    public void setBombNumber(int bombNumber) {
-        this.bombNumber = bombNumber;
-    }
-
     public int getSpeed() {
         return speed;
     }

@@ -8,8 +8,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class Kondoria extends Creature {
-    private double centerX;
-    private double centerY;
+    private final double centerX;
+    private final double centerY;
     private int randomMove;
     private boolean chooseToTurn = false;
     TimerTask randomTurn = new TimerTask() {
