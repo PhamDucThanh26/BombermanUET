@@ -9,6 +9,12 @@ public class Doll extends Creature {
     private final double pivotX;
     private final double pivotY;
 
+    private int randomMove;
+
+    private String direction;
+
+    private int speed = 3;
+
     public Doll(int xUnit, int yUnit, Image img) {
         super(xUnit, yUnit, img);
         pivotX = x;
@@ -44,26 +50,84 @@ public class Doll extends Creature {
 
     @Override
     protected void move() {
-        xVec = 0;
-        yVec = 0;
+        setRandomMove();
+        switch (direction) {
+            case "UP":
+                moveUp();
+                if(collision) {
+                    moveDown();
 
-        if (collision) {
-            xVec = -xVec;
-            yVec = -yVec;
-            collision = false;
+                }
+                break;
+            case "DOWN":
+                moveDown();
+                if(collision) {
+                    moveUp();
+                    moveUp();
+                }
+                break;
+            case "LEFT":
+                moveLeft();
+                if(collision) {
+                    moveRight();
+                    moveRight();
+                }
+                break;
+            case "RIGHT":
+                moveRight();
+                if(collision) {
+                    moveLeft();
+                    moveLeft();
+
+                } ;
+                break;
         }
-        x += xVec;
-        if (x + xVec > pivotX + 3 * Sprite.SCALED_SIZE || x + xVec < pivotX - 3 * Sprite.SCALED_SIZE) {
-            x -= xVec;
-            xVec = -xVec;
+
+
+
+    }
+
+    boolean checkLocation() {
+        return ((int)y % 32 == 0 && (int)x % 32 == 0);
+    }
+
+    public void setRandomMove() {
+        if (checkLocation()) {
+            randomMove = new Random().nextInt(4);
+            switch (randomMove) {
+                case 0:
+                    direction = "UP";
+                    break;
+                case 1:
+                    direction = "DOWN";
+                    break;
+                case 2:
+                    direction = "LEFT";
+                    break;
+                case 3:
+                    direction = "RIGHT";
+                    break;
+            }
         }
+    }
+    private void moveUp() {
+        y -= speed;
+    }
+    private void moveDown() {
+        y += speed;
+    }
+    private void moveLeft() {
+        x -= speed;
+    }
+    private void moveRight() {
+        x += speed;
     }
 
     @Override
     public void update() {
         if (isLife) {
             super.update();
-            move();
+//            move();
             updateAnimation();
             solidArea.setX(x + 1);
             solidArea.setY(y + 1);

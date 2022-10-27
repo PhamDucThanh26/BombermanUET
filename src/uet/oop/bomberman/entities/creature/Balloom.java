@@ -48,43 +48,42 @@ public class Balloom extends Creature {
 
 
     protected void move() {
-        setRandomMove();
-        switch (direction) {
-            case "UP":
-                moveUp();
-                if(collision) {
-                    moveDown();
-                }
-                break;
-            case "DOWN":
-                moveDown();
-                if(collision) {
-                    moveUp();
-
-                }
-                break;
-            case "LEFT":
-                moveLeft();
-                if(collision) {
-                   moveRight();
-
-                }
-                break;
-            case "RIGHT":
-                moveRight();
-                if(collision) {
-                    moveLeft();
-
-                } ;
-                break;
-        }
-
-
-
+//        setRandomMove();
+//        switch (direction) {
+//            case "UP":
+//                moveUp();
+//                if(collision) {
+//                    moveDown();
+//
+//                }
+//                break;
+//            case "DOWN":
+//                moveDown();
+//                if(collision) {
+//                    moveUp();
+//                    moveUp();
+//                }
+//                break;
+//            case "LEFT":
+//                moveLeft();
+//                if(collision) {
+//                   moveRight();
+//                   moveRight();
+//                }
+//                break;
+//            case "RIGHT":
+//                moveRight();
+//                if(collision) {
+//                    moveLeft();
+//                    moveLeft();
+//
+//                } ;
+//                break;
+//        }
     }
 
     boolean checkLocation() {
-        return (y % 32 == 0 && x % 32 == 0);
+        return ((int)y % 32 == 0 && (int)x % 32 == 0);
     }
 
     public void setRandomMove() {
@@ -114,7 +113,6 @@ public class Balloom extends Creature {
     }
     private void moveLeft() {
         x -= speed;
-
     }
     private void moveRight() {
         x += speed;

@@ -18,12 +18,17 @@ import java.io.File;
 import java.util.Scanner;
 
 import static uet.oop.bomberman.BombermanGame.*;
+import static uet.oop.bomberman.BombermanGame.root;
 import static uet.oop.bomberman.graphics.Score.*;
 import static uet.oop.bomberman.graphics.Sprite.HEIGHT;
 import static uet.oop.bomberman.graphics.Sprite.WIDTH;
+import static uet.oop.bomberman.graphics.TaskBar.pane;
+import static uet.oop.bomberman.level.Game.status;
 
 public class Menu {
 
+    public static Image levelUpImage;
+    public static ImageView levelUp;
     public static Image authorImage;
     public static boolean hasMusic = true;
     public static Image overGame;
@@ -35,28 +40,39 @@ public class Menu {
     public static ImageView gameOver;
     static Bgm bgm = new Bgm();
 
+    public static void returnMenu() {
+        pane.setVisible(false);
+        author.setVisible(true);
+        layoutMenu.setVisible(true);
+    }
 
     public static void createMenu(Group root) {
-
         createHighScore();
         readHighScore();
         System.out.println(highScore);
         bgm.startBgm(Bgm.menuBgm, Bgm.DEFAULT_VOLUME);
-
+        levelUpImage = new Image("images/levelUp.png");
+        levelUp = new ImageView(levelUpImage);
+        levelUp.setX(0);
+        levelUp.setY(Sprite.SCALED_SIZE);
+        levelUp.setFitWidth(WIDTH);
+        levelUp.setFitHeight(HEIGHT);
+        levelUp.setVisible(false);
         // background image
+
         authorImage = new Image("images/menu.jpg");
         author = new ImageView(authorImage);
         author.setFitWidth(WIDTH);
-        author.setFitHeight(HEIGHT);
-        author.setX(0);
-        author.setY(0);
+        author.setFitHeight(HEIGHT + Sprite.SCALED_SIZE);
+        author.setVisible(true);
 
         overGame = new Image("images/gameOver.png");
         gameOver = new ImageView(overGame);
-        gameOver.setFitHeight(HEIGHT);
+        gameOver.setFitHeight(HEIGHT + Sprite.SCALED_SIZE);
         gameOver.setFitWidth(WIDTH);
-        gameOver.setX(-1000);
-        gameOver.setY(-1000);
+        gameOver.setX(0);
+        gameOver.setY(Sprite.SCALED_SIZE);
+        gameOver.setVisible(false);
 
         // set text
         for (int i = 0; i < 4; i++) {
@@ -113,8 +129,9 @@ public class Menu {
         layoutMenu.setMinSize(WIDTH, HEIGHT);
         layoutMenu.setMaxSize(WIDTH, HEIGHT);
 
-        root.getChildren().addAll(author, layoutMenu, gameOver);
-
+        root.getChildren().addAll(author, layoutMenu, gameOver, levelUp);
+        TaskBar.createTaskBar();
+        pane.setVisible(false);
 
         for (Text i : buttonText) {
             i.setOnMouseEntered(event -> {
@@ -130,11 +147,9 @@ public class Menu {
         }
 
         buttonText[0].setOnMouseClicked(event -> {
-            Game.game(System.getProperty("user.dir") + "\\res\\levels\\Level0.txt", sceneGame);
-            author.setX(-1000);
-            author.setY(-1000);
-            layoutMenu.setTranslateX(-1000);
-            layoutMenu.setTranslateY(-1000);
+            Game.game(System.getProperty("user.dir") + "\\res\\levels\\Level2.txt", sceneGame);
+            author.setVisible(false);
+            layoutMenu.setVisible(false);
 //            bgm.stopBgm();
         });
         buttonText[3].setOnMouseClicked(event -> stage.close());

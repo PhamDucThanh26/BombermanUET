@@ -205,6 +205,7 @@ public final class Bomber extends Creature {
 
     @Override
     public void dead() {
+        isLife = false;
         animateDead++;
         if (animateDead % 20 == 0) {
             frameCount++;
