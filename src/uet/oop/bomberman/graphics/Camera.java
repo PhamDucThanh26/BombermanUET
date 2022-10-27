@@ -30,7 +30,7 @@ public class Camera {
     public void update() {
         if(focusObject != null) {
             cameraX = focusObject.getX() - (double) Sprite.WIDTH / 2;
-            cameraY = focusObject.getY() - (double) Sprite.HEIGHT / 2 + Sprite.SCALED_SIZE * 2;
+            cameraY = focusObject.getY() - (double) Sprite.HEIGHT / 2 + Sprite.SCALED_SIZE * 3;
             setWithinMap();
         } else {
             System.out.println("focus is null");
