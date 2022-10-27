@@ -6,8 +6,6 @@ import static uet.oop.bomberman.level.Game.bomberman;
 import static uet.oop.bomberman.entities.Interaction.collision;
 
 public class BombItem extends Item {
-    public BombItem() {
-    }
 
     public BombItem(int xUnit, int yUnit, Image img) {
         super(xUnit, yUnit, img);

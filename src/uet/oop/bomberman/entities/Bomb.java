@@ -59,6 +59,7 @@ public class Bomb extends Entity implements IAnimation {
         rightFlame.get(leftFlame.size() - 1).setHead(true);
         upFlame.get(leftFlame.size() - 1).setHead(true);
         downFlame.get(leftFlame.size() - 1).setHead(true);
+        nodeNumber = 1;
     }
 
     public boolean isBomberOut() {

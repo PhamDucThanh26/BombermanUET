@@ -12,18 +12,12 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import uet.oop.bomberman.level.Game;
-import uet.oop.bomberman.sound_effect.Sound;
-
-import java.io.File;
-import java.util.Scanner;
 
 import static uet.oop.bomberman.BombermanGame.*;
-import static uet.oop.bomberman.BombermanGame.root;
 import static uet.oop.bomberman.graphics.Score.*;
 import static uet.oop.bomberman.graphics.Sprite.HEIGHT;
 import static uet.oop.bomberman.graphics.Sprite.WIDTH;
 import static uet.oop.bomberman.graphics.TaskBar.pane;
-import static uet.oop.bomberman.level.Game.status;
 
 public class Menu {
 

@@ -43,7 +43,7 @@ public abstract class Entity {
         this.img = img;
         width = img.getWidth();
         height = img.getHeight();
-        nodeNumber = '0';
+        nodeNumber = 0;
     }
 
     public double getX() {

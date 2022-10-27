@@ -70,7 +70,6 @@ public class Doll extends Creature {
         x += xVec;
     }
 
-
     @Override
     public void update() {
         if (isLife) {

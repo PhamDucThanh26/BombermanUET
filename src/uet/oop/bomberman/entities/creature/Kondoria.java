@@ -46,7 +46,7 @@ public class Kondoria extends Creature {
         centerY = y;
         Random random = new Random();
         randomMove = random.nextInt(4);
-        timer.schedule(randomTurn, 0, 500);
+        timer.schedule(randomTurn, 0, 1000);
     }
     private void randomMove() {
         if(x % 32 < 2 && y % 32 < 2 && chooseToTurn) {

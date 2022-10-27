@@ -30,6 +30,7 @@ public abstract class Creature extends Entity implements IAnimation {
     public Creature(double xUnit, double yUnit, Image img) {
         super(xUnit, yUnit, img);
         solidArea = new Rectangle(x, y, width, height);
+        nodeNumber = 2;
     }
 
     public Rectangle getSolidArea() {

@@ -50,7 +50,7 @@ public class Game {
     private static final AnimationTimer timer = new AnimationTimer() {
         @Override
         public void handle(long l) {
-            if(status == 1) {
+            if (status == 1) {
                 status = 0;
                 pane.setVisible(true);
                 levelUp.setVisible(true);
@@ -83,10 +83,9 @@ public class Game {
                     default:
                         return;
                 }
-                level_++;
             }
 
-            if(!bomberman.isLife()) {
+            if (!bomberman.isLife()) {
                 updateHighScore();
                 status = 2;
                 gameOver.setVisible(true);
@@ -132,6 +131,12 @@ public class Game {
     }
 
     public static void updateNodeMap() {
+        for(int i = 0; i < Sprite.maxWorldCol; i++) {
+            for(int j =0; j < Sprite.maxWorldRow; j++) {
+                mapNodes[i][j] = 0;
+            }
+        }
+        bomberman.getBombs().forEach(Game::updateNodes);
         stillObjects.forEach(Game::updateNodes);
         creatures.forEach(Game::updateNodes);
         miscellaneous.forEach(Game::updateNodes);
@@ -168,9 +173,7 @@ public class Game {
         stillObjects.removeIf(Entity::isFlag);
         miscellaneous.removeIf(Entity::isFlag);
         camera.update();
-        if(!bomberman.isLife()) {
-            updateNodeMap();
-        }
+        updateNodeMap();
         if (creatures.size() == 0 && !isPortal) {
             Entity portal = new Portal(1, 2, Sprite.portal.getFxImage());
             stillObjects.add(portal);
@@ -190,12 +193,13 @@ public class Game {
             bomberman.render(gc);
         }
     }
+
     public static void reset() {
-        if(!bomberman.isLife()) {
+        if (!bomberman.isLife()) {
             updateHighScore();
         }
         creatures.forEach(creature -> {
-            if(creature instanceof Oneal || creature instanceof Kondoria) {
+            if (creature instanceof Oneal || creature instanceof Kondoria) {
                 if (creature instanceof Oneal) {
                     ((Oneal) creature).closeTimertask();
                 }
@@ -207,7 +211,7 @@ public class Game {
         miscellaneous.clear();
         stillObjects.clear();
         creatures.forEach(e -> {
-            if(e instanceof Oneal) {
+            if (e instanceof Oneal) {
                 ((Oneal) e).closeTimertask();
             }
         });
