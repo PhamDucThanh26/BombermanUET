@@ -26,7 +26,7 @@ public class Item extends Entity {
     @Override
     public void update() {
         if (collision(bomberman, this)) {
-            this.isLife = true;
+            this.flag = true;
             itemSFX.playSFX(Sound.item);
         }
     }
