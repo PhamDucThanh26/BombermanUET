@@ -9,8 +9,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import uet.oop.bomberman.graphics.Sprite;
-import uet.oop.bomberman.graphics.TaskBar;
-import uet.oop.bomberman.sound_effect.Sound;
 import uet.oop.bomberman.graphics.Menu;
 
 import static uet.oop.bomberman.graphics.Sprite.HEIGHT;
@@ -24,9 +22,6 @@ public class BombermanGame extends Application {
     public static Stage stage;
     public static Scene sceneGame;
     public static Group root;
-
-    public static ImageView authorView;
-
     @Override
     public void start(Stage primaryStage) {
         stage = new Stage();

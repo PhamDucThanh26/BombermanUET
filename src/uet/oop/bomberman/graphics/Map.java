@@ -7,12 +7,12 @@ import uet.oop.bomberman.entities.BuffItem.Item;
 import uet.oop.bomberman.entities.BuffItem.SpeedItem;
 import uet.oop.bomberman.entities.creature.*;
 
-import static uet.oop.bomberman.level.Game.backgroundTitle;
-import static uet.oop.bomberman.level.Game.stillObjects;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+
+import static uet.oop.bomberman.entities.BuffItem.Item.miscellaneous;
+import static uet.oop.bomberman.level.Game.*;
 
 public class Map {
     public static int heightMap;
@@ -70,8 +70,10 @@ public class Map {
                     if (object instanceof Brick || object instanceof Wall) {
                         stillObjects.add(object);
                     } else if (object instanceof Item) {
-                        ((Item) object).addStage();
-                    } else ((Creature) object).addStage();
+                        miscellaneous.add((Item) object);
+                    } if(object instanceof Creature) {
+                        creatures.add((Creature) object);
+                    }
                 }
                 j++;
             }

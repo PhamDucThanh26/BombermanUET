@@ -5,17 +5,14 @@ import javafx.scene.image.Image;
 import javafx.scene.shape.Rectangle;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.graphics.IAnimation;
-import uet.oop.bomberman.graphics.IGameEntity;
 
 import static uet.oop.bomberman.entities.Interaction.collision;
 import static uet.oop.bomberman.level.Game.bomberman;
-import static uet.oop.bomberman.level.Game.creatures;
-
-public abstract class Creature extends Entity implements IAnimation, IGameEntity {
+public abstract class Creature extends Entity implements IAnimation {
     public int SCORE;
 
     // animation timer
-    long startTime = System.currentTimeMillis();
+    private final long startTime = System.currentTimeMillis();
     protected int animateDead = 0;
     protected int frameCount = 0;
 
@@ -44,11 +41,6 @@ public abstract class Creature extends Entity implements IAnimation, IGameEntity
     public Rectangle2D getBoundary() {
         return new Rectangle2D(solidArea.getX() + xVec, solidArea.getY() + yVec,
                 solidArea.getWidth(), solidArea.getHeight());
-    }
-
-    @Override
-    public void addStage() {
-        creatures.add(this);
     }
 
     protected abstract void move();

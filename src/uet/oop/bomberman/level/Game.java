@@ -1,6 +1,7 @@
 package uet.oop.bomberman.level;
 
 import javafx.animation.AnimationTimer;
+import javafx.concurrent.Task;
 import javafx.scene.Scene;
 import uet.oop.bomberman.entities.BuffItem.Item;
 import uet.oop.bomberman.entities.Entity;
@@ -27,7 +28,6 @@ import static uet.oop.bomberman.graphics.Menu.levelUp;
 import static uet.oop.bomberman.graphics.Score.*;
 import static uet.oop.bomberman.graphics.Sprite.HEIGHT;
 import static uet.oop.bomberman.graphics.Sprite.WIDTH;
-import static uet.oop.bomberman.graphics.TaskBar.createTaskBar;
 import static uet.oop.bomberman.graphics.TaskBar.pane;
 
 public class Game {
@@ -41,8 +41,6 @@ public class Game {
             System.getProperty("user.dir") + "\\res\\levels\\level3.txt",
     };
 
-    public static boolean wait;
-    public static long waitingTime;
 
     public static boolean isPause = false;
     public static int level_ = 1;
@@ -60,13 +58,6 @@ public class Game {
                 update();
                 render();
             }
-            if(status == 1) {
-                status = 0;
-                pane.setVisible(true);
-                levelUp.setVisible(true);
-                newLevel.start();
-                timer.stop();
-            }
             if(!bomberman.isLife()) {
                 updateHighScore();
                 status = 2;
@@ -76,38 +67,46 @@ public class Game {
             }
         }
     };
-    static Thread newLevel = new Thread(() -> {
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+
+    static Task<Void> task = new Task<Void>() {
+        @Override
+        protected Void call() {
+            pane.setVisible(true);
+            levelUp.setVisible(true);
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            levelUp.setVisible(false);
+            switch (level_) {
+                case 1:
+                    level_ = 2;
+                    isPortal = false;
+                    Game.reset();
+                    Game.game(levelLoad[level_ - 1], sceneGame);
+                    break;
+                case 2:
+                    level_ = 3;
+                    isPortal = false;
+                    Game.reset();
+                    Game.game(levelLoad[level_ - 1], sceneGame);
+                    break;
+                case 3:
+                    level_ = 4;
+                    Game.reset();
+                    Game.game(levelLoad[level_ - 1], sceneGame);
+                    break;
+                case 4:
+                    level_ = 1;
+                    Game.reset();
+                    Game.game(levelLoad[level_ - 1], sceneGame);
+                default:
+                    Game.reset();
+            }
+            return null;
         }
-        System.out.println("Yes");
-        switch (level_) {
-            case 1:
-                level_ = 2;
-                isPortal = false;
-                Game.reset();
-                Game.game(levelLoad[level_ - 1], sceneGame);
-                break;
-            case 2:
-                level_ = 3;
-                isPortal = false;
-                Game.reset();
-                Game.game(levelLoad[level_ - 1], sceneGame);
-                break;
-            case 3:
-                level_ = 4;
-                Game.reset();
-                Game.game(levelLoad[level_ - 1], sceneGame);
-                break;
-            case 4:
-                level_ = 1;
-                Game.reset();
-                Game.game(levelLoad[level_ - 1], sceneGame);
-        }
-        levelUp.setVisible(false);
-    });
+    };
 
     // camera lock on player's position
     public static Camera camera = new Camera();
@@ -183,10 +182,12 @@ public class Game {
         if (creatures.size() == 0 && !isPortal) {
             Entity portal = new Portal(1, 2, Sprite.portal.getFxImage());
             stillObjects.add(portal);
-            if (collision(bomberman, portal)) {
-                wait = true;
-                waitingTime = System.currentTimeMillis();
+            if (collision(bomberman, portal) && status != 1) {
+
                 status = 1;
+                Thread thread = new Thread(task);
+                thread.start();
+//                timer.stop();
             }
         }
     }
@@ -210,7 +211,7 @@ public class Game {
                 ((Oneal) creature).closeTimertask();
             }
         });
-//        gc.clearRect(0, 0, WIDTH, HEIGHT);
+        gc.clearRect(0, 0, WIDTH, HEIGHT);
         backgroundTitle.clear();
         miscellaneous.clear();
         stillObjects.clear();
@@ -218,13 +219,4 @@ public class Game {
         timer.stop();
     }
 
-    public static void waitToLevelUp() {
-        if (wait) {
-            long now = System.currentTimeMillis();
-            if (now - waitingTime > 3000) {
-
-
-            }
-        }
-    }
 }

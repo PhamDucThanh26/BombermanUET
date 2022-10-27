@@ -4,8 +4,8 @@ import uet.oop.bomberman.graphics.Sprite;
 import java.util.Random;
 
 public class Kondoria extends Creature {
-    private double centerX;
-    private double centerY;
+    private final double centerX;
+    private final double centerY;
     private int randomMove;
     private final Image[] deadAnimation = {
             Sprite.kondoria_dead.getFxImage(),
