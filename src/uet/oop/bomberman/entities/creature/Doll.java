@@ -104,7 +104,7 @@ public class Doll extends Creature {
         frameCount %= 5;
         img = deadAnimation[frameCount];
         if (frameCount == 4) {
-            this.isLife = true;
+            this.flag = true;
             spawnUponDeath.start();
         }
     }

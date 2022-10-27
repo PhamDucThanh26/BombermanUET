@@ -1,54 +1,28 @@
 package uet.oop.bomberman.entities.creature;
-
 import javafx.scene.image.Image;
+import javafx.scene.shape.Rectangle;
 import uet.oop.bomberman.graphics.Sprite;
 
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import static uet.oop.bomberman.entities.Interaction.collision;
-import static uet.oop.bomberman.level.Game.bomberman;
-
 public class Kondoria extends Creature {
-    private final double pivotX;
-    private final double pivotY;
-
-    TimerTask timerTask = new TimerTask() {
+    private double centerX;
+    private double centerY;
+    private int randomMove;
+    private boolean chooseToTurn = false;
+    TimerTask randomTurn = new TimerTask() {
         @Override
         public void run() {
-            System.out.println("randomed");
-            // randomize movement
             Random random = new Random();
-            if(random.nextInt(100) < 50 ) {
-                moveHorizontal = !moveHorizontal;
-                if (moveHorizontal) {
-                    xVec = (random.nextInt(2) == 0 ? -1 : 1) * xVec;
-                    yVec = 0;
-                } else  {
-                    yVec = (random.nextInt(2) == 0 ? -1 : 1) * yVec;
-                    xVec = 0;
-                }
-            }
-
-            if(random.nextInt(100) < 5) {
-                xVec = -xVec;
-                yVec = -yVec;
+            if(random.nextInt(100) < 70) {
+                chooseToTurn = true;
+                System.out.println("choosed to move");
             }
         }
     };
     Timer timer = new Timer(true);
-
-    public Kondoria (int xUnit, int yUnit, Image img) {
-        super(xUnit, yUnit, img);
-        moveHorizontal = true;
-        pivotX = x;
-        pivotY = y;
-        xVec = 1;
-        yVec = 1;
-        SCORE = 50;
-        timer.schedule(timerTask, 3000);
-    }
     private final Image[] deadAnimation = {
             Sprite.kondoria_dead.getFxImage(),
             Sprite.kondoria_dead.getFxImage(),
@@ -56,7 +30,6 @@ public class Kondoria extends Creature {
             Sprite.mob_dead2.getFxImage(),
             Sprite.mob_dead3.getFxImage(),
     };
-
     private final Image[] moveAnimation = {
             Sprite.kondoria_left1.getFxImage(),
             Sprite.kondoria_right1.getFxImage(),
@@ -65,58 +38,64 @@ public class Kondoria extends Creature {
             Sprite.kondoria_left3.getFxImage(),
             Sprite.kondoria_right3.getFxImage(),
     };
-
-    @Override
-    protected void move() {
-
-//        if(randomMove == 0) {
-//            x += speed;
-//        }
-//        else if (randomMove == 1) {
-//            x -= speed;
-//
-//        }
-//        else if(randomMove == 2) {
-//            y += speed;
-//
-//        }
-//        else if(randomMove == 3) {
-//            y -= speed;
-//        }
-//        bomberman.getBombs().forEach(Bomb -> {
-//            if (collision(Bomb, this)) {
-//                speed = 0;
-//            }
-//        });
-//        if(collision && this.getX() % 32 == 0 && this.getY() % 32 == 0) {
-//            speed = 0;
-//        }
-//        if(speed == 0) {
-//            Random random = new Random();
-//            randomMove = random.nextInt(4);
-//            speed = 1;
-//        }
-        if(moveHorizontal) {
-
+    public Kondoria(int xUnit, int yUnit, Image img) {
+        super(xUnit, yUnit, img);
+        solidArea = new Rectangle(x + 1, y + 1, 20, 20);
+        SCORE = 50;
+        centerX = x;
+        centerY = y;
+        Random random = new Random();
+        randomMove = random.nextInt(4);
+        timer.schedule(randomTurn, 0, 500);
+    }
+    private void randomMove() {
+        if(x % 32 < 2 && y % 32 < 2 && chooseToTurn) {
+            System.out.println("in this");
+            Random random = new Random();
+            chooseToTurn = false;
+            int nextMove = random.nextInt(4);
+            while (nextMove == randomMove) {
+                nextMove = random.nextInt(4);
+            }
+//            System.exit(1);
+            randomMove = nextMove;
         }
-        x += xVec;
-        y += yVec;
-        // out of bound then calculate direction and speed again
-        if (Math.abs(x - pivotX ) > 3 * Sprite.SCALED_SIZE) {
-            x -= xVec;
-            xVec = -xVec;
-        }
+        if (randomMove == 0) {
+            xVec = 1;
+        } else if (randomMove == 3) {
+            xVec = -1;
 
-        if(Math.abs(y - pivotY ) > 3 * Sprite.SCALED_SIZE) {
-            y -= yVec;
-            yVec = -yVec;
+        } else if (randomMove == 1) {
+            yVec = 1;
+
+        } else if (randomMove == 2) {
+            yVec = -1;
         }
     }
+    @Override
+    protected void move() {
+        Random random = new Random();
+        xVec = 0;
+        yVec = 0;
+        randomMove();
+        x += xVec;
+        y += yVec;
 
+        // border checking
+        if (Math.abs(x - centerX) >= 3 * Sprite.SCALED_SIZE
+                || Math.abs(y - centerY) >= 3 * Sprite.SCALED_SIZE) {
+            x -= xVec;
+            y -= yVec;
+            int nextMove = random.nextInt(4);
+            while (nextMove == randomMove) {
+                nextMove = random.nextInt(4);
+            }
+            randomMove = nextMove;
+        }
+    }
     @Override
     public void update() {
         if (isLife) {
-            System.out.println(x + " " + y);
             super.update();
             move();
             updateAnimation();
@@ -124,7 +103,6 @@ public class Kondoria extends Creature {
             dead();
         }
     }
-
     @Override
     public void updateAnimation() {
         if (frame % 10 == 0) {
@@ -133,7 +111,6 @@ public class Kondoria extends Creature {
         }
         img = moveAnimation[frameCount];
     }
-
     @Override
     public void dead() {
         timer.cancel();
@@ -142,7 +119,6 @@ public class Kondoria extends Creature {
         if (animateDead % 40 == 0) {
             frameCount++;
         }
-
         frameCount %= 5;
         img = deadAnimation[frameCount];
         if (frameCount == 4) {

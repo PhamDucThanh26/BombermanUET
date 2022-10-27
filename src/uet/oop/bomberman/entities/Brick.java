@@ -37,7 +37,7 @@ public class Brick extends Entity implements IAnimation {
         }
         frameCount %= 4;
         img = brickAnimation[frameCount];
-        if (frameCount == 3) this.isLife = false;
+        if (frameCount == 3) this.flag = true;
     }
 
     @Override

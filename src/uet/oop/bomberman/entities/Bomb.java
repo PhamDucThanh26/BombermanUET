@@ -68,7 +68,7 @@ public class Bomb extends Entity implements IAnimation {
     @Override
     public void updateAnimation() {
         if (frame > 3 * FPS) {
-            isLife = false;
+            flag = true;
         } else if (frame == (int) (2.5 * FPS)) {
             isExploded = true;
             bombSFX.playSFX(Sound.bombExplosion);

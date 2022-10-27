@@ -21,7 +21,7 @@ public class Flame extends Entity implements IAnimation {
         x = 0;
         y = 0;
         img = null;
-        this.isLife = true;
+        this.flag = false;
     }
 
     public void setHead(boolean head) {

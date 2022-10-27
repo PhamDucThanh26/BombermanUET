@@ -20,6 +20,7 @@ public abstract class Entity {
     protected long frame = 0;
     protected double height;
     protected boolean collision = false;
+    protected boolean flag = false;
     public boolean isLife() {
         return isLife;
     }
@@ -68,6 +69,11 @@ public abstract class Entity {
     public void setImg(Image img) {
         this.img = img;
     }
+
+    public boolean isFlag() {
+        return flag;
+    }
+
 
     public boolean isCollision() {
         return collision;

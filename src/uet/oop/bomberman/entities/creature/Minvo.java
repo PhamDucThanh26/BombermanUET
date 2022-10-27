@@ -32,7 +32,6 @@ public class Minvo extends Creature {
     protected void move() {
         xVec = 0;
         yVec = 0;
-
     }
 
     @Override
@@ -65,7 +64,7 @@ public class Minvo extends Creature {
         frameCount %= 5;
         img = deadAnimation[frameCount];
         if (frameCount == 4) {
-            this.isLife = true;
+            this.flag = true;
         }
     }
 }
