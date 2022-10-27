@@ -175,7 +175,7 @@ public class Game {
         camera.update();
         updateNodeMap();
         if (creatures.size() == 0 && !isPortal) {
-            Entity portal = new Portal(1, 2, Sprite.portal.getFxImage());
+            Entity portal = new Portal(1, 1, Sprite.portal.getFxImage());
             stillObjects.add(portal);
             if (collision(bomberman, portal)) {
                 status = 1;

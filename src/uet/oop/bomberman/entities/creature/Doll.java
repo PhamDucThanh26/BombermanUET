@@ -14,7 +14,7 @@ public class Doll extends Creature {
 
     public Doll(int xUnit, int yUnit, Image img) {
         super(xUnit, yUnit, img);
-        solidArea = new Rectangle(x + 1, y + 1, 20, 20);
+        solidArea = new Rectangle(x + 1, y + 1, 24, 24);
         pivot = x;
         xVec = 1;
         SCORE = 50;
