@@ -12,7 +12,7 @@ public class Camera {
 
     public Camera() {
         this.cameraX = 0;
-        this.cameraY = 0;
+        this.cameraY = Sprite.SCALED_SIZE;
     }
 
     public void setFocusObject(Entity focusObject) {
@@ -38,7 +38,7 @@ public class Camera {
     public void update() {
         if(focusObject != null) {
             cameraX = focusObject.getX() - (double) Sprite.WIDTH / 2;
-            cameraY = focusObject.getY() - (double) Sprite.HEIGHT / 2 + Sprite.SCALED_SIZE * 2;
+            cameraY = focusObject.getY() - (double) Sprite.HEIGHT / 2 + Sprite.SCALED_SIZE * 3;
             setWithinMap();
         } else {
             System.out.println("focus is null");
@@ -57,8 +57,8 @@ public class Camera {
             cameraX = Map.widthMap * Sprite.SCALED_SIZE - Sprite.WIDTH;
         }
 
-        if(cameraY + Sprite.HEIGHT > Map.heightMap * Sprite.SCALED_SIZE) {
-            cameraY = Map.heightMap * Sprite.SCALED_SIZE - Sprite.HEIGHT;
+        if(cameraY + Sprite.HEIGHT > Map.heightMap * Sprite.SCALED_SIZE ) {
+            cameraY = (Map.heightMap) * Sprite.SCALED_SIZE - Sprite.HEIGHT;
         }
     }
 }

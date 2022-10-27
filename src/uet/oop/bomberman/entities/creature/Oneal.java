@@ -71,7 +71,7 @@ public class Oneal extends Creature {
         super(xUnit, yUnit, img);
         solidArea = new Rectangle(x + 1, y + 1, width - 2, height - 2);
         SCORE = 100;
-        timer.schedule(task, 0, 3000);
+        timer.schedule(task, 0, 500);
     }
 
     void getPositionOnGrid() {
@@ -103,9 +103,9 @@ public class Oneal extends Creature {
 
         // check the direction they should move
         if (nextX < x) {
-            xVec = -1;
+            xVec = -2;
         } else if (nextX > x) {
-            xVec = 1;
+            xVec = 2;
         }
         bomberman.getBombs().forEach(Bomb -> {
             if(collision(Bomb, this)) {
@@ -120,9 +120,9 @@ public class Oneal extends Creature {
         });
 
         if (nextY < y) {
-            yVec = -1;
+            yVec = -2;
         } else if (nextY > y) {
-            yVec = 1;
+            yVec = 2;
         }
         stillObjects.forEach(e -> {
             if (collision(e, this)) {
