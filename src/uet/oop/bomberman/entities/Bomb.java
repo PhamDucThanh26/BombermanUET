@@ -1,6 +1,5 @@
 package uet.oop.bomberman.entities;
 
-import uet.oop.bomberman.level.Game;
 import uet.oop.bomberman.sound_effect.SFX;
 import uet.oop.bomberman.sound_effect.Sound;
 import javafx.scene.canvas.GraphicsContext;
@@ -12,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static uet.oop.bomberman.entities.Interaction.collision;
-import static uet.oop.bomberman.level.Game.*;
+import static uet.oop.bomberman.Game.*;
 
 public class Bomb extends Entity implements IAnimation {
     public boolean isExploded = false;

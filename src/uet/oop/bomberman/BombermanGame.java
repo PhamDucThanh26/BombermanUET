@@ -6,14 +6,12 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
-import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.graphics.Menu;
+import uet.oop.bomberman.graphics.Sprite;
 
 import static uet.oop.bomberman.graphics.Sprite.HEIGHT;
 import static uet.oop.bomberman.graphics.Sprite.WIDTH;
-import static uet.oop.bomberman.graphics.TaskBar.pane;
 
 public class BombermanGame extends Application {
     //Update menu 17/10/2022
@@ -22,6 +20,7 @@ public class BombermanGame extends Application {
     public static Stage stage;
     public static Scene sceneGame;
     public static Group root;
+
     @Override
     public void start(Stage primaryStage) {
         stage = new Stage();

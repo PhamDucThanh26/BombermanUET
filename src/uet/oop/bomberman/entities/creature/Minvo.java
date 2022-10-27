@@ -4,17 +4,16 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.shape.Rectangle;
 import uet.oop.bomberman.entities.Brick;
-import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.graphics.Sprite;
-import uet.oop.bomberman.level.Game;
 
+import static uet.oop.bomberman.Game.stillObjects;
 import static uet.oop.bomberman.graphics.Map.mapNodes;
-import static uet.oop.bomberman.level.Game.*;
 
 public class Minvo extends Creature {
     int buildCD = FPS;
     int shieldCD = FPS;
     boolean shield = false;
+
     public Minvo(int xUnit, int yUnit, Image img) {
         super(xUnit, yUnit, img);
         SCORE = 200;
@@ -24,13 +23,13 @@ public class Minvo extends Creature {
 
     @Override
     public void setCollision(boolean collision) {
-        if(shield) return;
+        if (shield) return;
         super.setCollision(collision);
     }
 
     @Override
     public void setLife(boolean life) {
-        if(shield) return;
+        if (shield) return;
         super.setLife(life);
     }
 
@@ -63,7 +62,7 @@ public class Minvo extends Creature {
         int positionX = (int) solidArea.getX() / Sprite.SCALED_SIZE;
         int positionY = (int) solidArea.getY() / Sprite.SCALED_SIZE;
 
-        for(int i = - 1; i < 2 ; i++) {
+        for (int i = -1; i < 2; i++) {
             if (mapNodes[positionX + i][positionY + 2] == 0) {
                 stillObjects.add(new Brick(i + positionX, 2 + positionY, Sprite.brick.getFxImage()));
                 return;
@@ -75,13 +74,13 @@ public class Minvo extends Creature {
             }
         }
 
-        for(int i = - 1; i < 2 ; i++) {
+        for (int i = -1; i < 2; i++) {
             if (mapNodes[positionX + 2][positionY + i] == 0) {
                 stillObjects.add(new Brick(2 + positionX, i + positionY, Sprite.brick.getFxImage()));
                 return;
             }
 
-            if (mapNodes[positionX - 2][positionY + i ] == 0) {
+            if (mapNodes[positionX - 2][positionY + i] == 0) {
                 stillObjects.add(new Brick(positionX - 2, positionY + i, Sprite.brick.getFxImage()));
                 return;
             }
@@ -89,7 +88,7 @@ public class Minvo extends Creature {
     }
 
     void shieldDelay() {
-        if(--shieldCD < 0) {
+        if (--shieldCD < 0) {
             shieldCD = 2 * FPS;
             shield = false;
         } else if (shieldCD < FPS) {
@@ -98,7 +97,7 @@ public class Minvo extends Creature {
     }
 
     void buildDelay() {
-        if(--buildCD < 0) {
+        if (--buildCD < 0) {
             buildCD = 2 * FPS;
             buildWall();
         }
@@ -142,7 +141,7 @@ public class Minvo extends Creature {
 
     @Override
     public void render(GraphicsContext gc) {
-        if( shield && getCurrentFrame() % 2 == 0) {
+        if (shield && getCurrentFrame() % 2 == 0) {
             super.render(gc);
         } else if (!shield) {
             super.render(gc);

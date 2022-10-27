@@ -3,7 +3,7 @@ package uet.oop.bomberman.entities;
 import javafx.scene.image.Image;
 
 import static uet.oop.bomberman.entities.Interaction.collision;
-import static uet.oop.bomberman.level.Game.bomberman;
+import static uet.oop.bomberman.Game.bomberman;
 
 public class Portal extends Entity {
 

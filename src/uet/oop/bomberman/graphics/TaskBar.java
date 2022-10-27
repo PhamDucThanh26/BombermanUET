@@ -7,7 +7,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import uet.oop.bomberman.level.Game;
+import uet.oop.bomberman.Game;
 import static uet.oop.bomberman.BombermanGame.root;
 
 import static uet.oop.bomberman.graphics.Menu.*;
@@ -15,7 +15,7 @@ import static uet.oop.bomberman.graphics.Score.updateHighScore;
 import static uet.oop.bomberman.graphics.Score.yourScore;
 
 import static uet.oop.bomberman.BombermanGame.sceneGame;
-import static uet.oop.bomberman.level.Game.*;
+import static uet.oop.bomberman.Game.*;
 
 public class TaskBar {
     public static Pane pane = new Pane();

@@ -5,8 +5,8 @@ import uet.oop.bomberman.graphics.Sprite;
 
 import java.util.*;
 
-import static uet.oop.bomberman.level.Game.bomberman;
-import static uet.oop.bomberman.level.Game.stillObjects;
+import static uet.oop.bomberman.Game.bomberman;
+import static uet.oop.bomberman.Game.stillObjects;
 
 public class AStar {
     // final cost
@@ -186,7 +186,7 @@ public class AStar {
         List<Node> result = new ArrayList<>();
         if (end.solution) {
             Node current = end;
-            result.add(0,current);
+            result.add(0, current);
             while (current.parent != start && current.parent != null) {
                 current = current.parent;
                 result.add(0, current);

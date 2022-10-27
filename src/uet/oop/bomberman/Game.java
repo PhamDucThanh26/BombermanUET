@@ -1,4 +1,4 @@
-package uet.oop.bomberman.level;
+package uet.oop.bomberman;
 
 import javafx.animation.AnimationTimer;
 import javafx.scene.Scene;

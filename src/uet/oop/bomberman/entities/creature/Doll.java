@@ -2,12 +2,11 @@ package uet.oop.bomberman.entities.creature;
 
 import javafx.scene.image.Image;
 import javafx.scene.shape.Rectangle;
-import uet.oop.bomberman.graphics.Map;
 import uet.oop.bomberman.graphics.Sprite;
 
 import static uet.oop.bomberman.entities.Interaction.collision;
-import static uet.oop.bomberman.level.Game.bomberman;
-import static uet.oop.bomberman.level.Game.creatures;
+import static uet.oop.bomberman.Game.bomberman;
+import static uet.oop.bomberman.Game.creatures;
 
 public class Doll extends Creature {
     boolean dangerDetected = false;

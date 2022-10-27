@@ -8,10 +8,11 @@ import java.io.File;
 import static uet.oop.bomberman.graphics.Menu.hasMusic;
 
 public class SFX extends Sound {
-    private double sfxVolume = Sound.DEFAULT_VOLUME;
+    private final double sfxVolume = Sound.DEFAULT_VOLUME;
+
     public void playSFX(String path) {
         try {
-            if(hasMusic) {
+            if (hasMusic) {
                 Media media = new Media(new File(path).toURI().toString());
                 audioPlayer = new MediaPlayer(media);
                 audioPlayer.setVolume(DEFAULT_VOLUME);

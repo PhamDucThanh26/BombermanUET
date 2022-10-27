@@ -28,7 +28,7 @@ public class Balloom extends Creature {
         super(xUnit, yUnit, img);
         solidArea = new Rectangle(x + 1, y + 1, width - 2, height - 2);
         this.moveHorizontal = moveHorizontal;
-        if(moveHorizontal) {
+        if (moveHorizontal) {
             pivot = x;
             xVec = speed;
             yVec = 0;
@@ -46,7 +46,7 @@ public class Balloom extends Creature {
             collision = false;
         }
         x += xVec;
-        if(moveHorizontal) {
+        if (moveHorizontal) {
             if (x + xVec > pivot + 3 * Sprite.SCALED_SIZE || x + xVec < pivot - 3 * Sprite.SCALED_SIZE) {
                 x -= xVec;
                 xVec = -xVec;
@@ -71,16 +71,16 @@ public class Balloom extends Creature {
             img = rightAnimation[frameCount];
         }
     }
+
     @Override
     public void update() {
-        if(isLife) {
+        if (isLife) {
             super.update();
             move();
             updateAnimation();
             solidArea.setX(x + 1);
             solidArea.setY(y + 1);
-        }
-        else {
+        } else {
             dead();
         }
     }
@@ -88,13 +88,13 @@ public class Balloom extends Creature {
     @Override
     public void dead() {
         animateDead++;
-        if(animateDead % 40 == 0) {
+        if (animateDead % 40 == 0) {
             frameCount++;
         }
 
         frameCount %= 5;
         img = deadAnimation[frameCount];
-        if(frameCount == 4) {
+        if (frameCount == 4) {
             this.flag = true;
         }
     }

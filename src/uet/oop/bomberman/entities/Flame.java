@@ -4,9 +4,9 @@ import javafx.scene.image.Image;
 import uet.oop.bomberman.graphics.IAnimation;
 import uet.oop.bomberman.graphics.Sprite;
 
-import static uet.oop.bomberman.level.Game.bomberman;
+import static uet.oop.bomberman.Game.bomberman;
 import static uet.oop.bomberman.entities.Interaction.collision;
-import static uet.oop.bomberman.level.Game.creatures;
+import static uet.oop.bomberman.Game.creatures;
 
 public class Flame extends Entity implements IAnimation {
     private boolean head = false;

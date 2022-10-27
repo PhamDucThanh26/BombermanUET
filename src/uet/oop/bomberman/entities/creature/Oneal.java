@@ -9,8 +9,8 @@ import uet.oop.bomberman.path_finding.Node;
 import java.util.*;
 
 import static uet.oop.bomberman.entities.Interaction.collision;
-import static uet.oop.bomberman.level.Game.bomberman;
-import static uet.oop.bomberman.level.Game.stillObjects;
+import static uet.oop.bomberman.Game.bomberman;
+import static uet.oop.bomberman.Game.stillObjects;
 
 public class Oneal extends Creature {
     final Image[] leftAnimation = {

@@ -8,7 +8,7 @@ import uet.oop.bomberman.entities.BuffItem.SpeedItem;
 import uet.oop.bomberman.entities.creature.*;
 
 import static uet.oop.bomberman.entities.BuffItem.Item.miscellaneous;
-import static uet.oop.bomberman.level.Game.*;
+import static uet.oop.bomberman.Game.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;

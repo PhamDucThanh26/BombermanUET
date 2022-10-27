@@ -2,7 +2,7 @@ package uet.oop.bomberman.entities.BuffItem;
 
 import javafx.scene.image.Image;
 
-import static uet.oop.bomberman.level.Game.bomberman;
+import static uet.oop.bomberman.Game.bomberman;
 import static uet.oop.bomberman.entities.Interaction.collision;
 
 public class SpeedItem extends Item {

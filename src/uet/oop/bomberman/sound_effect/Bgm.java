@@ -8,10 +8,11 @@ import java.io.File;
 import static uet.oop.bomberman.graphics.Menu.hasMusic;
 
 public class Bgm extends Sound {
-    private double bgmVolume = Sound.DEFAULT_VOLUME;
+    private final double bgmVolume = Sound.DEFAULT_VOLUME;
+
     public void startBgm(String path, double volume) {
         try {
-            if(hasMusic) {
+            if (hasMusic) {
                 Media media = new Media(new File(path).toURI().toString());
                 audioPlayer = new MediaPlayer(media);
                 audioPlayer.setVolume(volume);

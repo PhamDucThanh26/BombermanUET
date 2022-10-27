@@ -5,7 +5,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.graphics.Sprite;
 
-import static uet.oop.bomberman.level.Game.camera;
+import static uet.oop.bomberman.Game.camera;
 
 public abstract class Entity {
 

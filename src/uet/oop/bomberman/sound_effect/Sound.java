@@ -1,5 +1,5 @@
-
 package uet.oop.bomberman.sound_effect;
+
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
@@ -26,11 +26,13 @@ public class Sound {
     public final String destroy = System.getProperty("user.dir") + "\\res\\sound\\destroy.wav";
     public static final double DEFAULT_VOLUME = 0.25;
     MediaPlayer audioPlayer;
+
     public Sound() {
     }
+
     static final double VOLUME = 1;
 
-    public void play(String filePath, int loop, double volume ) {
+    public void play(String filePath, int loop, double volume) {
         try {
             String path = new File(filePath).toURI().toString();
             Media pathFile = new Media(path);

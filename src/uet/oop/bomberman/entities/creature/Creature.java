@@ -5,11 +5,10 @@ import javafx.scene.image.Image;
 import javafx.scene.shape.Rectangle;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.graphics.IAnimation;
-import uet.oop.bomberman.level.Game;
+import uet.oop.bomberman.Game;
 
 import static uet.oop.bomberman.entities.Interaction.collision;
-import static uet.oop.bomberman.level.Game.bomberman;
-import static uet.oop.bomberman.level.Game.creatures;
+import static uet.oop.bomberman.Game.bomberman;
 
 public abstract class Creature extends Entity implements IAnimation {
     public int SCORE;
