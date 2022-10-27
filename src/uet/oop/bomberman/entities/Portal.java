@@ -9,7 +9,6 @@ public class Portal extends Entity {
 
     public static boolean isPortal = false;
 
-    public static boolean collision = false;
     public Portal(int xUnit, int yUnit, Image img) {
         super(xUnit, yUnit, img);
     }

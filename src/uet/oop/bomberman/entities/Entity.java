@@ -20,7 +20,6 @@ public abstract class Entity {
     protected long frame = 0;
     protected double height;
     protected boolean collision = false;
-    protected boolean flag = false;
     public boolean isLife() {
         return isLife;
     }
@@ -70,11 +69,6 @@ public abstract class Entity {
         this.img = img;
     }
 
-    public boolean isFlag() {
-        return flag;
-    }
-
-
     public boolean isCollision() {
         return collision;
     }
@@ -87,7 +81,6 @@ public abstract class Entity {
         double renderX = x - camera.getCameraX();
         double renderY = y - camera.getCameraY();
         gc.drawImage(img, renderX, renderY);
-//        gc.drawImage(img, x, y);
     }
 
     public abstract void update();

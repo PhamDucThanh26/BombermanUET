@@ -180,7 +180,7 @@ public final class Bomber extends Creature {
 
     @Override
     public void update() {
-        bombs.removeIf(Entity::isFlag);
+        bombs.removeIf(bomb -> !bomb.isLife());
         bombs.forEach(Bomb::update);
         if (isLife) {
             frame = getCurrentFrame();

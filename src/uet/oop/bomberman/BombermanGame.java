@@ -38,8 +38,8 @@ public class BombermanGame extends Application {
         root.getChildren().add(canvas);
         Menu.createMenu(root);
         sceneGame = new Scene(root);
-        stage.setMaxWidth(WIDTH + Sprite.SCALED_SIZE / 2);
-        stage.setMaxHeight(HEIGHT);
+        stage.setMaxWidth(WIDTH + (double) Sprite.SCALED_SIZE / 2);
+        stage.setMaxHeight(HEIGHT + Sprite.SCALED_SIZE * 2);
         stage.setTitle("Bomberman");
         //Passing FileInputStream object as a parameter
         Image img = new Image("file:res//icon.png");

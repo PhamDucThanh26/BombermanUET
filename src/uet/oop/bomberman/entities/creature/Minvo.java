@@ -8,7 +8,6 @@ public class Minvo extends Creature {
         super(xUnit, yUnit, img);
         SCORE = 200;
     }
-
     private final Image[] deadAnimation = {
             Sprite.minvo_dead.getFxImage(),
             Sprite.minvo_dead.getFxImage(),
@@ -16,12 +15,6 @@ public class Minvo extends Creature {
             Sprite.mob_dead2.getFxImage(),
             Sprite.mob_dead3.getFxImage(),
     };
-
-//    private final Image[] leftAnimation = {
-//            Sprite.doll_left1.getFxImage(),
-//            Sprite.doll_left2.getFxImage(),
-//            Sprite.doll_left3.getFxImage(),
-//    };
 
     private final Image[] moveAnimation = {
             Sprite.minvo_left1.getFxImage(),
@@ -72,7 +65,7 @@ public class Minvo extends Creature {
         frameCount %= 5;
         img = deadAnimation[frameCount];
         if (frameCount == 4) {
-            this.flag = true;
+            this.isLife = true;
         }
     }
 }

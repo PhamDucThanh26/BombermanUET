@@ -23,22 +23,14 @@ public class Camera {
         return cameraX;
     }
 
-    public void setCameraX(double cameraX) {
-        this.cameraX = cameraX;
-    }
-
     public double getCameraY() {
         return cameraY;
-    }
-
-    public void setCameraY(double cameraY) {
-        this.cameraY = cameraY;
     }
 
     public void update() {
         if(focusObject != null) {
             cameraX = focusObject.getX() - (double) Sprite.WIDTH / 2;
-            cameraY = focusObject.getY() - (double) Sprite.HEIGHT / 2 + Sprite.SCALED_SIZE * 3;
+            cameraY = focusObject.getY() - (double) Sprite.HEIGHT / 2 + Sprite.SCALED_SIZE * 2;
             setWithinMap();
         } else {
             System.out.println("focus is null");

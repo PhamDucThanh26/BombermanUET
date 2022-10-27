@@ -5,14 +5,13 @@ import javafx.scene.image.Image;
 import javafx.scene.shape.Rectangle;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.graphics.IAnimation;
-import uet.oop.bomberman.graphics.IGameEntity;
 import uet.oop.bomberman.level.Game;
 
 import static uet.oop.bomberman.entities.Interaction.collision;
 import static uet.oop.bomberman.level.Game.bomberman;
 import static uet.oop.bomberman.level.Game.creatures;
 
-public abstract class Creature extends Entity implements IAnimation, IGameEntity {
+public abstract class Creature extends Entity implements IAnimation {
     public int SCORE;
     protected double pivot;
     protected boolean moveHorizontal;
@@ -39,18 +38,13 @@ public abstract class Creature extends Entity implements IAnimation, IGameEntity
 
     @Override
     public long getCurrentFrame() {
-        return (System.currentTimeMillis() - startTime - Game.pauseDuration) * 60 / 1000;
+        return (System.currentTimeMillis() - startTime - Game.totalPauseDuration) * 60 / 1000;
     }
 
     @Override
     public Rectangle2D getBoundary() {
         return new Rectangle2D(solidArea.getX() + xVec, solidArea.getY() + yVec,
                 solidArea.getWidth(), solidArea.getHeight());
-    }
-
-    @Override
-    public void addStage() {
-        creatures.add(this);
     }
 
     protected abstract void move();

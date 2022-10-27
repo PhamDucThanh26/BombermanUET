@@ -2,22 +2,15 @@ package uet.oop.bomberman.entities.creature;
 
 import javafx.scene.image.Image;
 import javafx.scene.shape.Rectangle;
+import uet.oop.bomberman.graphics.Map;
 import uet.oop.bomberman.graphics.Sprite;
 
-import java.util.Random;
-
+import static uet.oop.bomberman.entities.Interaction.collision;
 import static uet.oop.bomberman.level.Game.bomberman;
 import static uet.oop.bomberman.level.Game.creatures;
 
 public class Doll extends Creature {
-    private final double pivot;
-    private final int[] moveAbleArea = {
-            0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0
-    };
+    boolean dangerDetected = false;
 
     public Doll(int xUnit, int yUnit, Image img) {
         super(xUnit, yUnit, img);
@@ -46,7 +39,7 @@ public class Doll extends Creature {
 
     Thread spawnUponDeath = new Thread(() -> {
         try {
-            Thread.sleep(200);
+            Thread.sleep(1000);
             creatures.add(new Balloom((int) (x + 10) / Sprite.SCALED_SIZE,
                     (int) y / Sprite.SCALED_SIZE, Sprite.doll_left1.getFxImage(), 1, true));
             creatures.add(new Balloom((int) (x - 10) / Sprite.SCALED_SIZE,
@@ -55,15 +48,28 @@ public class Doll extends Creature {
             throw new RuntimeException(e);
         }
     });
-
     @Override
     protected void move() {
-        // create random move within boundary
+        // detect bomb and change direction accordingly
+        bomberman.getBombs().forEach(bomb -> {
+            if(collision(this, bomb) && !dangerDetected) {
+                dangerDetected = true;
+            }
+        });
+        if(dangerDetected) {
+            xVec = -2 * xVec;
+            dangerDetected = false;
+        }
+
+        // move left right
+        if (collision) {
+            if(Math.abs(xVec) == 2) xVec /=2;
+            xVec = -xVec;
+            collision = false;
+        }
+        x += xVec;
     }
 
-    private void findSafePlace(int dangerX, int dangerY) {
-
-    }
 
     @Override
     public void update() {
@@ -98,7 +104,7 @@ public class Doll extends Creature {
         frameCount %= 5;
         img = deadAnimation[frameCount];
         if (frameCount == 4) {
-            this.flag = true;
+            this.isLife = true;
             spawnUponDeath.start();
         }
     }

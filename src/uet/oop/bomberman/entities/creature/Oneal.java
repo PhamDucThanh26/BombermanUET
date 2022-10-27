@@ -38,7 +38,6 @@ public class Oneal extends Creature {
 
     private int endX = (int) bomberman.getSolidArea().getX() / Sprite.SCALED_SIZE;
     private int endY = (int) bomberman.getSolidArea().getY() / Sprite.SCALED_SIZE;
-    // algorithm
     List<Node> path = new ArrayList<>();
 
     // background task
@@ -83,8 +82,6 @@ public class Oneal extends Creature {
     }
 
     public void closeTimertask() {
-        timer.cancel();
-        timer.purge();
     }
 
     @Override
@@ -181,7 +178,7 @@ public class Oneal extends Creature {
         frameCount %= 5;
         img = deadAnimation[frameCount];
         if (frameCount == 4) {
-            this.flag = true;
+            this.isLife = true;
         }
     }
 }

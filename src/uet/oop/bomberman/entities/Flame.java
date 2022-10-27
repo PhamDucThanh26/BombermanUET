@@ -21,7 +21,7 @@ public class Flame extends Entity implements IAnimation {
         x = 0;
         y = 0;
         img = null;
-        this.flag = false;
+        this.isLife = true;
     }
 
     public void setHead(boolean head) {
@@ -95,7 +95,6 @@ public class Flame extends Entity implements IAnimation {
         } else {
             this.setImg(flameHeadLeftStatus[frameCount]);
         }
-//            System.out.println(frameCount);
     }
 
     public void updateRightAnimation() {
@@ -110,7 +109,6 @@ public class Flame extends Entity implements IAnimation {
         } else {
             this.setImg(flameHeadRightStatus[frameCount]);
         }
-//        System.out.println(frameCount);
     }
 
     public void updateUpAnimation() {
@@ -125,7 +123,6 @@ public class Flame extends Entity implements IAnimation {
         } else {
             this.setImg(flameHeadUpStatus[frameCount]);
         }
-//        System.out.println(frameCount);
     }
 
     public void updateDownAnimation() {
@@ -140,7 +137,6 @@ public class Flame extends Entity implements IAnimation {
         } else {
             this.setImg(flameHeadDownStatus[frameCount]);
         }
-//        System.out.println(frameCount);
     }
 
     @Override

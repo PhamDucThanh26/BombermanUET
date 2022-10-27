@@ -4,7 +4,6 @@ import uet.oop.bomberman.sound_effect.SFX;
 import uet.oop.bomberman.sound_effect.Sound;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.entities.Entity;
-import uet.oop.bomberman.graphics.IGameEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +11,7 @@ import java.util.List;
 import static uet.oop.bomberman.level.Game.bomberman;
 import static uet.oop.bomberman.entities.Interaction.collision;
 
-public class Item extends Entity implements IGameEntity {
+public class Item extends Entity {
 
     protected SFX itemSFX = new SFX();
     public static List<Item> miscellaneous = new ArrayList<>();
@@ -25,14 +24,9 @@ public class Item extends Entity implements IGameEntity {
     }
 
     @Override
-    public void addStage() {
-        miscellaneous.add(this);
-    }
-
-    @Override
     public void update() {
         if (collision(bomberman, this)) {
-            this.flag = true;
+            this.isLife = true;
             itemSFX.playSFX(Sound.item);
         }
     }

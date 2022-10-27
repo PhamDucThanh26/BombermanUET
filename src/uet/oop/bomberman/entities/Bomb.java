@@ -11,9 +11,8 @@ import uet.oop.bomberman.graphics.Sprite;
 import java.util.ArrayList;
 import java.util.List;
 
-import static uet.oop.bomberman.level.Game.bomberman;
-import static uet.oop.bomberman.level.Game.stillObjects;
 import static uet.oop.bomberman.entities.Interaction.collision;
+import static uet.oop.bomberman.level.Game.*;
 
 public class Bomb extends Entity implements IAnimation {
     public boolean isExploded = false;
@@ -69,7 +68,7 @@ public class Bomb extends Entity implements IAnimation {
     @Override
     public void updateAnimation() {
         if (frame > 3 * FPS) {
-            flag = true;
+            isLife = false;
         } else if (frame == (int) (2.5 * FPS)) {
             isExploded = true;
             bombSFX.playSFX(Sound.bombExplosion);
@@ -163,6 +162,6 @@ public class Bomb extends Entity implements IAnimation {
 
     @Override
     public long getCurrentFrame() {
-        return (System.currentTimeMillis() - startTime - Game.pauseDuration) * 60 / 1000;
+        return (System.currentTimeMillis() - startTime - totalPauseDuration) * 60 / 1000;
     }
 }
